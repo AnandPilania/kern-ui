@@ -1,0 +1,1952 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kern UI — Attribute-driven, zero-build UI library</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=DM+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,700;1,9..144,300;1,9..144,600&display=swap"
+        rel="stylesheet">
+    <link href="./kern.css" rel="stylesheet" type="text/css" />
+    <style>
+        /* ═══════════════════════════════════════════
+                DOCS SITE STYLES
+           ═══════════════════════════════════════════ */
+        :root {
+            --sidebar-w: 256px;
+            --header-h: 58px;
+        }
+
+        /* Fraunces for editorial display */
+        .serif {
+            font-family: 'Fraunces', Georgia, serif;
+        }
+
+        /* Header */
+        .site-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: var(--header-h);
+            background: rgba(8, 8, 7, .9);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--k-border);
+            z-index: 200;
+            display: flex;
+            align-items: center;
+            padding: 0 var(--k-sp-5);
+            gap: var(--k-sp-5);
+        }
+
+        .logo {
+            font-family: 'Fraunces', serif;
+            font-weight: 700;
+            font-size: 1.25rem;
+            letter-spacing: -0.035em;
+            color: var(--k-text);
+            text-decoration: none;
+        }
+
+        .logo em {
+            font-style: normal;
+            color: var(--k-accent);
+        }
+
+        .v-chip {
+            font-family: var(--k-font-mono);
+            font-size: .68rem;
+            background: var(--k-accent-subtle);
+            color: var(--k-accent);
+            border: 1px solid var(--k-accent-muted);
+            padding: 2px 8px;
+            border-radius: var(--k-r-full);
+        }
+
+        .h-nav {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            margin-left: auto;
+        }
+
+        .h-nav a,
+        .h-nav button {
+            font-size: .82rem;
+            color: var(--k-text-2);
+            text-decoration: none;
+            padding: var(--k-sp-1) var(--k-sp-3);
+            border-radius: var(--k-r);
+            transition: color var(--k-fast), background var(--k-fast);
+            background: none;
+            border: none;
+            cursor: pointer;
+            height: 30px;
+        }
+
+        .h-nav a:hover,
+        .h-nav button:hover {
+            color: var(--k-text);
+            background: var(--k-surface);
+        }
+
+        /* Layout */
+        .docs-wrap {
+            display: flex;
+            padding-top: var(--header-h);
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: var(--sidebar-w);
+            flex-shrink: 0;
+            position: sticky;
+            top: var(--header-h);
+            height: calc(100vh - var(--header-h));
+            overflow-y: auto;
+            border-right: 1px solid var(--k-border);
+            padding: var(--k-sp-6) var(--k-sp-3);
+            scrollbar-width: thin;
+            scrollbar-color: var(--k-border) transparent;
+        }
+
+        .sidebar::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background: var(--k-border);
+            border-radius: 4px;
+        }
+
+        .nav-group {
+            margin-bottom: var(--k-sp-5);
+        }
+
+        .nav-group-title {
+            font-size: .65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .1em;
+            color: var(--k-text-3);
+            padding: 0 var(--k-sp-3);
+            margin-bottom: var(--k-sp-2);
+        }
+
+        .nav-a {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 5px var(--k-sp-3);
+            font-size: .84rem;
+            color: var(--k-text-2);
+            border-radius: var(--k-r);
+            text-decoration: none;
+            transition: all var(--k-fast);
+            cursor: pointer;
+        }
+
+        .nav-a:hover {
+            color: var(--k-text);
+            background: var(--k-surface);
+        }
+
+        .nav-a.is-active {
+            color: var(--k-accent);
+            background: var(--k-accent-subtle);
+            font-weight: var(--k-fw-medium);
+        }
+
+        .nav-chip {
+            font-size: .62rem;
+            background: var(--k-surface-2);
+            color: var(--k-text-3);
+            border: 1px solid var(--k-border);
+            padding: 1px 6px;
+            border-radius: var(--k-r-full);
+        }
+
+        /* Content */
+        .content {
+            flex: 1;
+            min-width: 0;
+            padding: var(--k-sp-12) var(--k-sp-8) var(--k-sp-16);
+            max-width: 900px;
+        }
+
+        /* Sections */
+        .section {
+            margin-bottom: var(--k-sp-16);
+            scroll-margin-top: calc(var(--header-h) + 24px);
+        }
+
+        .eyebrow {
+            display: block;
+            font-family: var(--k-font-mono);
+            font-size: .68rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: .12em;
+            color: var(--k-accent);
+            margin-bottom: var(--k-sp-3);
+        }
+
+        .section-title {
+            font-family: 'Fraunces', serif;
+            font-weight: 600;
+            font-size: 1.7rem;
+            letter-spacing: -0.025em;
+            color: var(--k-text);
+            margin-bottom: var(--k-sp-3);
+        }
+
+        .section-desc {
+            font-size: .9rem;
+            color: var(--k-text-2);
+            line-height: 1.75;
+            max-width: 58ch;
+        }
+
+        .section-desc code {
+            font-size: .8em;
+        }
+
+        /* Demo block */
+        .demo {
+            border: 1px solid var(--k-border);
+            border-radius: var(--k-r-lg);
+            overflow: hidden;
+            margin-bottom: var(--k-sp-4);
+        }
+
+        .demo-pad {
+            padding: var(--k-sp-8);
+            background: var(--k-surface);
+            display: flex;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: var(--k-sp-3);
+        }
+
+        .demo-pad.col {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .demo-pad.center {
+            justify-content: center;
+            align-items: center;
+        }
+
+        .demo-code {
+            border-top: 1px solid var(--k-border);
+            position: relative;
+        }
+
+        .demo-code pre {
+            border: none;
+            border-radius: 0;
+            margin: 0;
+            background: var(--k-surface-2);
+            padding: var(--k-sp-5) var(--k-sp-6);
+            font-size: .79rem;
+            max-height: 280px;
+            overflow-y: auto;
+        }
+
+        .demo-code pre code {
+            background: none;
+            border: none;
+            padding: 0;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: var(--k-sp-3);
+            right: var(--k-sp-3);
+            height: 24px;
+            padding: 0 var(--k-sp-3);
+            font-size: .73rem;
+            background: var(--k-surface);
+            border: 1px solid var(--k-border);
+            color: var(--k-text-2);
+            border-radius: var(--k-r);
+            cursor: pointer;
+            transition: all var(--k-fast);
+        }
+
+        .copy-btn:hover {
+            color: var(--k-text);
+            border-color: var(--k-border-strong);
+        }
+
+        /* Syntax highlight */
+        .c {
+            color: var(--k-500);
+        }
+
+        .t {
+            color: #e06c75;
+        }
+
+        .a {
+            color: #d19a66;
+        }
+
+        .s {
+            color: #98c379;
+        }
+
+        .k {
+            color: #c678dd;
+        }
+
+        .f {
+            color: #61afef;
+        }
+
+        .n {
+            color: #d19a66;
+        }
+
+        /* Hero */
+        .hero {
+            padding: var(--k-sp-16) 0 var(--k-sp-12);
+            border-bottom: 1px solid var(--k-border);
+            margin-bottom: var(--k-sp-12);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -80px;
+            left: -80px;
+            width: 480px;
+            height: 480px;
+            background: radial-gradient(circle, hsl(var(--k-accent-h), var(--k-accent-s), var(--k-accent-l), .07) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--k-sp-2);
+            font-family: var(--k-font-mono);
+            font-size: .68rem;
+            color: var(--k-accent);
+            border: 1px solid var(--k-accent-muted);
+            background: var(--k-accent-subtle);
+            padding: var(--k-sp-1) var(--k-sp-3);
+            border-radius: var(--k-r-full);
+            margin-bottom: var(--k-sp-6);
+        }
+
+        .hero h1 {
+            font-family: 'Fraunces', serif;
+            font-weight: 700;
+            font-size: clamp(2.4rem, 6vw, 3.5rem);
+            line-height: 1.08;
+            letter-spacing: -0.04em;
+            margin-bottom: var(--k-sp-6);
+            max-width: 14ch;
+        }
+
+        .hero h1 em {
+            font-style: italic;
+            color: var(--k-accent);
+        }
+
+        .hero-desc {
+            font-size: 1rem;
+            color: var(--k-text-2);
+            max-width: 52ch;
+            line-height: 1.75;
+            margin-bottom: var(--k-sp-8);
+        }
+
+        .hero-actions {
+            display: flex;
+            align-items: center;
+            gap: var(--k-sp-4);
+            flex-wrap: wrap;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: var(--k-sp-8);
+            margin-top: var(--k-sp-10);
+            padding-top: var(--k-sp-8);
+            border-top: 1px solid var(--k-border);
+        }
+
+        .stat-n {
+            font-family: 'Fraunces', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            line-height: 1;
+            color: var(--k-text);
+        }
+
+        .stat-n span {
+            color: var(--k-accent);
+        }
+
+        .stat-l {
+            font-size: .78rem;
+            color: var(--k-text-3);
+            margin-top: 4px;
+        }
+
+        /* Config playground */
+        .config-row {
+            display: flex;
+            gap: var(--k-sp-6);
+            flex-wrap: wrap;
+            margin-bottom: var(--k-sp-5);
+        }
+
+        .config-group {
+            display: flex;
+            flex-direction: column;
+            gap: var(--k-sp-2);
+        }
+
+        .config-label {
+            font-size: .7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .09em;
+            color: var(--k-text-3);
+        }
+
+        .config-opts {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--k-sp-2);
+        }
+
+        .copt {
+            padding: var(--k-sp-2) var(--k-sp-3);
+            font-size: .8rem;
+            border: 1px solid var(--k-border);
+            border-radius: var(--k-r);
+            cursor: pointer;
+            background: var(--k-surface-2);
+            color: var(--k-text-2);
+            transition: all var(--k-fast);
+            height: auto;
+        }
+
+        .copt:hover {
+            background: var(--k-surface);
+            color: var(--k-text);
+            border-color: var(--k-border-strong);
+            filter: none;
+        }
+
+        .copt.on {
+            background: var(--k-accent);
+            color: var(--k-accent-fg);
+            border-color: transparent;
+            filter: none;
+        }
+
+        .cdot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 4px;
+            vertical-align: middle;
+            border: 1px solid rgba(255, 255, 255, .12);
+        }
+
+        /* Install */
+        .install-box {
+            background: var(--k-surface);
+            border: 1px solid var(--k-border);
+            border-radius: var(--k-r-lg);
+            overflow: hidden;
+        }
+
+        .itabs {
+            display: flex;
+            gap: 2px;
+            padding: var(--k-sp-3) var(--k-sp-4);
+            border-bottom: 1px solid var(--k-border);
+        }
+
+        .itab {
+            padding: var(--k-sp-1) var(--k-sp-3);
+            font-size: .79rem;
+            border-radius: var(--k-r);
+            cursor: pointer;
+            border: 1px solid transparent;
+            background: none;
+            color: var(--k-text-2);
+            transition: all var(--k-fast);
+            height: auto;
+        }
+
+        .itab:hover {
+            background: var(--k-surface-2);
+            color: var(--k-text);
+            filter: none;
+        }
+
+        .itab.on {
+            background: var(--k-surface-2);
+            color: var(--k-text);
+            border-color: var(--k-border);
+            filter: none;
+        }
+
+        .isnip {
+            display: none;
+        }
+
+        .isnip.on {
+            display: block;
+        }
+
+        .isnip pre {
+            border: none;
+            border-radius: 0;
+            background: transparent;
+        }
+
+        /* Token table */
+        .token-tbl {
+            border: 1px solid var(--k-border);
+            border-radius: var(--k-r-md);
+            overflow: hidden;
+            font-size: .81rem;
+        }
+
+        .token-row {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr 1fr;
+            border-bottom: 1px solid var(--k-border);
+        }
+
+        .token-row:last-child {
+            border-bottom: none;
+        }
+
+        .token-row>* {
+            padding: var(--k-sp-3) var(--k-sp-4);
+            display: flex;
+            align-items: center;
+        }
+
+        .token-row.head>* {
+            font-size: .67rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .09em;
+            color: var(--k-text-3);
+            background: var(--k-surface);
+        }
+
+        .tn {
+            font-family: var(--k-font-mono);
+            color: var(--k-accent);
+            font-size: .8rem;
+        }
+
+        .tv {
+            font-family: var(--k-font-mono);
+            color: var(--k-text-2);
+            font-size: .78rem;
+        }
+
+        .tsw {
+            width: 22px;
+            height: 22px;
+            border-radius: var(--k-r-sm);
+            border: 1px solid rgba(255, 255, 255, .1);
+        }
+
+        @media(max-width:768px) {
+            .sidebar {
+                display: none;
+            }
+
+            .content {
+                padding: var(--k-sp-8) var(--k-sp-4) var(--k-sp-12);
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero-stats {
+                gap: var(--k-sp-5);
+                flex-wrap: wrap;
+            }
+
+            [data-grid="2"],
+            [data-grid="3"],
+            [data-grid="4"] {
+                --k-cols: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header class="site-header">
+        <a class="logo" href="#top"><em>kern</em></a>
+        <span class="v-chip">v0.0.1</span>
+        <nav class="h-nav">
+            <a href="#components">Components</a>
+            <a href="#tokens">Tokens</a>
+            <a href="#config">Configure</a>
+            <button onclick="toggleTheme()" data-tooltip="Toggle theme"
+                style="font-size:1.1rem;width:32px;padding:0">☀</button>
+        </nav>
+    </header>
+
+    <div class="docs-wrap">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div class="nav-group">
+                <div class="nav-group-title">Start</div>
+                <a class="nav-a" href="#install">Installation</a>
+                <a class="nav-a" href="#philosophy">Philosophy</a>
+                <a class="nav-a" href="#config">Configure</a>
+                <a class="nav-a" href="#tokens">Tokens</a>
+            </div>
+            <div class="nav-group">
+                <div class="nav-group-title">Layout</div>
+                <a class="nav-a" href="#layout">Grid / Stack / Row</a>
+            </div>
+            <div class="nav-group" id="components">
+                <div class="nav-group-title">Components</div>
+                <a class="nav-a" href="#buttons">Buttons</a>
+                <a class="nav-a" href="#forms">Forms</a>
+                <a class="nav-a" href="#card">Card</a>
+                <a class="nav-a" href="#badge">Badge</a>
+                <a class="nav-a" href="#alert">Alert</a>
+                <a class="nav-a" href="#table">Table</a>
+                <a class="nav-a" href="#tabs">Tabs <span class="nav-chip">WC</span></a>
+                <a class="nav-a" href="#accordion">Accordion</a>
+                <a class="nav-a" href="#dialog">Dialog <span class="nav-chip">WC</span></a>
+                <a class="nav-a" href="#dropdown">Dropdown <span class="nav-chip">WC</span></a>
+                <a class="nav-a" href="#toast">Toast <span class="nav-chip">JS API</span></a>
+                <a class="nav-a" href="#tooltip">Tooltip</a>
+                <a class="nav-a" href="#progress">Progress</a>
+                <a class="nav-a" href="#avatar">Avatar</a>
+                <a class="nav-a" href="#stepper">Stepper</a>
+                <a class="nav-a" href="#breadcrumb">Breadcrumb</a>
+                <a class="nav-a" href="#switch">Switch</a>
+                <a class="nav-a" href="#pagination">Pagination</a>
+                <a class="nav-a" href="#skeleton">Skeleton</a>
+            </div>
+        </aside>
+
+        <!-- MAIN -->
+        <main class="content">
+
+            <!-- HERO -->
+            <section class="hero" id="top">
+                <div class="hero-tag">⬡ kern ui · v0.0.1 · MIT License</div>
+                <h1>Attribute-driven UI.<br><em>No builds.</em> No classes.</h1>
+                <p class="hero-desc">Drop in one CSS + one JS file. Configure components with <code>data-*</code>
+                    attributes. Theme with CSS variables. Control programmatically via a clean JS API. Works with any
+                    backend, any framework, forever.</p>
+                <div class="hero-actions">
+                    <button data-size="lg" onclick="scrollTo('install')">Get started →</button>
+                    <button data-variant="outline" data-size="lg" onclick="scrollTo('components')">Browse
+                        components</button>
+                </div>
+                <div class="hero-stats">
+                    <div>
+                        <div class="stat-n">~12<span>KB</span></div>
+                        <div class="stat-l">CSS + JS gzipped</div>
+                    </div>
+                    <div>
+                        <div class="stat-n">26<span>+</span></div>
+                        <div class="stat-l">Components</div>
+                    </div>
+                    <div>
+                        <div class="stat-n">0</div>
+                        <div class="stat-l">Dependencies</div>
+                    </div>
+                    <div>
+                        <div class="stat-n">∞</div>
+                        <div class="stat-l">Frameworks supported</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- INSTALL -->
+            <section class="section" id="install">
+                <span class="eyebrow">Getting Started</span>
+                <h2 class="section-title">Installation</h2>
+                <p class="section-desc">No npm required. No webpack. No config. Include two files and you're building.
+                </p>
+                <div class="install-box" style="margin-top:1.5rem">
+                    <div class="itabs">
+                        <button class="itab on" onclick="switchTab(this,'cdn')">CDN</button>
+                        <button class="itab" onclick="switchTab(this,'npm')">npm</button>
+                        <button class="itab" onclick="switchTab(this,'dl')">Self-host</button>
+                    </div>
+                    <div class="isnip on" id="t-cdn">
+                        <pre><code><span class="c">&lt;!-- In &lt;head&gt; --&gt;</span>
+<span class="t">&lt;link</span> <span class="a">rel</span>=<span class="s">"stylesheet"</span> <span class="a">href</span>=<span class="s">"https://cdn.kern.ui/v1/kern.min.css"</span><span class="t">&gt;</span>
+
+<span class="c">&lt;!-- Before &lt;/body&gt; --&gt;</span>
+<span class="t">&lt;script</span> <span class="a">src</span>=<span class="s">"https://cdn.kern.ui/v1/kern.min.js"</span><span class="t">&gt;&lt;/script&gt;</span></code></pre>
+                    </div>
+                    <div class="isnip" id="t-npm">
+                        <pre><code><span class="c"># Install</span>
+<span class="f">npm</span> install kern-ui
+
+<span class="c"># Import in your entry file</span>
+<span class="k">import</span> <span class="s">'kern-ui/kern.css'</span>;
+<span class="k">import</span> <span class="s">'kern-ui/kern.js'</span>;</code></pre>
+                    </div>
+                    <div class="isnip" id="t-dl">
+                        <pre><code><span class="c"># Download and host yourself</span>
+kern.min.css  <span class="n">~9KB</span> gzipped
+kern.min.js   <span class="n">~3KB</span> gzipped
+
+<span class="c"># No CDN dependency, no SRI required</span></code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PHILOSOPHY -->
+            <section class="section" id="philosophy">
+                <span class="eyebrow">Design Philosophy</span>
+                <h2 class="section-title">Three-layer contract</h2>
+                <p class="section-desc">Kern has a clear mental model: HTML configures, CSS themes, JS controls.</p>
+                <div data-grid="3" data-gap="sm" style="margin-top:1.5rem">
+                    <div data-card data-variant="inset">
+                        <div style="font-size:1.5rem;margin-bottom:.75rem">⬡</div>
+                        <div data-card-title>HTML layer</div>
+                        <p style="font-size:.84rem;color:var(--k-text-2);margin-top:.5rem"><code>data-variant</code>,
+                            <code>data-size</code>, <code>data-color</code>, <code>data-state</code> — configure
+                            appearance declaratively, in markup.
+                        </p>
+                    </div>
+                    <div data-card data-variant="inset">
+                        <div style="font-size:1.5rem;margin-bottom:.75rem">◈</div>
+                        <div data-card-title>CSS layer</div>
+                        <p style="font-size:.84rem;color:var(--k-text-2);margin-top:.5rem">A full token system. Override
+                            <code>--k-accent</code>, <code>--k-radius</code>, <code>--k-font-sans</code> and the entire
+                            library repaints.
+                        </p>
+                    </div>
+                    <div data-card data-variant="inset">
+                        <div style="font-size:1.5rem;margin-bottom:.75rem">⟡</div>
+                        <div data-card-title>JS layer</div>
+                        <p style="font-size:.84rem;color:var(--k-text-2);margin-top:.5rem">Clean imperative API.
+                            <code>Kern.toast()</code>, <code>Kern.dialog()</code>, <code>Kern.setAccent()</code> —
+                            programmatic control when you need it.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CONFIG -->
+            <section class="section" id="config">
+                <span class="eyebrow">Configuration</span>
+                <h2 class="section-title">Live theme builder</h2>
+                <p class="section-desc">Swap accent color, border radius, and theme with a single HTML attribute. Try it
+                    — the entire page updates live.</p>
+                <div data-card style="margin-top:1.5rem">
+                    <div class="config-row">
+                        <div class="config-group">
+                            <div class="config-label">Accent color</div>
+                            <div class="config-opts">
+                                <button class="copt on" onclick="pickAccent('amber',this)"><span class="cdot"
+                                        style="background:hsl(38,92%,50%)"></span>Amber</button>
+                                <button class="copt" onclick="pickAccent('blue',this)"><span class="cdot"
+                                        style="background:hsl(214,85%,52%)"></span>Blue</button>
+                                <button class="copt" onclick="pickAccent('green',this)"><span class="cdot"
+                                        style="background:hsl(142,72%,40%)"></span>Green</button>
+                                <button class="copt" onclick="pickAccent('violet',this)"><span class="cdot"
+                                        style="background:hsl(262,75%,58%)"></span>Violet</button>
+                                <button class="copt" onclick="pickAccent('rose',this)"><span class="cdot"
+                                        style="background:hsl(346,80%,55%)"></span>Rose</button>
+                                <button class="copt" onclick="pickAccent('cyan',this)"><span class="cdot"
+                                        style="background:hsl(192,80%,42%)"></span>Cyan</button>
+                            </div>
+                        </div>
+                        <div class="config-group">
+                            <div class="config-label">Border radius</div>
+                            <div class="config-opts">
+                                <button class="copt" onclick="pickRadius('none',this)">None</button>
+                                <button class="copt" onclick="pickRadius('sharp',this)">Sharp</button>
+                                <button class="copt on" onclick="pickRadius('default',this)">Default</button>
+                                <button class="copt" onclick="pickRadius('round',this)">Round</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div data-divider style="margin:1rem 0">Preview</div>
+                    <div data-stack data-gap="sm">
+                        <div data-row data-gap="sm">
+                            <button>Primary</button>
+                            <button data-variant="secondary">Secondary</button>
+                            <button data-variant="outline">Outline</button>
+                            <button data-variant="ghost">Ghost</button>
+                            <button data-variant="danger">Danger</button>
+                        </div>
+                        <div data-row data-gap="sm">
+                            <span data-badge data-color="accent" data-dot>Accent</span>
+                            <span data-badge data-color="success" data-dot>Success</span>
+                            <span data-badge data-color="warning" data-dot>Warning</span>
+                            <span data-badge data-color="danger" data-dot>Error</span>
+                        </div>
+                        <input type="text" placeholder="Input preview" style="max-width:280px">
+                    </div>
+                </div>
+                <div class="demo" style="margin-top:1rem">
+                    <div class="demo-code">
+                        <pre><code><span class="c">&lt;!-- Set via HTML attribute on &lt;html&gt; --&gt;</span>
+<span class="t">&lt;html</span> <span class="a">data-accent</span>=<span class="s">"violet"</span> <span class="a">data-radius</span>=<span class="s">"round"</span> <span class="a">data-theme</span>=<span class="s">"dark"</span><span class="t">&gt;</span>
+
+<span class="c">// Or via the JS API</span>
+<span class="f">Kern</span>.setAccent(<span class="s">'violet'</span>);
+<span class="f">Kern</span>.setRadius(<span class="s">'round'</span>);
+<span class="f">Kern</span>.setTheme(<span class="s">'dark'</span>);</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- BUTTONS -->
+            <section class="section" id="buttons">
+                <span class="eyebrow">Components</span>
+                <h2 class="section-title">Buttons</h2>
+                <p class="section-desc">Configure with <code>data-variant</code>, <code>data-size</code>,
+                    <code>data-color</code>, and <code>data-loading</code>. Works on <code>&lt;button&gt;</code>,
+                    <code>&lt;a&gt;</code>, or any <code>role="button"</code>.
+                </p>
+                <div class="demo">
+                    <div class="demo-pad">
+                        <button>Primary</button>
+                        <button data-variant="secondary">Secondary</button>
+                        <button data-variant="outline">Outline</button>
+                        <button data-variant="ghost">Ghost</button>
+                        <button data-variant="danger">Danger</button>
+                        <button disabled>Disabled</button>
+                    </div>
+                    <div class="demo-code">
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        <pre><code><span class="t">&lt;button&gt;</span>Primary<span class="t">&lt;/button&gt;</span>
+<span class="t">&lt;button</span> <span class="a">data-variant</span>=<span class="s">"secondary"</span><span class="t">&gt;</span>Secondary<span class="t">&lt;/button&gt;</span>
+<span class="t">&lt;button</span> <span class="a">data-variant</span>=<span class="s">"outline"</span><span class="t">&gt;</span>Outline<span class="t">&lt;/button&gt;</span>
+<span class="t">&lt;button</span> <span class="a">data-variant</span>=<span class="s">"ghost"</span><span class="t">&gt;</span>Ghost<span class="t">&lt;/button&gt;</span>
+<span class="t">&lt;button</span> <span class="a">data-variant</span>=<span class="s">"danger"</span><span class="t">&gt;</span>Danger<span class="t">&lt;/button&gt;</span></code></pre>
+                    </div>
+                </div>
+                <div class="demo">
+                    <div class="demo-pad">
+                        <button data-size="sm">Small</button>
+                        <button>Default</button>
+                        <button data-size="lg">Large</button>
+                        <button data-size="icon" data-variant="outline" data-tooltip="Settings">⚙</button>
+                        <button data-loading>Saving…</button>
+                    </div>
+                    <div class="demo-code">
+                        <pre><code><span class="t">&lt;button</span> <span class="a">data-size</span>=<span class="s">"sm"</span><span class="t">&gt;</span>Small<span class="t">&lt;/button&gt;</span>
+<span class="t">&lt;button</span> <span class="a">data-size</span>=<span class="s">"lg"</span><span class="t">&gt;</span>Large<span class="t">&lt;/button&gt;</span>
+<span class="t">&lt;button</span> <span class="a">data-size</span>=<span class="s">"icon"</span> <span class="a">data-variant</span>=<span class="s">"outline"</span><span class="t">&gt;</span>⚙<span class="t">&lt;/button&gt;</span>
+<span class="t">&lt;button</span> <span class="a">data-loading</span><span class="t">&gt;</span>Saving…<span class="t">&lt;/button&gt;</span></code></pre>
+                    </div>
+                </div>
+                <div class="demo">
+                    <div class="demo-pad">
+                        <div role="group">
+                            <button data-variant="outline">Left</button>
+                            <button data-variant="outline">Center</button>
+                            <button data-variant="outline">Right</button>
+                        </div>
+                    </div>
+                    <div class="demo-code">
+                        <pre><code><span class="t">&lt;div</span> <span class="a">role</span>=<span class="s">"group"</span><span class="t">&gt;</span>
+  <span class="t">&lt;button</span> <span class="a">data-variant</span>=<span class="s">"outline"</span><span class="t">&gt;</span>Left<span class="t">&lt;/button&gt;</span>
+  <span class="t">&lt;button</span> <span class="a">data-variant</span>=<span class="s">"outline"</span><span class="t">&gt;</span>Center<span class="t">&lt;/button&gt;</span>
+  <span class="t">&lt;button</span> <span class="a">data-variant</span>=<span class="s">"outline"</span><span class="t">&gt;</span>Right<span class="t">&lt;/button&gt;</span>
+<span class="t">&lt;/div&gt;</span></code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- FORMS -->
+            <section class="section" id="forms">
+                <span class="eyebrow">Components</span>
+                <h2 class="section-title">Form Elements</h2>
+                <p class="section-desc">All inputs styled via semantic elements. Use <code>data-field</code> wrappers
+                    for spacing, <code>data-state</code> for validation, <code>data-input-group</code> for
+                    prefix/suffix.</p>
+                <div class="demo">
+                    <div class="demo-pad col" style="max-width:440px">
+                        <div data-field style="width:100%">
+                            <label data-required>Full name</label>
+                            <input type="text" placeholder="Jane Smith">
+                        </div>
+                        <div data-field style="width:100%">
+                            <label>Email address</label>
+                            <div data-input-group>
+                                <span data-addon>@</span>
+                                <input type="email" placeholder="jane@example.com">
+                            </div>
+                        </div>
+                        <div data-field style="width:100%">
+                            <label>Country</label>
+                            <select>
+                                <option>India</option>
+                                <option>United States</option>
+                                <option>United Kingdom</option>
+                            </select>
+                        </div>
+                        <div data-field style="width:100%">
+                            <label>Password</label>
+                            <input type="password" data-state="error" value="weak">
+                            <span data-hint data-state="error">Must be at least 8 characters</span>
+                        </div>
+                        <div data-row data-gap="sm">
+                            <label data-switch><input type="checkbox" checked><span
+                                    data-switch-track></span>Notifications</label>
+                            <label data-switch><input type="checkbox"><span data-switch-track></span>Dark mode</label>
+                        </div>
+                        <div data-row data-gap="sm">
+                            <label style="display:flex;align-items:center;gap:.5rem;font-weight:400"><input
+                                    type="checkbox" checked> Accept terms</label>
+                            <label style="display:flex;align-items:center;gap:.5rem;font-weight:400"><input type="radio"
+                                    name="p" checked> Monthly</label>
+                            <label style="display:flex;align-items:center;gap:.5rem;font-weight:400"><input type="radio"
+                                    name="p"> Annual</label>
+                        </div>
+                    </div>
+                    <div class="demo-code">
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        <pre><code><span class="t">&lt;div</span> <span class="a">data-field</span><span class="t">&gt;</span>
+  <span class="t">&lt;label</span> <span class="a">data-required</span><span class="t">&gt;</span>Full name<span class="t">&lt;/label&gt;</span>
+  <span class="t">&lt;input</span> <span class="a">type</span>=<span class="s">"text"</span><span class="t">&gt;</span>
+<span class="t">&lt;/div&gt;</span>
+
+<span class="c">&lt;!-- Input with prefix --&gt;</span>
+<span class="t">&lt;div</span> <span class="a">data-input-group</span><span class="t">&gt;</span>
+  <span class="t">&lt;span</span> <span class="a">data-addon</span><span class="t">&gt;</span>@<span class="t">&lt;/span&gt;</span>
+  <span class="t">&lt;input</span> <span class="a">type</span>=<span class="s">"email"</span><span class="t">&gt;</span>
+<span class="t">&lt;/div&gt;</span>
+
+<span class="c">&lt;!-- Error state --&gt;</span>
+<span class="t">&lt;input</span> <span class="a">type</span>=<span class="s">"password"</span> <span class="a">data-state</span>=<span class="s">"error"</span><span class="t">&gt;</span>
+<span class="t">&lt;span</span> <span class="a">data-hint</span> <span class="a">data-state</span>=<span class="s">"error"</span><span class="t">&gt;</span>Error message<span class="t">&lt;/span&gt;</span>
+
+<span class="c">&lt;!-- Switch --&gt;</span>
+<span class="t">&lt;label</span> <span class="a">data-switch</span><span class="t">&gt;</span>
+  <span class="t">&lt;input</span> <span class="a">type</span>=<span class="s">"checkbox"</span> <span class="a">checked</span><span class="t">&gt;</span>
+  <span class="t">&lt;span</span> <span class="a">data-switch-track</span><span class="t">&gt;&lt;/span&gt;</span>
+  Label
+<span class="t">&lt;/label&gt;</span></code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CARD -->
+            <section class="section" id="card">
+                <span class="eyebrow">Components</span>
+                <h2 class="section-title">Card</h2>
+                <div class="demo">
+                    <div class="demo-pad" style="align-items:stretch">
+                        <div data-card style="flex:1;min-width:200px">
+                            <div data-card-header>
+                                <div>
+                                    <div data-card-title>Default card</div>
+                                    <div data-card-desc>With header and footer</div>
+                                </div>
+                                <span data-badge data-color="success" data-dot>Active</span>
+                            </div>
+                            <p style="font-size:.875rem;color:var(--k-text-2)">Use structured slots for header, body,
+                                and footer. Compose any content inside.</p>
+                            <div data-card-footer>
+                                <button data-size="sm">Save</button>
+                                <button data-size="sm" data-variant="ghost">Cancel</button>
+                            </div>
+                        </div>
+                        <div data-card data-variant="raised" data-clickable style="flex:1;min-width:200px">
+                            <div data-card-title>Raised + clickable</div>
+                            <div data-card-desc>Hover to see lift effect</div>
+                            <p style="font-size:.875rem;color:var(--k-text-2);margin-top:.75rem">Combines
+                                <code>data-variant="raised"</code> with <code>data-clickable</code>.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="demo-code">
+                        <pre><code><span class="t">&lt;div</span> <span class="a">data-card</span><span class="t">&gt;</span>
+  <span class="t">&lt;div</span> <span class="a">data-card-header</span><span class="t">&gt;</span>
+    <span class="t">&lt;div&gt;</span>
+      <span class="t">&lt;div</span> <span class="a">data-card-title</span><span class="t">&gt;</span>Title<span class="t">&lt;/div&gt;</span>
+      <span class="t">&lt;div</span> <span class="a">data-card-desc</span><span class="t">&gt;</span>Description<span class="t">&lt;/div&gt;</span>
+    <span class="t">&lt;/div&gt;</span>
+  <span class="t">&lt;/div&gt;</span>
+  <span class="c">&lt;!-- body content --&gt;</span>
+  <span class="t">&lt;div</span> <span class="a">data-card-footer</span><span class="t">&gt;</span>...<span class="t">&lt;/div&gt;</span>
+<span class="t">&lt;/div&gt;</span>
+
+<span class="c">&lt;!-- Raised, clickable --&gt;</span>
+<span class="t">&lt;div</span> <span class="a">data-card</span> <span class="a">data-variant</span>=<span class="s">"raised"</span> <span class="a">data-clickable</span><span class="t">&gt;</span>...<span class="t">&lt;/div&gt;</span></code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- BADGE -->
+            <section class="section" id="badge">
+                <span class="eyebrow">Components</span>
+                <h2 class="section-title">Badge</h2>
+                <div class="demo">
+                    <div class="demo-pad">
+                        <span data-badge>Default</span>
+                        <span data-badge data-color="accent">Accent</span>
+                        <span data-badge data-color="success" data-dot>Online</span>
+                        <span data-badge data-color="warning" data-dot>Pending</span>
+                        <span data-badge data-color="danger" data-dot>Failed</span>
+                        <span data-badge data-color="info">Info</span>
+                        <span data-badge data-color="accent" data-variant="pill">New</span>
+                        <span data-badge data-variant="solid" data-color="success">Verified ✓</span>
+                    </div>
+                    <div class="demo-code">
+                        <pre><code><span class="t">&lt;span</span> <span class="a">data-badge</span> <span class="a">data-color</span>=<span class="s">"success"</span> <span class="a">data-dot</span><span class="t">&gt;</span>Online<span class="t">&lt;/span&gt;</span>
+<span class="t">&lt;span</span> <span class="a">data-badge</span> <span class="a">data-color</span>=<span class="s">"danger"</span> <span class="a">data-variant</span>=<span class="s">"pill"</span><span class="t">&gt;</span>Error<span class="t">&lt;/span&gt;</span>
+<span class="t">&lt;span</span> <span class="a">data-badge</span> <span class="a">data-variant</span>=<span class="s">"solid"</span> <span class="a">data-color</span>=<span class="s">"success"</span><span class="t">&gt;</span>Verified<span class="t">&lt;/span&gt;</span></code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ALERT -->
+            <section class="section" id="alert">
+                <span class="eyebrow">Components</span>
+                <h2 class="section-title">Alert</h2>
+                <div class="demo">
+                    <div class="demo-pad col" style="width:100%">
+                        <div data-alert style="width:100%;margin-bottom:0">
+                            <div>
+                                <div data-alert-title>Information</div>Your session expires in 15 minutes.
+                            </div>
+                        </div>
+                        <div data-alert data-color="success" style="width:100%;margin-bottom:0">
+                            <div>
+                                <div data-alert-title>Success</div>Changes saved successfully.
+                            </div>
+                        </div>
+                        <div data-alert data-color="warning" style="width:100%;margin-bottom:0">
+                            <div>
+                                <div data-alert-title>Warning</div>You're approaching your storage limit.
+                            </div>
+                        </div>
+                        <div data-alert data-color="danger" style="width:100%;margin-bottom:0">
+                            <div>
+                                <div data-alert-title>Error</div>Unable to connect to the server. Please retry.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="demo-code">
+                        <pre><code><span class="t">&lt;div</span> <span class="a">data-alert</span> <span class="a">data-color</span>=<span class="s">"success"</span><span class="t">&gt;</span>
+  <span class="t">&lt;div&gt;</span>
+    <span class="t">&lt;div</span> <span class="a">data-alert-title</span><span class="t">&gt;</span>Success<span class="t">&lt;/div&gt;</span>
+    Changes saved.
+  <span class="t">&lt;/div&gt;</span>
+<span class="t">&lt;/div&gt;</span>
+
+<span class="c">&lt;!-- Colors: (default info) success warning danger neutral --&gt;</span></code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TABLE -->
+            <section class="section" id="table">
+                <span class="eyebrow">Components</span>
+                <h2 class="section-title">Table</h2>
+                <p class="section-desc">Add <code>data-sort</code> to any <code>&lt;th&gt;</code> for instant
+                    client-side column sorting. <code>data-hover</code> enables row highlights. Wrap in
+                    <code>data-table-wrap</code> for a bordered, scrollable container.
+                </p>
+                <div class="demo">
+                    <div class="demo-pad" style="padding:0;background:var(--k-bg)">
+                        <div data-table-wrap style="width:100%;border-radius:0;border:none">
+                            <table data-hover data-variant="striped">
+                                <thead>
+                                    <tr>
+                                        <th>User</th>
+                                        <th data-sort>Role</th>
+                                        <th data-sort>Status</th>
+                                        <th data-sort>Joined</th>
+                                        <th style="width:40px"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <div data-row data-gap="sm">
+                                                <div data-avatar data-size="sm">JD</div>
+                                                <div>
+                                                    <div style="font-weight:500;font-size:.875rem">Jane Doe</div>
+                                                    <div style="font-size:.78rem;color:var(--k-text-2)">jane@acme.io
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td><span data-badge>Admin</span></td>
+                                        <td><span data-badge data-color="success" data-dot>Active</span></td>
+                                        <td style="color:var(--k-text-2);font-size:.85rem">Jan 2024</td>
+                                        <td>
+                                            <kern-dropdown data-align="end">
+                                                <button data-dropdown-trigger data-variant="ghost"
+                                                    data-size="icon">⋯</button>
+                                                <div data-dropdown-content>
+                                                    <a data-dropdown-item href="#">Edit</a>
+                                                    <a data-dropdown-item data-color="danger" href="#">Remove</a>
+                                                </div>
+                                            </kern-dropdown>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div data-row data-gap="sm">
+                                                <div data-avatar data-size="sm"
+                                                    style="background:hsl(262,30%,22%);color:hsl(262,75%,65%)">AM</div>
+                                                <div>
+                                                    <div style="font-weight:500;font-size:.875rem">Alex Moon</div>
+                                                    <div style="font-size:.78rem;color:var(--k-text-2)">alex@acme.io
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td><span data-badge>Editor</span></td>
+                                        <td><span data-badge data-color="warning" data-dot>Pending</span></td>
+                                        <td style="color:var(--k-text-2);font-size:.85rem">Mar 2024</td>
+                                        <td>
+                                            <kern-dropdown data-align="end">
+                                                <button data-dropdown-trigger data-variant="ghost"
+                                                    data-size="icon">⋯</button>
+                                                <div data-dropdown-content>
+                                                    <a data-dropdown-item href="#">Edit</a>
+                                                    <a data-dropdown-item data-color="danger" href="#">Remove</a>
+                                                </div>
+                                            </kern-dropdown>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div data-row data-gap="sm">
+                                                <div data-avatar data-size="sm"
+                                                    style="background:hsl(142,30%,16%);color:hsl(142,72%,45%)">SK</div>
+                                                <div>
+                                                    <div style="font-weight:500;font-size:.875rem">Sam Kim</div>
+                                                    <div style="font-size:.78rem;color:var(--k-text-2)">sam@acme.io
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td><span data-badge>Viewer</span></td>
+                                        <td><span data-badge data-color="danger" data-dot>Inactive</span></td>
+                                        <td style="color:var(--k-text-2);font-size:.85rem">Jun 2024</td>
+                                        <td>
+                                            <kern-dropdown data-align="end">
+                                                <button data-dropdown-trigger data-variant="ghost"
+                                                    data-size="icon">⋯</button>
+                                                <div data-dropdown-content>
+                                                    <a data-dropdown-item href="#">Edit</a>
+                                                    <a data-dropdown-item data-color="danger" href="#">Remove</a>
+                                                </div>
+                                            </kern-dropdown>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="demo-code">
+                        <pre><code><span class="t">&lt;div</span> <span class="a">data-table-wrap</span><span class="t">&gt;</span>
+  <span class="t">&lt;table</span> <span class="a">data-hover</span> <span class="a">data-variant</span>=<span class="s">"striped"</span><span class="t">&gt;</span>
+    <span class="t">&lt;thead&gt;&lt;tr&gt;</span>
+      <span class="t">&lt;th&gt;</span>Name<span class="t">&lt;/th&gt;</span>
+      <span class="t">&lt;th</span> <span class="a">data-sort</span><span class="t">&gt;</span>Role<span class="t">&lt;/th&gt;</span>  <span class="c">&lt;!-- sortable column --&gt;</span>
+    <span class="t">&lt;/tr&gt;&lt;/thead&gt;</span>
+    <span class="t">&lt;tbody&gt;</span>...<span class="t">&lt;/tbody&gt;</span>
+  <span class="t">&lt;/table&gt;</span>
+<span class="t">&lt;/div&gt;</span></code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TABS -->
+            <section class="section" id="tabs">
+                <span class="eyebrow">Components</span>
+                <h2 class="section-title">Tabs</h2>
+                <p class="section-desc">Web Component with full keyboard navigation (←→ arrows, Home, End). JS API:
+                    <code>el.goto(index)</code> or <code>el.setActive(n)</code>. Two variants: <code>underline</code>
+                    (default) and <code>pills</code>.
+                </p>
+                <div class="demo">
+                    <div class="demo-pad col" style="width:100%">
+                        <kern-tabs style="width:100%">
+                            <div data-tabs-list>
+                                <button data-tab>Overview</button>
+                                <button data-tab>Analytics</button>
+                                <button data-tab>Settings</button>
+                            </div>
+                            <div data-tab-panel>
+                                <div data-card data-variant="inset">
+                                    <strong>Overview panel</strong>
+                                    <p style="color:var(--k-text-2);font-size:.875rem;margin-top:.5rem">Navigate tabs
+                                        with arrow keys. Add any content here.</p>
+                                </div>
+                            </div>
+                            <div data-tab-panel>
+                                <div data-card data-variant="inset">
+                                    <strong>Analytics panel</strong>
+                                    <p style="color:var(--k-text-2);font-size:.875rem;margin-top:.5rem">Charts, graphs,
+                                        and data visualizations live here.</p>
+                                </div>
+                            </div>
+                            <div data-tab-panel>
+                                <div data-card data-variant="inset">
+                                    <strong>Settings panel</strong>
+                                    <p style="color:var(--k-text-2);font-size:.875rem;margin-top:.5rem">User preferences
+                                        and configuration options.</p>
+                                </div>
+                            </div>
+                        </kern-tabs>
+                        <div style="margin-top:1rem">
+                            <kern-tabs data-variant="pills">
+                                <div data-tabs-list>
+                                    <button data-tab>All</button>
+                                    <button data-tab>Active</button>
+                                    <button data-tab>Archived</button>
+                                </div>
+                                <div data-tab-panel>
+                                    <p style="font-size:.875rem;color:var(--k-text-2);padding-top:.5rem">Showing all
+                                        items</p>
+                                </div>
+                                <div data-tab-panel>
+                                    <p style="font-size:.875rem;color:var(--k-text-2);padding-top:.5rem">Active items
+                                        only</p>
+                                </div>
+                                <div data-tab-panel>
+                                    <p style="font-size:.875rem;color:var(--k-text-2);padding-top:.5rem">Archived items
+                                    </p>
+                                </div>
+                            </kern-tabs>
+                        </div>
+                    </div>
+                    <div class="demo-code">
+                        <pre><code><span class="t">&lt;kern-tabs&gt;</span>
+  <span class="t">&lt;div</span> <span class="a">data-tabs-list</span><span class="t">&gt;</span>
+    <span class="t">&lt;button</span> <span class="a">data-tab</span><span class="t">&gt;</span>Tab 1<span class="t">&lt;/button&gt;</span>
+    <span class="t">&lt;button</span> <span class="a">data-tab</span><span class="t">&gt;</span>Tab 2<span class="t">&lt;/button&gt;</span>
+  <span class="t">&lt;/div&gt;</span>
+  <span class="t">&lt;div</span> <span class="a">data-tab-panel</span><span class="t">&gt;</span>Panel 1<span class="t">&lt;/div&gt;</span>
+  <span class="t">&lt;div</span> <span class="a">data-tab-panel</span><span class="t">&gt;</span>Panel 2<span class="t">&lt;/div&gt;</span>
+<span class="t">&lt;/kern-tabs&gt;</span>
+
+<span class="c">// JS API</span>
+document.querySelector(<span class="s">'kern-tabs'</span>).goto(<span class="n">1</span>);
+
+<span class="c">&lt;!-- Pills variant --&gt;</span>
+<span class="t">&lt;kern-tabs</span> <span class="a">data-variant</span>=<span class="s">"pills"</span><span class="t">&gt;</span>...<span class="t">&lt;/kern-tabs&gt;</span></code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ACCORDION -->
+            <section class="section" id="accordion">
+                <span class="eyebrow">Components</span>
+                <h2 class="section-title">Accordion</h2>
+                <p class="section-desc">Auto-closes other items by default. Add <code>data-multi</code> to allow
+                    multiple open at once.</p>
+                <div class="demo">
+                    <div class="demo-pad col" style="width:100%">
+                        <div data-accordion style="width:100%">
+                            <div data-accordion-item>
+                                <button data-accordion-trigger>What makes Kern different from oat or Pico?</button>
+                                <div data-accordion-content>
+                                    <div data-accordion-body>Kern adds a proper variant system, a full JS API on every
+                                        dynamic component, a documented CSS token system, and a clear mental model: HTML
+                                        configures, CSS themes, JS controls. oat and Pico are simpler but less
+                                        production-ready.</div>
+                                </div>
+                            </div>
+                            <div data-accordion-item>
+                                <button data-accordion-trigger>Does it work without JavaScript?</button>
+                                <div data-accordion-content>
+                                    <div data-accordion-body>Most visual components (card, badge, alert, table,
+                                        progress, avatar, breadcrumb, stepper) require zero JS. Dynamic components
+                                        (tabs, dropdown, dialog, toast, drawer) are Web Components that enhance
+                                        progressively.</div>
+                                </div>
+                            </div>
+                            <div data-accordion-item>
+                                <button data-accordion-trigger>Is it compatible with htmx and Alpine.js?</button>
+                                <div data-accordion-content>
+                                    <div data-accordion-body>Yes — perfectly. Kern's <code>data-state</code>,
+                                        <code>data-loading</code>, and <code>data-active</code> attributes map directly
+                                        to Alpine and htmx state, making server-rendered UIs trivially styled without
+                                        framework overhead.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="demo-code">
+                        <pre><code><span class="t">&lt;div</span> <span class="a">data-accordion</span><span class="t">&gt;</span>  <span class="c">&lt;!-- add data-multi for multi-open --&gt;</span>
+  <span class="t">&lt;div</span> <span class="a">data-accordion-item</span><span class="t">&gt;</span>
+    <span class="t">&lt;button</span> <span class="a">data-accordion-trigger</span><span class="t">&gt;</span>Question<span class="t">&lt;/button&gt;</span>
+    <span class="t">&lt;div</span> <span class="a">data-accordion-content</span><span class="t">&gt;</span>
+      <span class="t">&lt;div</span> <span class="a">data-accordion-body</span><span class="t">&gt;</span>Answer text<span class="t">&lt;/div&gt;</span>
+    <span class="t">&lt;/div&gt;</span>
+  <span class="t">&lt;/div&gt;</span>
+<span class="t">&lt;/div&gt;</span></code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- DIALOG -->
+            <section class="section" id="dialog">
+                <span class="eyebrow">Components</span>
+                <h2 class="section-title">Dialog</h2>
+                <p class="section-desc">Built on native <code>&lt;dialog&gt;</code> for proper accessibility. Backdrop
+                    blur, focus trap, ESC to close. Trigger with <code>data-toggle</code> or
+                    <code>Kern.dialog('id')</code>.
+                </p>
+                <div class="demo">
+                    <div class="demo-pad">
+                        <button data-toggle="dlg-demo">Open dialog</button>
+                        <button data-variant="outline" data-toggle="dlg-confirm">Confirm dialog</button>
+                        <button data-variant="ghost" onclick="Kern.dialog('dlg-demo')">Via JS API</button>
+                    </div>
+                    <div class="demo-code">
+                        <pre><code><span class="c">&lt;!-- Trigger --&gt;</span>
+<span class="t">&lt;button</span> <span class="a">data-toggle</span>=<span class="s">"my-dialog"</span><span class="t">&gt;</span>Open<span class="t">&lt;/button&gt;</span>
+
+<span class="c">&lt;!-- Dialog markup --&gt;</span>
+<span class="t">&lt;kern-dialog&gt;</span>
+  <span class="t">&lt;dialog</span> <span class="a">id</span>=<span class="s">"my-dialog"</span><span class="t">&gt;</span>
+    <span class="t">&lt;div</span> <span class="a">data-dialog-header</span><span class="t">&gt;</span>
+      <span class="t">&lt;div&gt;&lt;div</span> <span class="a">data-dialog-title</span><span class="t">&gt;</span>Title<span class="t">&lt;/div&gt;&lt;/div&gt;</span>
+      <span class="t">&lt;button</span> <span class="a">data-dialog-close</span><span class="t">&gt;</span>✕<span class="t">&lt;/button&gt;</span>
+    <span class="t">&lt;/div&gt;</span>
+    <span class="t">&lt;div</span> <span class="a">data-dialog-body</span><span class="t">&gt;</span>Content<span class="t">&lt;/div&gt;</span>
+    <span class="t">&lt;div</span> <span class="a">data-dialog-footer</span><span class="t">&gt;</span>...<span class="t">&lt;/div&gt;</span>
+  <span class="t">&lt;/dialog&gt;</span>
+<span class="t">&lt;/kern-dialog&gt;</span>
+
+<span class="c">// JS API</span>
+<span class="f">Kern</span>.dialog(<span class="s">'my-dialog'</span>);</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- DROPDOWN -->
+            <section class="section" id="dropdown">
+                <span class="eyebrow">Components</span>
+                <h2 class="section-title">Dropdown</h2>
+                <p class="section-desc">Full keyboard navigation (↑↓ arrows, Escape). Use <code>data-align="end"</code>
+                    to right-align the menu.</p>
+                <div class="demo">
+                    <div class="demo-pad">
+                        <kern-dropdown>
+                            <button data-dropdown-trigger data-variant="outline">Actions ▾</button>
+                            <div data-dropdown-content>
+                                <div data-dropdown-label>Workspace</div>
+                                <a data-dropdown-item href="#">⚙ Settings</a>
+                                <a data-dropdown-item href="#">👥 Members</a>
+                                <a data-dropdown-item href="#">📋 Billing</a>
+                                <div data-dropdown-sep></div>
+                                <a data-dropdown-item data-color="danger" href="#">🗑 Delete workspace</a>
+                            </div>
+                        </kern-dropdown>
+                        <kern-dropdown data-align="end">
+                            <button data-dropdown-trigger data-size="icon" data-variant="ghost"
+                                style="font-size:1.2rem">⋯</button>
+                            <div data-dropdown-content>
+                                <a data-dropdown-item href="#">Edit</a>
+                                <a data-dropdown-item href="#">Duplicate</a>
+                                <a data-dropdown-item href="#">Share</a>
+                                <div data-dropdown-sep></div>
+                                <a data-dropdown-item data-color="danger" href="#">Delete</a>
+                            </div>
+                        </kern-dropdown>
+                    </div>
+                    <div class="demo-code">
+                        <pre><code><span class="t">&lt;kern-dropdown&gt;</span>
+  <span class="t">&lt;button</span> <span class="a">data-dropdown-trigger</span><span class="t">&gt;</span>Actions ▾<span class="t">&lt;/button&gt;</span>
+  <span class="t">&lt;div</span> <span class="a">data-dropdown-content</span><span class="t">&gt;</span>
+    <span class="t">&lt;div</span> <span class="a">data-dropdown-label</span><span class="t">&gt;</span>Section<span class="t">&lt;/div&gt;</span>
+    <span class="t">&lt;a</span> <span class="a">data-dropdown-item</span> <span class="a">href</span>=<span class="s">"#"</span><span class="t">&gt;</span>Settings<span class="t">&lt;/a&gt;</span>
+    <span class="t">&lt;div</span> <span class="a">data-dropdown-sep</span><span class="t">&gt;&lt;/div&gt;</span>
+    <span class="t">&lt;a</span> <span class="a">data-dropdown-item</span> <span class="a">data-color</span>=<span class="s">"danger"</span><span class="t">&gt;</span>Delete<span class="t">&lt;/a&gt;</span>
+  <span class="t">&lt;/div&gt;</span>
+<span class="t">&lt;/kern-dropdown&gt;</span>
+
+<span class="c">&lt;!-- Right-aligned --&gt;</span>
+<span class="t">&lt;kern-dropdown</span> <span class="a">data-align</span>=<span class="s">"end"</span><span class="t">&gt;</span>...<span class="t">&lt;/kern-dropdown&gt;</span></code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TOAST -->
+            <section class="section" id="toast">
+                <span class="eyebrow">Components</span>
+                <h2 class="section-title">Toast</h2>
+                <p class="section-desc">Fully programmatic via <code>Kern.toast()</code>. Stacking, auto-dismiss,
+                    colored left-border accent, six positions. Pass a string for a quick message or an options object
+                    for full control.</p>
+                <div class="demo">
+                    <div class="demo-pad">
+                        <button
+                            onclick="Kern.toast({title:'Saved',message:'Your changes were saved.',color:'success'})">Success</button>
+                        <button data-variant="outline"
+                            onclick="Kern.toast({title:'Warning',message:'Storage 80% full.',color:'warning'})">Warning</button>
+                        <button data-variant="outline"
+                            onclick="Kern.toast({title:'Error',message:'Connection failed.',color:'danger'})">Error</button>
+                        <button data-variant="ghost"
+                            onclick="Kern.toast({message:'New message from the team.'})">Info</button>
+                        <button data-variant="ghost"
+                            onclick="Kern.toast({title:'🎉 Welcome!',message:'Enjoy Kern UI.',color:'accent',duration:6000})">Accent</button>
+                        <button data-variant="ghost"
+                            onclick="Kern.toast({title:'Persistent',message:'Won\'t auto-dismiss.',duration:0})">Persistent</button>
+                    </div>
+                    <div class="demo-code">
+                        <pre><code><span class="c">// Minimal</span>
+<span class="f">Kern</span>.toast(<span class="s">'File uploaded successfully.'</span>);
+
+<span class="c">// Full options</span>
+<span class="f">Kern</span>.toast({
+  title: <span class="s">'Saved'</span>,
+  message: <span class="s">'Changes applied.'</span>,
+  color: <span class="s">'success'</span>,     <span class="c">// success | warning | danger | accent</span>
+  duration: <span class="n">4000</span>,       <span class="c">// ms — 0 = persistent</span>
+  position: <span class="s">'bottom-right'</span>, <span class="c">// 6 positions</span>
+  dismissible: <span class="k">true</span>
+});</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TOOLTIP -->
+            <section class="section" id="tooltip">
+                <span class="eyebrow">Components</span>
+                <h2 class="section-title">Tooltip</h2>
+                <p class="section-desc">Pure CSS — zero JS. Set <code>data-tooltip</code> on any element. Four
+                    placements: <code>top</code> (default), <code>bottom</code>, <code>left</code>, <code>right</code>.
+                </p>
+                <div class="demo">
+                    <div class="demo-pad center" style="padding:3.5rem;gap:2rem">
+                        <button data-tooltip="Default — top" data-variant="outline">Top</button>
+                        <button data-tooltip="Appears below" data-placement="bottom"
+                            data-variant="outline">Bottom</button>
+                        <button data-tooltip="On the right side" data-placement="right"
+                            data-variant="outline">Right</button>
+                        <span data-tooltip="Works on any element — span, div, icon…">Any element</span>
+                    </div>
+                    <div class="demo-code">
+                        <pre><code><span class="t">&lt;button</span> <span class="a">data-tooltip</span>=<span class="s">"Tooltip text"</span><span class="t">&gt;</span>Hover<span class="t">&lt;/button&gt;</span>
+<span class="t">&lt;button</span> <span class="a">data-tooltip</span>=<span class="s">"Bottom"</span> <span class="a">data-placement</span>=<span class="s">"bottom"</span><span class="t">&gt;</span>...<span class="t">&lt;/button&gt;</span>
+<span class="t">&lt;button</span> <span class="a">data-tooltip</span>=<span class="s">"Right"</span>  <span class="a">data-placement</span>=<span class="s">"right"</span><span class="t">&gt;</span>...<span class="t">&lt;/button&gt;</span></code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PROGRESS -->
+            <section class="section" id="progress">
+                <span class="eyebrow">Components</span>
+                <h2 class="section-title">Progress & Spinner</h2>
+                <div class="demo">
+                    <div class="demo-pad col" style="width:100%;gap:1.25rem">
+                        <div data-stack data-gap="sm" style="width:100%">
+                            <div data-row data-justify="between"><span
+                                    style="font-size:.82rem;color:var(--k-text-2)">Uploading…</span><span
+                                    style="font-size:.82rem;color:var(--k-text-2)">68%</span></div>
+                            <div data-progress>
+                                <div data-progress-bar style="width:68%"></div>
+                            </div>
+                        </div>
+                        <div data-progress data-color="success">
+                            <div data-progress-bar style="width:100%"></div>
+                        </div>
+                        <div data-progress data-color="warning">
+                            <div data-progress-bar style="width:42%"></div>
+                        </div>
+                        <div data-progress data-color="danger" data-size="sm">
+                            <div data-progress-bar style="width:18%"></div>
+                        </div>
+                        <div data-progress data-indeterminate>
+                            <div data-progress-bar></div>
+                        </div>
+                        <div data-row>
+                            <div data-spinner></div>
+                            <div data-spinner data-size="sm"></div>
+                            <div data-spinner data-size="lg"></div>
+                            <span style="font-size:.85rem;color:var(--k-text-2)">sm · default · lg</span>
+                        </div>
+                    </div>
+                    <div class="demo-code">
+                        <pre><code><span class="c">&lt;!-- Determinate --&gt;</span>
+<span class="t">&lt;div</span> <span class="a">data-progress</span> <span class="a">data-color</span>=<span class="s">"success"</span><span class="t">&gt;</span>
+  <span class="t">&lt;div</span> <span class="a">data-progress-bar</span> <span class="a">style</span>=<span class="s">"width:75%"</span><span class="t">&gt;&lt;/div&gt;</span>
+<span class="t">&lt;/div&gt;</span>
+
+<span class="c">&lt;!-- Indeterminate --&gt;</span>
+<span class="t">&lt;div</span> <span class="a">data-progress</span> <span class="a">data-indeterminate</span><span class="t">&gt;</span>
+  <span class="t">&lt;div</span> <span class="a">data-progress-bar</span><span class="t">&gt;&lt;/div&gt;</span>
+<span class="t">&lt;/div&gt;</span>
+
+<span class="c">&lt;!-- Spinner --&gt;</span>
+<span class="t">&lt;div</span> <span class="a">data-spinner</span><span class="t">&gt;&lt;/div&gt;</span>
+<span class="t">&lt;div</span> <span class="a">data-spinner</span> <span class="a">data-size</span>=<span class="s">"lg"</span><span class="t">&gt;&lt;/div&gt;</span></code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SKELETON -->
+            <section class="section" id="skeleton">
+                <span class="eyebrow">Components</span>
+                <h2 class="section-title">Skeleton</h2>
+                <div class="demo">
+                    <div class="demo-pad">
+                        <div data-card style="width:280px">
+                            <div data-row data-gap="sm" style="margin-bottom:1rem">
+                                <div data-skeleton data-shape="circle" style="width:40px;height:40px;flex-shrink:0">
+                                </div>
+                                <div style="flex:1">
+                                    <div data-skeleton data-shape="text" style="width:60%;margin-bottom:.4rem"></div>
+                                    <div data-skeleton data-shape="text" style="width:40%;height:.75em"></div>
+                                </div>
+                            </div>
+                            <div data-skeleton style="height:100px;margin-bottom:.75rem"></div>
+                            <div data-skeleton data-shape="text" style="margin-bottom:.4rem"></div>
+                            <div data-skeleton data-shape="text" style="width:75%"></div>
+                        </div>
+                    </div>
+                    <div class="demo-code">
+                        <pre><code><span class="c">&lt;!-- Text line --&gt;</span>
+<span class="t">&lt;div</span> <span class="a">data-skeleton</span> <span class="a">data-shape</span>=<span class="s">"text"</span><span class="t">&gt;&lt;/div&gt;</span>
+
+<span class="c">&lt;!-- Circle (avatar placeholder) --&gt;</span>
+<span class="t">&lt;div</span> <span class="a">data-skeleton</span> <span class="a">data-shape</span>=<span class="s">"circle"</span> <span class="a">style</span>=<span class="s">"width:40px;height:40px"</span><span class="t">&gt;&lt;/div&gt;</span>
+
+<span class="c">&lt;!-- Block --&gt;</span>
+<span class="t">&lt;div</span> <span class="a">data-skeleton</span> <span class="a">style</span>=<span class="s">"height:120px"</span><span class="t">&gt;&lt;/div&gt;</span></code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- AVATAR -->
+            <section class="section" id="avatar">
+                <span class="eyebrow">Components</span>
+                <h2 class="section-title">Avatar</h2>
+                <div class="demo">
+                    <div class="demo-pad" style="align-items:center;gap:1.5rem">
+                        <div data-avatar data-size="sm">JD</div>
+                        <div data-avatar>AM</div>
+                        <div data-avatar data-size="lg" style="background:hsl(262,30%,22%);color:hsl(262,75%,65%)">SK
+                        </div>
+                        <div data-avatar data-size="xl">👋</div>
+                        <div data-avatar-group>
+                            <div data-avatar data-size="sm">A</div>
+                            <div data-avatar data-size="sm" style="background:hsl(142,30%,16%);color:hsl(142,72%,45%)">B
+                            </div>
+                            <div data-avatar data-size="sm" style="background:hsl(214,30%,16%);color:hsl(214,85%,55%)">C
+                            </div>
+                            <div data-avatar data-size="sm"
+                                style="background:var(--k-surface-2);color:var(--k-text-2);font-size:.65rem">+4</div>
+                        </div>
+                    </div>
+                    <div class="demo-code">
+                        <pre><code><span class="t">&lt;div</span> <span class="a">data-avatar</span><span class="t">&gt;</span>JD<span class="t">&lt;/div&gt;</span>
+<span class="t">&lt;div</span> <span class="a">data-avatar</span> <span class="a">data-size</span>=<span class="s">"lg"</span><span class="t">&gt;</span>AM<span class="t">&lt;/div&gt;</span>
+
+<span class="c">&lt;!-- Avatar group (overlapping) --&gt;</span>
+<span class="t">&lt;div</span> <span class="a">data-avatar-group</span><span class="t">&gt;</span>
+  <span class="t">&lt;div</span> <span class="a">data-avatar</span> <span class="a">data-size</span>=<span class="s">"sm"</span><span class="t">&gt;</span>A<span class="t">&lt;/div&gt;</span>
+  <span class="t">&lt;div</span> <span class="a">data-avatar</span> <span class="a">data-size</span>=<span class="s">"sm"</span><span class="t">&gt;</span>B<span class="t">&lt;/div&gt;</span>
+  <span class="t">&lt;div</span> <span class="a">data-avatar</span> <span class="a">data-size</span>=<span class="s">"sm"</span><span class="t">&gt;</span>+3<span class="t">&lt;/div&gt;</span>
+<span class="t">&lt;/div&gt;</span></code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- STEPPER -->
+            <section class="section" id="stepper">
+                <span class="eyebrow">Components</span>
+                <h2 class="section-title">Stepper</h2>
+                <p class="section-desc">Pure CSS with CSS counters. Use <code>data-done</code> for completed steps,
+                    <code>data-active</code> for the current one.
+                </p>
+                <div class="demo">
+                    <div class="demo-pad col" style="width:100%">
+                        <div data-stepper style="width:100%">
+                            <div data-step data-done>
+                                <div data-step-marker></div>
+                                <div data-step-label>Account</div>
+                            </div>
+                            <div data-step data-done>
+                                <div data-step-marker></div>
+                                <div data-step-label>Profile</div>
+                            </div>
+                            <div data-step data-active>
+                                <div data-step-marker></div>
+                                <div data-step-label>Payment</div>
+                            </div>
+                            <div data-step>
+                                <div data-step-marker></div>
+                                <div data-step-label>Confirm</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="demo-code">
+                        <pre><code><span class="t">&lt;div</span> <span class="a">data-stepper</span><span class="t">&gt;</span>
+  <span class="t">&lt;div</span> <span class="a">data-step</span> <span class="a">data-done</span><span class="t">&gt;</span>
+    <span class="t">&lt;div</span> <span class="a">data-step-marker</span><span class="t">&gt;&lt;/div&gt;</span>
+    <span class="t">&lt;div</span> <span class="a">data-step-label</span><span class="t">&gt;</span>Account<span class="t">&lt;/div&gt;</span>
+  <span class="t">&lt;/div&gt;</span>
+  <span class="t">&lt;div</span> <span class="a">data-step</span> <span class="a">data-active</span><span class="t">&gt;</span>...<span class="t">&lt;/div&gt;</span>
+  <span class="t">&lt;div</span> <span class="a">data-step</span><span class="t">&gt;</span>...<span class="t">&lt;/div&gt;</span>
+<span class="t">&lt;/div&gt;</span></code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- BREADCRUMB -->
+            <section class="section" id="breadcrumb">
+                <span class="eyebrow">Components</span>
+                <h2 class="section-title">Breadcrumb</h2>
+                <div class="demo">
+                    <div class="demo-pad col" style="gap:1rem">
+                        <div data-breadcrumb>
+                            <a href="#">Home</a>
+                            <span data-breadcrumb-sep></span>
+                            <a href="#">Settings</a>
+                            <span data-breadcrumb-sep></span>
+                            <span aria-current="page">Profile</span>
+                        </div>
+                        <div data-breadcrumb data-sep="arrow">
+                            <a href="#">Dashboard</a>
+                            <span data-breadcrumb-sep></span>
+                            <a href="#">Projects</a>
+                            <span data-breadcrumb-sep></span>
+                            <span aria-current="page">kern-ui</span>
+                        </div>
+                    </div>
+                    <div class="demo-code">
+                        <pre><code><span class="t">&lt;div</span> <span class="a">data-breadcrumb</span><span class="t">&gt;</span>
+  <span class="t">&lt;a</span> <span class="a">href</span>=<span class="s">"#"</span><span class="t">&gt;</span>Home<span class="t">&lt;/a&gt;</span>
+  <span class="t">&lt;span</span> <span class="a">data-breadcrumb-sep</span><span class="t">&gt;&lt;/span&gt;</span>
+  <span class="t">&lt;span</span> <span class="a">aria-current</span>=<span class="s">"page"</span><span class="t">&gt;</span>Current<span class="t">&lt;/span&gt;</span>
+<span class="t">&lt;/div&gt;</span>
+
+<span class="c">&lt;!-- Arrow separator --&gt;</span>
+<span class="t">&lt;div</span> <span class="a">data-breadcrumb</span> <span class="a">data-sep</span>=<span class="s">"arrow"</span><span class="t">&gt;</span>...<span class="t">&lt;/div&gt;</span></code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SWITCH -->
+            <section class="section" id="switch">
+                <span class="eyebrow">Components</span>
+                <h2 class="section-title">Switch</h2>
+                <div class="demo">
+                    <div class="demo-pad">
+                        <label data-switch><input type="checkbox" checked><span data-switch-track></span>Email
+                            notifications</label>
+                        <label data-switch><input type="checkbox"><span data-switch-track></span>Dark mode</label>
+                        <label data-switch data-size="sm"><input type="checkbox" checked><span
+                                data-switch-track></span>Compact view</label>
+                    </div>
+                    <div class="demo-code">
+                        <pre><code><span class="t">&lt;label</span> <span class="a">data-switch</span><span class="t">&gt;</span>
+  <span class="t">&lt;input</span> <span class="a">type</span>=<span class="s">"checkbox"</span> <span class="a">checked</span><span class="t">&gt;</span>
+  <span class="t">&lt;span</span> <span class="a">data-switch-track</span><span class="t">&gt;&lt;/span&gt;</span>
+  Enable feature
+<span class="t">&lt;/label&gt;</span></code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PAGINATION -->
+            <section class="section" id="pagination">
+                <span class="eyebrow">Components</span>
+                <h2 class="section-title">Pagination</h2>
+                <div class="demo">
+                    <div class="demo-pad center">
+                        <div data-pagination>
+                            <a data-page disabled href="#">← Prev</a>
+                            <a data-page aria-current="page" href="#">1</a>
+                            <a data-page href="#">2</a>
+                            <a data-page href="#">3</a>
+                            <span data-page
+                                style="border:none;background:none;color:var(--k-text-3);pointer-events:none">…</span>
+                            <a data-page href="#">12</a>
+                            <a data-page href="#">Next →</a>
+                        </div>
+                    </div>
+                    <div class="demo-code">
+                        <pre><code><span class="t">&lt;div</span> <span class="a">data-pagination</span><span class="t">&gt;</span>
+  <span class="t">&lt;a</span> <span class="a">data-page</span> <span class="a">disabled</span> <span class="a">href</span>=<span class="s">"#"</span><span class="t">&gt;</span>← Prev<span class="t">&lt;/a&gt;</span>
+  <span class="t">&lt;a</span> <span class="a">data-page</span> <span class="a">aria-current</span>=<span class="s">"page"</span> <span class="a">href</span>=<span class="s">"#"</span><span class="t">&gt;</span>1<span class="t">&lt;/a&gt;</span>
+  <span class="t">&lt;a</span> <span class="a">data-page</span> <span class="a">href</span>=<span class="s">"#"</span><span class="t">&gt;</span>2<span class="t">&lt;/a&gt;</span>
+  <span class="t">&lt;a</span> <span class="a">data-page</span> <span class="a">href</span>=<span class="s">"#"</span><span class="t">&gt;</span>Next →<span class="t">&lt;/a&gt;</span>
+<span class="t">&lt;/div&gt;</span></code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- LAYOUT -->
+            <section class="section" id="layout">
+                <span class="eyebrow">Layout</span>
+                <h2 class="section-title">Grid, Stack & Row</h2>
+                <p class="section-desc">Intrinsic layout primitives. No class names — just <code>data-grid</code>,
+                    <code>data-stack</code>, <code>data-row</code> with attribute-driven gap, alignment, and
+                    justification.
+                </p>
+                <div class="demo">
+                    <div class="demo-pad col" style="width:100%;gap:2rem">
+                        <div>
+                            <div
+                                style="font-size:.75rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--k-text-3);margin-bottom:.75rem">
+                                data-grid="3"</div>
+                            <div data-grid="3" data-gap="sm" style="width:100%">
+                                <div data-card data-variant="inset"
+                                    style="text-align:center;padding:.75rem;font-size:.8rem;color:var(--k-text-2)">Col 1
+                                </div>
+                                <div data-card data-variant="inset"
+                                    style="text-align:center;padding:.75rem;font-size:.8rem;color:var(--k-text-2)">Col 2
+                                </div>
+                                <div data-card data-variant="inset"
+                                    style="text-align:center;padding:.75rem;font-size:.8rem;color:var(--k-text-2)">Col 3
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div
+                                style="font-size:.75rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--k-text-3);margin-bottom:.75rem">
+                                data-row + data-justify</div>
+                            <div data-row data-justify="between"
+                                style="width:100%;background:var(--k-surface-2);padding:.75rem;border-radius:var(--k-r-md)">
+                                <div data-row data-gap="sm">
+                                    <div data-avatar data-size="sm">K</div>
+                                    <strong style="font-size:.875rem">kern-ui</strong>
+                                </div>
+                                <div data-row data-gap="sm">
+                                    <button data-variant="ghost" data-size="sm">Docs</button>
+                                    <button data-size="sm">Star ★</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="demo-code">
+                        <pre><code><span class="c">&lt;!-- 3-column grid --&gt;</span>
+<span class="t">&lt;div</span> <span class="a">data-grid</span>=<span class="s">"3"</span> <span class="a">data-gap</span>=<span class="s">"sm"</span><span class="t">&gt;</span>
+  <span class="t">&lt;div&gt;</span>Col 1<span class="t">&lt;/div&gt;</span>
+  <span class="t">&lt;div&gt;</span>Col 2<span class="t">&lt;/div&gt;</span>
+  <span class="t">&lt;div&gt;</span>Col 3<span class="t">&lt;/div&gt;</span>
+<span class="t">&lt;/div&gt;</span>
+
+<span class="c">&lt;!-- Spaced row --&gt;</span>
+<span class="t">&lt;div</span> <span class="a">data-row</span> <span class="a">data-justify</span>=<span class="s">"between"</span><span class="t">&gt;</span>
+  <span class="t">&lt;div&gt;</span>Left<span class="t">&lt;/div&gt;</span>
+  <span class="t">&lt;div&gt;</span>Right<span class="t">&lt;/div&gt;</span>
+<span class="t">&lt;/div&gt;</span>
+
+<span class="c">&lt;!-- Vertical stack --&gt;</span>
+<span class="t">&lt;div</span> <span class="a">data-stack</span> <span class="a">data-gap</span>=<span class="s">"sm"</span><span class="t">&gt;</span>
+  <span class="t">&lt;div&gt;</span>Item 1<span class="t">&lt;/div&gt;</span>
+  <span class="t">&lt;div&gt;</span>Item 2<span class="t">&lt;/div&gt;</span>
+<span class="t">&lt;/div&gt;</span></code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TOKENS -->
+            <section class="section" id="tokens">
+                <span class="eyebrow">Design System</span>
+                <h2 class="section-title">Design Tokens</h2>
+                <p class="section-desc">Every visual property is a CSS custom property on <code>:root</code>. Override
+                    globally, or scope overrides to any selector. Component-specific tokens let you tune without
+                    touching globals.</p>
+                <div class="token-tbl" style="margin-top:1.5rem">
+                    <div class="token-row head">
+                        <div>Token</div>
+                        <div>Default</div>
+                        <div>Preview</div>
+                    </div>
+                    <div class="token-row">
+                        <div class="tn">--k-accent</div>
+                        <div class="tv">hsl(38,92%,50%)</div>
+                        <div>
+                            <div class="tsw" style="background:hsl(38,92%,50%)"></div>
+                        </div>
+                    </div>
+                    <div class="token-row">
+                        <div class="tn">--k-bg</div>
+                        <div class="tv">var(--k-950)</div>
+                        <div>
+                            <div class="tsw" style="background:#080807;border-color:rgba(255,255,255,.2)"></div>
+                        </div>
+                    </div>
+                    <div class="token-row">
+                        <div class="tn">--k-radius</div>
+                        <div class="tv">6px</div>
+                        <div>
+                            <div
+                                style="width:36px;height:18px;border:1px solid var(--k-border);border-radius:6px;background:var(--k-surface-2)">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="token-row">
+                        <div class="tn">--k-font-sans</div>
+                        <div class="tv">'DM Sans'</div>
+                        <div style="font-size:.85rem">The quick brown fox</div>
+                    </div>
+                    <div class="token-row">
+                        <div class="tn">--k-font-mono</div>
+                        <div class="tv">'DM Mono'</div>
+                        <div style="font-family:var(--k-font-mono);font-size:.8rem">const x = 42</div>
+                    </div>
+                    <div class="token-row">
+                        <div class="tn">--k-btn-height</div>
+                        <div class="tv">36px</div>
+                        <div><button data-size="sm" style="pointer-events:none;height:36px">Button</button></div>
+                    </div>
+                    <div class="token-row">
+                        <div class="tn">--k-btn-radius</div>
+                        <div class="tv">var(--k-radius)</div>
+                        <div><button data-size="sm" style="pointer-events:none">Button</button></div>
+                    </div>
+                    <div class="token-row">
+                        <div class="tn">--k-card-padding</div>
+                        <div class="tv">1.5rem</div>
+                        <div style="font-size:.82rem;color:var(--k-text-2)">Override per-component</div>
+                    </div>
+                    <div class="token-row">
+                        <div class="tn">--k-shadow-lg</div>
+                        <div class="tv">0 8px 32px…</div>
+                        <div>
+                            <div
+                                style="width:36px;height:18px;background:var(--k-surface);border-radius:4px;box-shadow:var(--k-sh-lg)">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="demo" style="margin-top:1.25rem">
+                    <div class="demo-code">
+                        <pre><code><span class="c">/* Override globally */</span>
+<span class="t">:root</span> {
+  <span class="a">--k-accent-h</span>: <span class="n">220</span>;         <span class="c">/* hue — accent becomes blue */</span>
+  <span class="a">--k-radius</span>: <span class="n">10px</span>;           <span class="c">/* rounder corners globally */</span>
+  <span class="a">--k-font-sans</span>: <span class="s">'Geist'</span>;    <span class="c">/* swap the font stack */</span>
+  <span class="a">--k-btn-height</span>: <span class="n">40px</span>;       <span class="c">/* taller buttons only */</span>
+  <span class="a">--k-card-padding</span>: <span class="n">2rem</span>;    <span class="c">/* more generous card padding */</span>
+  <span class="a">--k-input-radius</span>: <span class="n">0</span>;        <span class="c">/* square inputs, round buttons */</span>
+}</code></pre>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- DIALOGS -->
+    <kern-dialog id="kd-demo">
+        <dialog id="dlg-demo">
+            <div data-dialog-header>
+                <div>
+                    <div data-dialog-title>Confirm changes</div>
+                    <div data-dialog-desc>Review your workspace settings before saving.</div>
+                </div>
+                <button data-dialog-close>✕</button>
+            </div>
+            <div data-dialog-body>
+                <p>This will update your workspace preferences. Changes take effect immediately.</p>
+            </div>
+            <div data-dialog-footer>
+                <button data-variant="ghost" onclick="this.closest('kern-dialog').close()">Cancel</button>
+                <button
+                    onclick="this.closest('kern-dialog').close();Kern.toast({title:'Saved',message:'Settings updated.',color:'success'})">Save
+                    changes</button>
+            </div>
+        </dialog>
+    </kern-dialog>
+
+    <kern-dialog id="kd-confirm">
+        <dialog id="dlg-confirm" data-size="sm">
+            <div data-dialog-header>
+                <div>
+                    <div data-dialog-title>Delete workspace?</div>
+                    <div data-dialog-desc>This cannot be undone.</div>
+                </div>
+                <button data-dialog-close>✕</button>
+            </div>
+            <div data-dialog-body>
+                <div data-alert data-color="danger" style="margin-bottom:0">All data will be permanently deleted.</div>
+            </div>
+            <div data-dialog-footer>
+                <button data-variant="ghost" onclick="this.closest('kern-dialog').close()">Cancel</button>
+                <button data-variant="danger"
+                    onclick="this.closest('kern-dialog').close();Kern.toast({title:'Deleted',message:'Workspace removed.',color:'danger'})">Delete</button>
+            </div>
+        </dialog>
+    </kern-dialog>
+
+    <kern-toaster data-position="bottom-right"></kern-toaster>
+    <script src="./kern.js" type="text/javascript"></script>
+    <script>
+        /* ── DOCS SCRIPTS ── */
+        // Active nav on scroll
+        const docSections = document.querySelectorAll('.section[id]');
+        const navAs = document.querySelectorAll('.nav-a');
+        new IntersectionObserver(entries => {
+            entries.forEach(e => {
+                if (e.isIntersecting) navAs.forEach(a => a.classList.toggle('is-active', a.getAttribute('href') === '#' + e.target.id));
+            });
+        }, { rootMargin: '-15% 0px -75% 0px' }).observe && docSections.forEach(s => new IntersectionObserver(entries => {
+            entries.forEach(e => { if (e.isIntersecting) navAs.forEach(a => a.classList.toggle('is-active', a.getAttribute('href') === '#' + e.target.id)); });
+        }, { rootMargin: '-15% 0px -75% 0px' }).observe(s));
+
+        function scrollTo(id) { document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' }); }
+        function toggleTheme() { Kern.setTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'); }
+
+        function switchTab(btn, key) {
+            document.querySelectorAll('.itab').forEach(t => t.classList.remove('on'));
+            document.querySelectorAll('.isnip').forEach(s => s.classList.remove('on'));
+            btn.classList.add('on');
+            document.getElementById('t-' + key).classList.add('on');
+        }
+        function pickAccent(name, btn) {
+            Kern.setAccent(name);
+            document.querySelectorAll('.copt').forEach(b => { if (b.getAttribute('onclick')?.includes('pickAccent')) b.classList.remove('on'); });
+            btn.classList.add('on');
+        }
+        function pickRadius(name, btn) {
+            Kern.setRadius(name);
+            document.querySelectorAll('.copt').forEach(b => { if (b.getAttribute('onclick')?.includes('pickRadius')) b.classList.remove('on'); });
+            btn.classList.add('on');
+        }
+        function copyCode(btn) {
+            const code = btn.closest('.demo-code').querySelector('code');
+            navigator.clipboard.writeText(code.innerText).then(() => {
+                btn.textContent = 'Copied!';
+                setTimeout(() => btn.textContent = 'Copy', 1800);
+            });
+        }
+    </script>
+</body>
+
+</html>
