@@ -1,0 +1,20 @@
+/* kern/src/tokens/radius.css — scale + presets */
+:root {
+  --k-r-sm:3px;
+  --k-r:6px;
+  --k-r-md:8px;
+  --k-r-lg:12px;
+  --k-r-xl:16px;
+  --k-r-full:9999px;
+  /* Component-level radius tokens */
+  --k-btn-r:var(--k-r);
+  --k-card-r:var(--k-r-md);
+  --k-input-r:var(--k-r);
+  --k-badge-r:var(--k-r-sm);
+  --k-tooltip-r:var(--k-r-sm);
+  --k-dialog-r:var(--k-r-lg);
+}
+/* Radius presets (set on <html>) */
+[data-radius="none"]  {--k-r-sm:0;--k-r:0;--k-r-md:0;--k-r-lg:0;--k-r-xl:0;--k-btn-r:0;--k-card-r:0;--k-input-r:0;--k-badge-r:0}
+[data-radius="sharp"] {--k-r-sm:2px;--k-r:4px;--k-r-md:6px;--k-r-lg:8px;--k-r-xl:10px}
+[data-radius="round"] {--k-r-sm:6px;--k-r:10px;--k-r-md:14px;--k-r-lg:20px;--k-r-xl:28px;--k-btn-r:var(--k-r-full);--k-input-r:var(--k-r-full)}

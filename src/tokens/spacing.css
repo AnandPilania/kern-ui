@@ -1,0 +1,13 @@
+/* kern/src/tokens/spacing.css — 4px base scale */
+:root {
+  --k-sp-1:.25rem;  /* 4px  */
+  --k-sp-2:.5rem;   /* 8px  */
+  --k-sp-3:.75rem;  /* 12px */
+  --k-sp-4:1rem;    /* 16px */
+  --k-sp-5:1.25rem; /* 20px */
+  --k-sp-6:1.5rem;  /* 24px */
+  --k-sp-8:2rem;    /* 32px */
+  --k-sp-10:2.5rem; /* 40px */
+  --k-sp-12:3rem;   /* 48px */
+  --k-sp-16:4rem;   /* 64px */
+}

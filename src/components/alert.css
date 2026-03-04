@@ -1,0 +1,13 @@
+/* kern/src/components/alert.css */
+[role="alert"],[data-alert]{
+  display:flex;gap:var(--k-sp-3);align-items:flex-start;
+  padding:var(--k-sp-4) var(--k-sp-5);border-radius:var(--k-r-md);
+  border:1px solid;font-size:.875rem;line-height:1.5;
+  background:var(--k-info-bg);border-color:var(--k-info);color:var(--k-info-fg);
+}
+[data-alert][data-color="success"]{background:var(--k-success-bg);border-color:var(--k-success);color:var(--k-success-fg)}
+[data-alert][data-color="warning"]{background:var(--k-warning-bg);border-color:var(--k-warning);color:var(--k-warning-fg)}
+[data-alert][data-color="danger"] {background:var(--k-danger-bg); border-color:var(--k-danger); color:var(--k-danger-fg)}
+[data-alert][data-color="neutral"]{background:var(--k-surface-2); border-color:var(--k-border); color:var(--k-text)}
+[data-alert] [data-alert-title]{font-weight:var(--k-fw-bold);margin-bottom:var(--k-sp-1)}
+[data-alert] [data-alert-icon]{flex-shrink:0;margin-top:1px}

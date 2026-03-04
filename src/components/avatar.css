@@ -1,0 +1,9 @@
+/* kern/src/components/avatar.css */
+[data-avatar]{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:var(--k-accent-subtle);color:var(--k-accent);font-size:.875rem;font-weight:var(--k-fw-bold);overflow:hidden;flex-shrink:0;user-select:none;border:2px solid var(--k-bg)}
+[data-avatar][data-size="sm"]{width:26px;height:26px;font-size:.7rem}
+[data-avatar][data-size="lg"]{width:48px;height:48px;font-size:1.1rem}
+[data-avatar][data-size="xl"]{width:64px;height:64px;font-size:1.4rem}
+[data-avatar] img{width:100%;height:100%;object-fit:cover}
+[data-avatar-group]{display:flex}
+[data-avatar-group] [data-avatar]{margin-left:-8px}
+[data-avatar-group] [data-avatar]:first-child{margin-left:0}

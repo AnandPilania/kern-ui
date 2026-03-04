@@ -1,0 +1,10 @@
+/* kern/src/tokens/typography.css */
+:root {
+  --k-font-sans:'DM Sans','Inter',system-ui,sans-serif;
+  --k-font-mono:'DM Mono','Fira Code','Cascadia Code',monospace;
+  --k-font-size:15px;
+  --k-line-height:1.6;
+  --k-fw-normal:400;
+  --k-fw-medium:500;
+  --k-fw-bold:600;
+}

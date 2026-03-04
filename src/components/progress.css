@@ -1,0 +1,15 @@
+/* kern/src/components/progress.css */
+[data-progress]{width:100%;height:6px;background:var(--k-surface-2);border-radius:var(--k-r-full);overflow:hidden}
+[data-progress][data-size="sm"]{height:3px}
+[data-progress][data-size="lg"]{height:10px}
+[data-progress-bar]{height:100%;background:var(--k-accent);border-radius:inherit;transition:width var(--k-slow) var(--k-ease)}
+[data-progress][data-color="success"] [data-progress-bar]{background:var(--k-success)}
+[data-progress][data-color="warning"] [data-progress-bar]{background:var(--k-warning)}
+[data-progress][data-color="danger"]  [data-progress-bar]{background:var(--k-danger)}
+[data-progress][data-animated] [data-progress-bar]{background:repeating-linear-gradient(-45deg,var(--k-accent),var(--k-accent) 10px,hsl(var(--k-accent-h),var(--k-accent-s),calc(var(--k-accent-l) + 10%)) 10px,hsl(var(--k-accent-h),var(--k-accent-s),calc(var(--k-accent-l) + 10%)) 20px);background-size:28px 100%;animation:k-progress-stripe 1s linear infinite}
+[data-progress][data-indeterminate] [data-progress-bar]{width:40%!important;animation:k-progress-indeterminate 1.4s ease-in-out infinite}
+/* Spinner */
+[data-spinner]{display:inline-block;width:20px;height:20px;border:2px solid var(--k-surface-2);border-top-color:var(--k-accent);border-radius:50%;animation:k-spin .7s linear infinite}
+[data-spinner][data-size="sm"]{width:14px;height:14px}
+[data-spinner][data-size="lg"]{width:32px;height:32px;border-width:3px}
+[data-spinner][data-color="text"]{border-color:var(--k-surface-2);border-top-color:currentColor}

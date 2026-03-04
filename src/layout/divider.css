@@ -1,0 +1,5 @@
+/* kern/src/layout/divider.css */
+[data-divider]{display:flex;align-items:center;gap:var(--k-sp-4);color:var(--k-text-3);font-size:.8rem;margin:var(--k-sp-6) 0}
+[data-divider]::before,[data-divider]::after{content:'';flex:1;height:1px;background:var(--k-border)}
+[data-divider][data-vertical]{flex-direction:column;height:100%;margin:0 var(--k-sp-4);width:auto}
+[data-divider][data-vertical]::before,[data-divider][data-vertical]::after{width:1px;height:auto;flex:1}

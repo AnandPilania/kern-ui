@@ -1,0 +1,2257 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" data-accent="amber">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kern UI — Theme Showcase</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;1,9..144,400&display=swap"
+        rel="stylesheet">
+    <link href="../dist/kern.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --shell-sidebar: 220px;
+            --shell-header: 52px
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0
+        }
+
+        body {
+            font-family: var(--k-font-sans);
+            background: var(--k-bg);
+            color: var(--k-text);
+            -webkit-font-smoothing: antialiased
+        }
+
+        ::-webkit-scrollbar {
+            width: 5px;
+            height: 5px
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--k-border);
+            border-radius: 99px
+        }
+
+        .serif {
+            font-family: 'Fraunces', serif
+        }
+
+        /* ── Top nav ── */
+        .top-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 300;
+            height: var(--shell-header);
+            background: rgba(8, 8, 7, .92);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--k-border);
+            display: flex;
+            align-items: center;
+            padding: 0 1rem;
+            gap: .75rem
+        }
+
+        [data-theme="light"] .top-nav {
+            background: rgba(255, 255, 255, .92)
+        }
+
+        .top-nav .logo {
+            font-family: 'Fraunces', serif;
+            font-weight: 700;
+            font-size: 1.05rem;
+            color: var(--k-text);
+            text-decoration: none;
+            letter-spacing: -.03em
+        }
+
+        .top-nav .logo span {
+            color: var(--k-accent)
+        }
+
+        .theme-tabs {
+            display: flex;
+            gap: 2px;
+            background: var(--k-surface-2);
+            border: 1px solid var(--k-border);
+            border-radius: var(--k-r-full);
+            padding: 3px
+        }
+
+        .ttab {
+            padding: 4px 12px;
+            font-size: .76rem;
+            font-weight: 500;
+            border-radius: var(--k-r-full);
+            cursor: pointer;
+            border: none;
+            background: none;
+            color: var(--k-text-2);
+            transition: all var(--k-fast);
+            height: auto;
+            white-space: nowrap
+        }
+
+        .ttab:hover {
+            color: var(--k-text);
+            filter: none
+        }
+
+        .ttab.on {
+            background: var(--k-bg);
+            color: var(--k-text);
+            box-shadow: var(--k-sh-sm);
+            filter: none
+        }
+
+        .accent-dots {
+            display: flex;
+            gap: 5px;
+            align-items: center;
+            margin-left: .75rem
+        }
+
+        .adot {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: transform .15s, border-color .15s;
+            flex-shrink: 0
+        }
+
+        .adot:hover {
+            transform: scale(1.2)
+        }
+
+        .adot.on {
+            border-color: var(--k-text)
+        }
+
+        .ttoggle {
+            margin-left: .375rem;
+            width: 30px;
+            height: 30px;
+            padding: 0;
+            background: none;
+            border: 1px solid var(--k-border);
+            border-radius: var(--k-r);
+            cursor: pointer;
+            color: var(--k-text-2);
+            font-size: .95rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all var(--k-fast)
+        }
+
+        .ttoggle:hover {
+            background: var(--k-surface-2);
+            color: var(--k-text);
+            filter: none
+        }
+
+        .size-note {
+            margin-left: auto;
+            font-family: var(--k-font-mono);
+            font-size: .68rem;
+            color: var(--k-text-3);
+            background: var(--k-surface-2);
+            border: 1px solid var(--k-border);
+            padding: 2px 8px;
+            border-radius: var(--k-r-full);
+            white-space: nowrap
+        }
+
+        /* ── Demo wrap ── */
+        .demo-wrap {
+            padding-top: var(--shell-header)
+        }
+
+        .demo-scene {
+            display: none;
+            min-height: calc(100vh - var(--shell-header))
+        }
+
+        .demo-scene.on {
+            display: block
+        }
+
+        /* ══════════════════════════
+   SCENE 1 — ANALYTICS
+══════════════════════════ */
+        .analytics {
+            display: flex;
+            height: calc(100vh - var(--shell-header))
+        }
+
+        .an-sidebar {
+            width: var(--shell-sidebar);
+            flex-shrink: 0;
+            background: var(--k-surface);
+            border-right: 1px solid var(--k-border);
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto
+        }
+
+        .an-logo {
+            padding: 1.1rem .875rem;
+            border-bottom: 1px solid var(--k-border);
+            display: flex;
+            align-items: center;
+            gap: .5rem
+        }
+
+        .an-logo-mark {
+            width: 26px;
+            height: 26px;
+            background: var(--k-accent);
+            border-radius: 7px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: .75rem;
+            font-weight: 700;
+            color: var(--k-accent-fg);
+            flex-shrink: 0
+        }
+
+        .an-logo-text {
+            font-weight: 700;
+            font-size: .85rem;
+            letter-spacing: -.02em
+        }
+
+        .an-nav {
+            padding: .625rem .375rem;
+            flex: 1
+        }
+
+        .an-sec {
+            font-size: .6rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .09em;
+            color: var(--k-text-3);
+            padding: .5rem .625rem .25rem
+        }
+
+        .an-item {
+            display: flex;
+            align-items: center;
+            gap: .5rem;
+            padding: .35rem .625rem;
+            border-radius: var(--k-r);
+            font-size: .8rem;
+            color: var(--k-text-2);
+            cursor: pointer;
+            transition: all var(--k-fast);
+            text-decoration: none;
+            margin-bottom: 1px
+        }
+
+        .an-item:hover {
+            background: var(--k-surface-2);
+            color: var(--k-text)
+        }
+
+        .an-item.on {
+            background: var(--k-accent-subtle);
+            color: var(--k-accent);
+            font-weight: 500
+        }
+
+        .an-footer {
+            padding: .625rem .375rem;
+            border-top: 1px solid var(--k-border)
+        }
+
+        .an-main {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1.5rem
+        }
+
+        .an-topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: .75rem
+        }
+
+        .an-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            letter-spacing: -.02em
+        }
+
+        .an-sub {
+            font-size: .78rem;
+            color: var(--k-text-2);
+            margin-top: 2px
+        }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem
+        }
+
+        .stat-card {
+            background: var(--k-surface);
+            border: 1px solid var(--k-border);
+            border-radius: var(--k-r-md);
+            padding: 1.125rem
+        }
+
+        .stat-lbl {
+            font-size: .68rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: .07em;
+            color: var(--k-text-3);
+            margin-bottom: .4rem
+        }
+
+        .stat-val {
+            font-family: 'Fraunces', serif;
+            font-size: 1.7rem;
+            font-weight: 700;
+            letter-spacing: -.03em;
+            line-height: 1
+        }
+
+        .stat-d {
+            font-size: .72rem;
+            margin-top: .3rem
+        }
+
+        .stat-d.up {
+            color: var(--k-success-fg)
+        }
+
+        .stat-d.dn {
+            color: var(--k-danger-fg)
+        }
+
+        .charts-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem
+        }
+
+        .chart-box {
+            background: var(--k-surface);
+            border: 1px solid var(--k-border);
+            border-radius: var(--k-r-md);
+            padding: 1.125rem
+        }
+
+        .chart-hdr {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem
+        }
+
+        .chart-title {
+            font-size: .84rem;
+            font-weight: 600
+        }
+
+        .bar-chart {
+            display: flex;
+            align-items: flex-end;
+            gap: 5px;
+            height: 110px
+        }
+
+        .bar {
+            flex: 1;
+            background: var(--k-accent);
+            border-radius: 3px 3px 0 0;
+            opacity: .8;
+            transition: opacity var(--k-fast)
+        }
+
+        .bar:hover {
+            opacity: 1
+        }
+
+        .bar-labels {
+            display: flex;
+            gap: 5px;
+            margin-top: 5px
+        }
+
+        .bar-lbl {
+            flex: 1;
+            font-size: .6rem;
+            color: var(--k-text-3);
+            text-align: center
+        }
+
+        .donut-wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 155px;
+            gap: .5rem
+        }
+
+        .donut {
+            width: 90px;
+            height: 90px
+        }
+
+        .donut-legend {
+            display: flex;
+            flex-direction: column;
+            gap: .2rem;
+            width: 100%
+        }
+
+        .donut-item {
+            display: flex;
+            align-items: center;
+            gap: .4rem;
+            font-size: .72rem;
+            color: var(--k-text-2)
+        }
+
+        .donut-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            flex-shrink: 0
+        }
+
+        .recent-box {
+            background: var(--k-surface);
+            border: 1px solid var(--k-border);
+            border-radius: var(--k-r-md);
+            overflow: hidden
+        }
+
+        .recent-hdr {
+            padding: .875rem 1.125rem;
+            border-bottom: 1px solid var(--k-border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between
+        }
+
+        .recent-title {
+            font-size: .84rem;
+            font-weight: 600
+        }
+
+        @media(max-width:900px) {
+            .an-sidebar {
+                display: none
+            }
+
+            .stat-grid {
+                grid-template-columns: repeat(2, 1fr)
+            }
+
+            .charts-row {
+                grid-template-columns: 1fr
+            }
+        }
+
+        @media(max-width:480px) {
+            .stat-grid {
+                grid-template-columns: 1fr
+            }
+        }
+
+        /* ══════════════════════════
+   SCENE 2 — INBOX
+══════════════════════════ */
+        .inbox {
+            display: flex;
+            height: calc(100vh - var(--shell-header))
+        }
+
+        .inbox-list {
+            width: 300px;
+            flex-shrink: 0;
+            border-right: 1px solid var(--k-border);
+            overflow-y: auto;
+            background: var(--k-surface)
+        }
+
+        .inbox-tb {
+            padding: .625rem .875rem;
+            border-bottom: 1px solid var(--k-border);
+            display: flex;
+            gap: .5rem;
+            align-items: center
+        }
+
+        .inbox-item {
+            padding: .75rem .875rem;
+            border-bottom: 1px solid var(--k-border);
+            cursor: pointer;
+            transition: background var(--k-fast)
+        }
+
+        .inbox-item:hover {
+            background: var(--k-surface-2)
+        }
+
+        .inbox-item.on {
+            background: var(--k-accent-subtle)
+        }
+
+        .inbox-from {
+            font-size: .78rem;
+            font-weight: 600;
+            color: var(--k-text);
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 2px
+        }
+
+        .inbox-time {
+            font-size: .7rem;
+            font-weight: 400;
+            color: var(--k-text-3)
+        }
+
+        .inbox-subject {
+            font-size: .8rem;
+            color: var(--k-text-2);
+            margin-bottom: 2px
+        }
+
+        .inbox-preview {
+            font-size: .72rem;
+            color: var(--k-text-3);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis
+        }
+
+        .unread-row {
+            display: flex;
+            gap: .4rem;
+            align-items: flex-start
+        }
+
+        .udot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--k-accent);
+            flex-shrink: 0;
+            margin-top: 5px
+        }
+
+        .inbox-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden
+        }
+
+        .inbox-hdr {
+            padding: .875rem 1.25rem;
+            border-bottom: 1px solid var(--k-border);
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 1rem
+        }
+
+        .email-subject {
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: -.02em;
+            margin-bottom: .2rem
+        }
+
+        .email-meta {
+            font-size: .75rem;
+            color: var(--k-text-2)
+        }
+
+        .inbox-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1.25rem
+        }
+
+        .email-body {
+            font-size: .875rem;
+            line-height: 1.8;
+            color: var(--k-text-2);
+            max-width: 60ch
+        }
+
+        .email-body p {
+            margin-bottom: .875rem
+        }
+
+        .inbox-ftr {
+            padding: .875rem 1.25rem;
+            border-top: 1px solid var(--k-border);
+            display: flex;
+            gap: .625rem;
+            background: var(--k-surface)
+        }
+
+        @media(max-width:768px) {
+            .inbox-list {
+                width: 100%;
+                border-right: none
+            }
+
+            .inbox-main {
+                display: none
+            }
+        }
+
+        /* ══════════════════════════
+   SCENE 3 — TRAVEL
+══════════════════════════ */
+        .travel {
+            min-height: calc(100vh - var(--shell-header));
+            overflow-y: auto
+        }
+
+        .travel-hero {
+            position: relative;
+            height: 400px;
+            overflow: hidden;
+            background: linear-gradient(135deg, hsl(var(--k-accent-h), 60%, 12%) 0%, hsl(var(--k-accent-h), 80%, 22%) 50%, hsl(calc(var(--k-accent-h) + 40), 70%, 15%) 100%);
+            display: flex;
+            align-items: center
+        }
+
+        .travel-hero-bg {
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(ellipse at 30% 50%, hsl(var(--k-accent-h), 80%, 30%, .3) 0%, transparent 60%), radial-gradient(ellipse at 80% 30%, hsl(calc(var(--k-accent-h)+60), 70%, 40%, .2) 0%, transparent 50%)
+        }
+
+        .travel-hero-c {
+            position: relative;
+            z-index: 1;
+            padding: 2rem 2.5rem;
+            max-width: 680px
+        }
+
+        .travel-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: .375rem;
+            background: rgba(255, 255, 255, .1);
+            border: 1px solid rgba(255, 255, 255, .2);
+            padding: .2rem .75rem;
+            border-radius: 99px;
+            font-size: .7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: .07em;
+            color: rgba(255, 255, 255, .9);
+            margin-bottom: .875rem
+        }
+
+        .travel-title {
+            font-family: 'Fraunces', serif;
+            font-size: clamp(1.7rem, 4vw, 2.6rem);
+            font-weight: 700;
+            color: #fff;
+            line-height: 1.1;
+            letter-spacing: -.03em;
+            margin-bottom: .625rem
+        }
+
+        .travel-title em {
+            font-style: italic;
+            color: hsl(var(--k-accent-h), 90%, 75%)
+        }
+
+        .travel-desc {
+            color: rgba(255, 255, 255, .75);
+            font-size: .875rem;
+            line-height: 1.7;
+            margin-bottom: 1.25rem;
+            max-width: 46ch
+        }
+
+        .search-bar {
+            display: flex;
+            background: rgba(255, 255, 255, .1);
+            border: 1px solid rgba(255, 255, 255, .2);
+            border-radius: var(--k-r-lg);
+            padding: .3rem;
+            gap: .2rem;
+            flex-wrap: wrap;
+            backdrop-filter: blur(8px)
+        }
+
+        .sf {
+            display: flex;
+            flex-direction: column;
+            padding: .2rem .625rem;
+            flex: 1;
+            min-width: 110px
+        }
+
+        .sf-lbl {
+            font-size: .6rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: .06em;
+            color: rgba(255, 255, 255, .6);
+            margin-bottom: 1px
+        }
+
+        .sf-val {
+            font-size: .84rem;
+            color: #fff;
+            font-weight: 500;
+            background: none;
+            border: none;
+            outline: none;
+            padding: 0
+        }
+
+        .sf-val::placeholder {
+            color: rgba(255, 255, 255, .45)
+        }
+
+        .sf-sep {
+            width: 1px;
+            background: rgba(255, 255, 255, .15);
+            align-self: stretch;
+            margin: .2rem 0
+        }
+
+        .travel-sec {
+            padding: 2rem 2rem 1rem
+        }
+
+        .travel-sec-hdr {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.25rem
+        }
+
+        .travel-sec-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            letter-spacing: -.02em
+        }
+
+        .dest-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 1rem
+        }
+
+        .dest-card {
+            border-radius: var(--k-r-lg);
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform var(--k-dur), box-shadow var(--k-dur);
+            background: var(--k-surface);
+            border: 1px solid var(--k-border)
+        }
+
+        .dest-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--k-sh-lg)
+        }
+
+        .dest-img {
+            height: 150px;
+            display: flex;
+            align-items: flex-end;
+            padding: .875rem;
+            position: relative
+        }
+
+        .dest-lbl {
+            position: relative;
+            z-index: 1;
+            color: #fff
+        }
+
+        .dest-city {
+            font-family: 'Fraunces', serif;
+            font-size: 1rem;
+            font-weight: 700;
+            line-height: 1.2
+        }
+
+        .dest-country {
+            font-size: .72rem;
+            opacity: .85
+        }
+
+        .dest-info {
+            padding: .75rem .875rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between
+        }
+
+        .dest-price {
+            font-weight: 700;
+            font-size: .84rem
+        }
+
+        .dest-rating {
+            font-size: .72rem;
+            color: var(--k-text-2)
+        }
+
+        .pkg-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            padding: 0 2rem 2rem
+        }
+
+        .pkg-card {
+            background: var(--k-surface);
+            border: 1px solid var(--k-border);
+            border-radius: var(--k-r-lg);
+            padding: 1.125rem
+        }
+
+        .pkg-icon {
+            font-size: 1.6rem;
+            margin-bottom: .625rem
+        }
+
+        .pkg-name {
+            font-weight: 700;
+            font-size: .875rem;
+            margin-bottom: .2rem
+        }
+
+        .pkg-desc {
+            font-size: .78rem;
+            color: var(--k-text-2);
+            margin-bottom: .875rem;
+            line-height: 1.6
+        }
+
+        .pkg-price {
+            font-family: 'Fraunces', serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--k-accent);
+            margin-bottom: .625rem
+        }
+
+        .pkg-price span {
+            font-size: .75rem;
+            font-weight: 400;
+            color: var(--k-text-3);
+            font-family: var(--k-font-sans)
+        }
+
+        @media(max-width:768px) {
+            .travel-hero-c {
+                padding: 1.25rem
+            }
+
+            .pkg-grid {
+                grid-template-columns: 1fr
+            }
+        }
+
+        /* ══════════════════════════
+   SCENE 4 — SaaS KANBAN
+══════════════════════════ */
+        .saas {
+            display: flex;
+            height: calc(100vh - var(--shell-header))
+        }
+
+        .saas-sb {
+            width: var(--shell-sidebar);
+            flex-shrink: 0;
+            background: var(--k-surface);
+            border-right: 1px solid var(--k-border);
+            display: flex;
+            flex-direction: column;
+            padding: .875rem .375rem
+        }
+
+        .saas-logo {
+            padding: .375rem .625rem .875rem;
+            display: flex;
+            align-items: center;
+            gap: .5rem;
+            font-weight: 700;
+            font-size: .84rem;
+            letter-spacing: -.02em
+        }
+
+        .saas-lic {
+            width: 24px;
+            height: 24px;
+            background: var(--k-accent);
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: .72rem;
+            font-weight: 700;
+            color: var(--k-accent-fg);
+            flex-shrink: 0
+        }
+
+        .saas-nav-item {
+            display: flex;
+            align-items: center;
+            gap: .5rem;
+            padding: .35rem .625rem;
+            border-radius: var(--k-r);
+            font-size: .8rem;
+            color: var(--k-text-2);
+            cursor: pointer;
+            transition: all var(--k-fast);
+            text-decoration: none;
+            margin-bottom: 1px
+        }
+
+        .saas-nav-item:hover {
+            background: var(--k-surface-2);
+            color: var(--k-text)
+        }
+
+        .saas-nav-item.on {
+            background: var(--k-accent-subtle);
+            color: var(--k-accent);
+            font-weight: 500
+        }
+
+        .snb {
+            margin-left: auto;
+            background: var(--k-accent);
+            color: var(--k-accent-fg);
+            font-size: .6rem;
+            font-weight: 700;
+            padding: 1px 5px;
+            border-radius: 99px
+        }
+
+        .saas-main {
+            flex: 1;
+            overflow-y: auto
+        }
+
+        .saas-topbar {
+            padding: .75rem 1.25rem;
+            border-bottom: 1px solid var(--k-border);
+            display: flex;
+            align-items: center;
+            gap: .625rem;
+            background: var(--k-bg);
+            position: sticky;
+            top: 0;
+            z-index: 10
+        }
+
+        .saas-bc {
+            font-size: .78rem;
+            color: var(--k-text-2);
+            display: flex;
+            align-items: center;
+            gap: .3rem
+        }
+
+        .saas-bc span {
+            color: var(--k-text);
+            font-weight: 500
+        }
+
+        .saas-content {
+            padding: 1.25rem
+        }
+
+        .kanban {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            min-height: 380px
+        }
+
+        .kcol {
+            background: var(--k-surface);
+            border: 1px solid var(--k-border);
+            border-radius: var(--k-r-md);
+            padding: .75rem;
+            display: flex;
+            flex-direction: column;
+            gap: .4rem
+        }
+
+        .kcol-hdr {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: .25rem
+        }
+
+        .kcol-title {
+            font-size: .72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .07em;
+            color: var(--k-text-3)
+        }
+
+        .kcount {
+            font-size: .68rem;
+            background: var(--k-surface-2);
+            border: 1px solid var(--k-border);
+            padding: 0 5px;
+            border-radius: 99px;
+            color: var(--k-text-3)
+        }
+
+        .kcard {
+            background: var(--k-bg);
+            border: 1px solid var(--k-border);
+            border-radius: var(--k-r);
+            padding: .625rem;
+            cursor: pointer;
+            transition: box-shadow var(--k-fast), border-color var(--k-fast)
+        }
+
+        .kcard:hover {
+            box-shadow: var(--k-sh-md);
+            border-color: var(--k-border-strong)
+        }
+
+        .kcard-title {
+            font-size: .8rem;
+            font-weight: 500;
+            margin-bottom: .3rem;
+            line-height: 1.4
+        }
+
+        .kcard-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: .4rem
+        }
+
+        .kcard-tag {
+            font-size: .65rem;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: 500
+        }
+
+        .kavs {
+            display: flex
+        }
+
+        .kav {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            border: 1.5px solid var(--k-bg);
+            font-size: .52rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: -4px
+        }
+
+        .kav:first-child {
+            margin-left: 0
+        }
+
+        .pdot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            flex-shrink: 0
+        }
+
+        @media(max-width:900px) {
+            .saas-sb {
+                display: none
+            }
+
+            .kanban {
+                grid-template-columns: 1fr
+            }
+        }
+
+        /* ══════════════════════════
+   SCENE 5 — E-COMMERCE
+══════════════════════════ */
+        .ecom {
+            min-height: calc(100vh - var(--shell-header));
+            background: var(--k-bg)
+        }
+
+        .ecom-hdr {
+            padding: 1.25rem 1.75rem;
+            border-bottom: 1px solid var(--k-border);
+            display: flex;
+            align-items: center;
+            gap: .875rem;
+            background: var(--k-surface)
+        }
+
+        .ecom-logo {
+            font-family: 'Fraunces', serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            letter-spacing: -.03em;
+            text-decoration: none;
+            color: var(--k-text)
+        }
+
+        .ecom-logo em {
+            color: var(--k-accent);
+            font-style: normal
+        }
+
+        .ecom-nav {
+            display: flex;
+            gap: 1.25rem;
+            margin-left: 1.5rem
+        }
+
+        .ecom-nav a {
+            font-size: .82rem;
+            color: var(--k-text-2);
+            text-decoration: none;
+            transition: color var(--k-fast)
+        }
+
+        .ecom-nav a:hover,
+        .ecom-nav a.on {
+            color: var(--k-text)
+        }
+
+        .ecom-acts {
+            margin-left: auto;
+            display: flex;
+            gap: .375rem;
+            align-items: center
+        }
+
+        .cart-btn {
+            position: relative
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            width: 15px;
+            height: 15px;
+            background: var(--k-accent);
+            color: var(--k-accent-fg);
+            font-size: .58rem;
+            font-weight: 700;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center
+        }
+
+        .ecom-body {
+            display: flex;
+            padding: 1.25rem 1.75rem;
+            gap: 1.25rem
+        }
+
+        .ecom-filters {
+            width: 190px;
+            flex-shrink: 0
+        }
+
+        .filter-group {
+            margin-bottom: 1.25rem
+        }
+
+        .filter-title {
+            font-size: .72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .07em;
+            color: var(--k-text-3);
+            margin-bottom: .5rem
+        }
+
+        .filter-opt {
+            display: flex;
+            align-items: center;
+            gap: .4rem;
+            font-size: .8rem;
+            color: var(--k-text-2);
+            cursor: pointer;
+            padding: .2rem 0
+        }
+
+        .cswatch {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            border: 1px solid rgba(128, 128, 128, .25);
+            flex-shrink: 0;
+            cursor: pointer;
+            transition: transform .15s
+        }
+
+        .cswatch:hover {
+            transform: scale(1.2)
+        }
+
+        .ecom-grid {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(185px, 1fr));
+            gap: 1rem
+        }
+
+        .pcard {
+            background: var(--k-surface);
+            border: 1px solid var(--k-border);
+            border-radius: var(--k-r-lg);
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform var(--k-dur), box-shadow var(--k-dur)
+        }
+
+        .pcard:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--k-sh-md)
+        }
+
+        .pimg {
+            height: 168px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            position: relative
+        }
+
+        .pbadge {
+            position: absolute;
+            top: .625rem;
+            left: .625rem
+        }
+
+        .pinfo {
+            padding: .75rem .875rem
+        }
+
+        .pname {
+            font-size: .82rem;
+            font-weight: 600;
+            margin-bottom: .2rem
+        }
+
+        .pcat {
+            font-size: .7rem;
+            color: var(--k-text-3);
+            margin-bottom: .4rem
+        }
+
+        .pprice-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between
+        }
+
+        .pprice {
+            font-weight: 700;
+            font-size: .875rem
+        }
+
+        .pold {
+            font-size: .72rem;
+            color: var(--k-text-3);
+            text-decoration: line-through;
+            margin-left: .2rem
+        }
+
+        .pstars {
+            font-size: .7rem;
+            color: hsl(38, 92%, 55%)
+        }
+
+        @media(max-width:768px) {
+            .ecom-filters {
+                display: none
+            }
+
+            .ecom-body {
+                padding: .875rem
+            }
+
+            .ecom-nav {
+                display: none
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- TOP NAV -->
+    <nav class="top-nav">
+        <a class="logo" href="#"><span>kern</span></a>
+        <div class="theme-tabs">
+            <button class="ttab on" onclick="show('analytics',this)">📊 Analytics</button>
+            <button class="ttab" onclick="show('inbox',this)">✉ Inbox</button>
+            <button class="ttab" onclick="show('travel',this)">✈ Travel</button>
+            <button class="ttab" onclick="show('saas',this)">🗂 SaaS</button>
+            <button class="ttab" onclick="show('ecom',this)">🛍 Shop</button>
+        </div>
+        <div class="accent-dots">
+            <div class="adot on" style="background:hsl(38,92%,50%)" onclick="accent('amber',this)" title="Amber"></div>
+            <div class="adot" style="background:hsl(214,85%,52%)" onclick="accent('blue',this)" title="Blue"></div>
+            <div class="adot" style="background:hsl(262,75%,58%)" onclick="accent('violet',this)" title="Violet"></div>
+            <div class="adot" style="background:hsl(142,72%,40%)" onclick="accent('green',this)" title="Green"></div>
+            <div class="adot" style="background:hsl(346,80%,55%)" onclick="accent('rose',this)" title="Rose"></div>
+            <div class="adot" style="background:hsl(192,80%,42%)" onclick="accent('cyan',this)" title="Cyan"></div>
+        </div>
+        <button class="ttoggle" onclick="toggleTheme()" title="Toggle light/dark">☀</button>
+        <div class="size-note">CSS 7KB · JS 3KB gzip</div>
+    </nav>
+
+    <div class="demo-wrap">
+
+        <!-- ═══════════════════════════════════════════
+     SCENE 1: ANALYTICS DASHBOARD
+═══════════════════════════════════════════ -->
+        <div class="demo-scene on" id="s-analytics">
+            <div class="analytics">
+                <aside class="an-sidebar">
+                    <div class="an-logo">
+                        <div class="an-logo-mark">A</div>
+                        <span class="an-logo-text">Analytic</span>
+                    </div>
+                    <nav class="an-nav">
+                        <div class="an-sec">Overview</div>
+                        <a class="an-item on" href="#">📊 Dashboard</a>
+                        <a class="an-item" href="#">📈 Reports</a>
+                        <a class="an-item" href="#">🔍 Explorer</a>
+                        <div class="an-sec" style="margin-top:.5rem">Data</div>
+                        <a class="an-item" href="#">👥 Audience</a>
+                        <a class="an-item" href="#">🎯 Campaigns</a>
+                        <a class="an-item" href="#">💰 Revenue</a>
+                        <a class="an-item" href="#">🔔 Alerts</a>
+                        <div class="an-sec" style="margin-top:.5rem">Config</div>
+                        <a class="an-item" href="#">⚙ Settings</a>
+                        <a class="an-item" href="#">🔌 Integrations</a>
+                    </nav>
+                    <div class="an-footer">
+                        <div class="an-item" style="cursor:pointer">
+                            <div data-avatar data-size="sm"
+                                style="background:var(--k-accent-subtle);color:var(--k-accent);flex-shrink:0">JD</div>
+                            <div style="flex:1;min-width:0">
+                                <div style="font-size:.78rem;font-weight:500">Jane Doe</div>
+                                <div style="font-size:.68rem;color:var(--k-text-3)">Admin</div>
+                            </div>
+                            <span style="color:var(--k-text-3);font-size:.75rem">⋯</span>
+                        </div>
+                    </div>
+                </aside>
+
+                <main class="an-main">
+                    <div class="an-topbar">
+                        <div>
+                            <div class="an-title">Good morning, Jane 👋</div>
+                            <div class="an-sub">Here's what's happening with your products today.</div>
+                        </div>
+                        <div data-row data-gap="sm">
+                            <kern-dropdown>
+                                <button data-dropdown-trigger data-variant="outline" data-size="sm">Last 30 days
+                                    ▾</button>
+                                <div data-dropdown-content>
+                                    <a data-dropdown-item href="#">Last 7 days</a>
+                                    <a data-dropdown-item href="#">Last 30 days</a>
+                                    <a data-dropdown-item href="#">Last 90 days</a>
+                                    <div data-dropdown-sep></div>
+                                    <a data-dropdown-item href="#">Custom range…</a>
+                                </div>
+                            </kern-dropdown>
+                            <button data-size="sm"
+                                onclick="Kern.toast({title:'Export started',message:'Your report is being generated.',color:'success'})">Export</button>
+                        </div>
+                    </div>
+
+                    <div class="stat-grid">
+                        <div class="stat-card">
+                            <div class="stat-lbl">Total Revenue</div>
+                            <div class="stat-val">$84.2k</div>
+                            <div class="stat-d up">↑ 12.5% vs last month</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-lbl">Active Users</div>
+                            <div class="stat-val">24,891</div>
+                            <div class="stat-d up">↑ 8.1% vs last month</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-lbl">Conversion</div>
+                            <div class="stat-val">3.62%</div>
+                            <div class="stat-d dn">↓ 0.4% vs last month</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-lbl">Avg. Session</div>
+                            <div class="stat-val">4m 12s</div>
+                            <div class="stat-d up">↑ 22s vs last month</div>
+                        </div>
+                    </div>
+
+                    <div class="charts-row">
+                        <div class="chart-box">
+                            <div class="chart-hdr">
+                                <span class="chart-title">Revenue over time</span>
+                                <div data-row data-gap="sm">
+                                    <span data-badge data-color="accent" data-variant="pill">Revenue</span>
+                                    <span data-badge data-variant="pill">Sessions</span>
+                                </div>
+                            </div>
+                            <div class="bar-chart" id="bar-chart"></div>
+                            <div class="bar-labels" id="bar-labels"></div>
+                        </div>
+                        <div class="chart-box">
+                            <div class="chart-hdr"><span class="chart-title">Traffic sources</span></div>
+                            <div class="donut-wrap">
+                                <svg class="donut" viewBox="0 0 36 36">
+                                    <circle cx="18" cy="18" r="15.9" fill="none" stroke="var(--k-surface-2)"
+                                        stroke-width="3.8" />
+                                    <circle cx="18" cy="18" r="15.9" fill="none" stroke="var(--k-accent)"
+                                        stroke-width="3.8" stroke-dasharray="42 58" stroke-dashoffset="25"
+                                        stroke-linecap="round" />
+                                    <circle cx="18" cy="18" r="15.9" fill="none" stroke="var(--k-success)"
+                                        stroke-width="3.8" stroke-dasharray="28 72" stroke-dashoffset="-17"
+                                        stroke-linecap="round" />
+                                    <circle cx="18" cy="18" r="15.9" fill="none" stroke="var(--k-info)"
+                                        stroke-width="3.8" stroke-dasharray="18 82" stroke-dashoffset="-45"
+                                        stroke-linecap="round" />
+                                    <circle cx="18" cy="18" r="15.9" fill="none" stroke="var(--k-warning)"
+                                        stroke-width="3.8" stroke-dasharray="12 88" stroke-dashoffset="-63"
+                                        stroke-linecap="round" />
+                                </svg>
+                                <div class="donut-legend">
+                                    <div class="donut-item">
+                                        <div class="donut-dot" style="background:var(--k-accent)"></div>Organic — 42%
+                                    </div>
+                                    <div class="donut-item">
+                                        <div class="donut-dot" style="background:var(--k-success)"></div>Direct — 28%
+                                    </div>
+                                    <div class="donut-item">
+                                        <div class="donut-dot" style="background:var(--k-info)"></div>Paid — 18%
+                                    </div>
+                                    <div class="donut-item">
+                                        <div class="donut-dot" style="background:var(--k-warning)"></div>Social — 12%
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="recent-box">
+                        <div class="recent-hdr">
+                            <span class="recent-title">Recent transactions</span>
+                            <button data-variant="ghost" data-size="sm">View all →</button>
+                        </div>
+                        <div data-table-wrap style="border:none;border-radius:0">
+                            <table data-hover>
+                                <thead>
+                                    <tr>
+                                        <th>Customer</th>
+                                        <th data-sort>Amount</th>
+                                        <th data-sort>Status</th>
+                                        <th>Date</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <div data-row data-gap="sm">
+                                                <div data-avatar data-size="sm">AM</div>
+                                                <div>
+                                                    <div style="font-size:.8rem;font-weight:500">Alex Morgan</div>
+                                                    <div style="font-size:.7rem;color:var(--k-text-3)">alex@co.io</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td style="font-weight:600">$1,240.00</td>
+                                        <td><span data-badge data-color="success" data-dot>Paid</span></td>
+                                        <td style="font-size:.78rem;color:var(--k-text-2)">Today, 2:34pm</td>
+                                        <td><kern-dropdown data-align="end"><button data-dropdown-trigger
+                                                    data-variant="ghost" data-size="icon"
+                                                    style="width:28px;height:28px;font-size:.85rem">⋯</button>
+                                                <div data-dropdown-content><a data-dropdown-item href="#">View</a><a
+                                                        data-dropdown-item href="#">Refund</a></div>
+                                            </kern-dropdown></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div data-row data-gap="sm">
+                                                <div data-avatar data-size="sm"
+                                                    style="background:hsl(262,30%,22%);color:hsl(262,75%,65%)">SR</div>
+                                                <div>
+                                                    <div style="font-size:.8rem;font-weight:500">Sara Reeves</div>
+                                                    <div style="font-size:.7rem;color:var(--k-text-3)">sara@mail.com
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td style="font-weight:600">$890.50</td>
+                                        <td><span data-badge data-color="warning" data-dot>Pending</span></td>
+                                        <td style="font-size:.78rem;color:var(--k-text-2)">Today, 11:12am</td>
+                                        <td><kern-dropdown data-align="end"><button data-dropdown-trigger
+                                                    data-variant="ghost" data-size="icon"
+                                                    style="width:28px;height:28px;font-size:.85rem">⋯</button>
+                                                <div data-dropdown-content><a data-dropdown-item href="#">View</a><a
+                                                        data-dropdown-item data-color="danger" href="#">Cancel</a></div>
+                                            </kern-dropdown></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div data-row data-gap="sm">
+                                                <div data-avatar data-size="sm"
+                                                    style="background:hsl(4,30%,20%);color:hsl(4,70%,60%)">TK</div>
+                                                <div>
+                                                    <div style="font-size:.8rem;font-weight:500">Tom Klein</div>
+                                                    <div style="font-size:.7rem;color:var(--k-text-3)">tom@corp.io</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td style="font-weight:600">$320.00</td>
+                                        <td><span data-badge data-color="danger" data-dot>Failed</span></td>
+                                        <td style="font-size:.78rem;color:var(--k-text-2)">Yesterday</td>
+                                        <td><kern-dropdown data-align="end"><button data-dropdown-trigger
+                                                    data-variant="ghost" data-size="icon"
+                                                    style="width:28px;height:28px;font-size:.85rem">⋯</button>
+                                                <div data-dropdown-content><a data-dropdown-item href="#">Retry</a><a
+                                                        data-dropdown-item data-color="danger" href="#">Delete</a></div>
+                                            </kern-dropdown></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div data-row data-gap="sm">
+                                                <div data-avatar data-size="sm"
+                                                    style="background:hsl(142,30%,16%);color:hsl(142,72%,45%)">NP</div>
+                                                <div>
+                                                    <div style="font-size:.8rem;font-weight:500">Nina Park</div>
+                                                    <div style="font-size:.7rem;color:var(--k-text-3)">nina@site.com
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td style="font-weight:600">$4,100.00</td>
+                                        <td><span data-badge data-color="success" data-dot>Paid</span></td>
+                                        <td style="font-size:.78rem;color:var(--k-text-2)">Mar 1</td>
+                                        <td><kern-dropdown data-align="end"><button data-dropdown-trigger
+                                                    data-variant="ghost" data-size="icon"
+                                                    style="width:28px;height:28px;font-size:.85rem">⋯</button>
+                                                <div data-dropdown-content><a data-dropdown-item href="#">View</a><a
+                                                        data-dropdown-item href="#">Invoice</a></div>
+                                            </kern-dropdown></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════
+     SCENE 2: INBOX
+═══════════════════════════════════════════ -->
+        <div class="demo-scene" id="s-inbox">
+            <div class="inbox">
+                <div class="inbox-list">
+                    <div class="inbox-tb">
+                        <input type="text" placeholder="Search…"
+                            style="flex:1;height:28px;border-radius:var(--k-r-full);font-size:.8rem">
+                        <button data-variant="ghost" data-size="icon"
+                            style="width:28px;height:28px;flex-shrink:0">✏</button>
+                    </div>
+                    <kern-tabs data-variant="pills" style="padding:.5rem .75rem .25rem;display:block">
+                        <div data-tabs-list>
+                            <button data-tab style="font-size:.74rem;padding:.2rem .5rem">All</button>
+                            <button data-tab style="font-size:.74rem;padding:.2rem .5rem">Unread</button>
+                            <button data-tab style="font-size:.74rem;padding:.2rem .5rem">Starred</button>
+                        </div>
+                        <div data-tab-panel style="padding:0;display:contents">
+                            <div>
+                                <div class="inbox-item on">
+                                    <div class="inbox-from">Priya Sharma <span class="inbox-time">10:42 AM</span></div>
+                                    <div class="inbox-subject">Q1 design review feedback ✓</div>
+                                    <div class="inbox-preview">Hey, just went through the Figma file. Looks great but I
+                                        have a few thoughts on the color tokens in the…</div>
+                                </div>
+                                <div class="inbox-item">
+                                    <div class="unread-row">
+                                        <div class="udot"></div>
+                                        <div style="flex:1">
+                                            <div class="inbox-from">GitHub <span class="inbox-time">9:15 AM</span></div>
+                                            <div class="inbox-subject">PR #482 — "feat: add dark mode tokens"</div>
+                                            <div class="inbox-preview">@lena_dev reviewed your pull request. 3 comments
+                                                left.</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="inbox-item">
+                                    <div class="unread-row">
+                                        <div class="udot"></div>
+                                        <div style="flex:1">
+                                            <div class="inbox-from">Stripe <span class="inbox-time">8:02 AM</span></div>
+                                            <div class="inbox-subject">Payment received: $2,400.00</div>
+                                            <div class="inbox-preview">Invoice INV-2024-089 from Acme Corporation has
+                                                been paid.</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="inbox-item">
+                                    <div class="inbox-from">Linear <span class="inbox-time">Yesterday</span></div>
+                                    <div class="inbox-subject">7 issues assigned to you</div>
+                                    <div class="inbox-preview">Implement toast, Fix dropdown keyboard nav, Add stepper
+                                        CSS…</div>
+                                </div>
+                                <div class="inbox-item">
+                                    <div class="inbox-from">Lena Müller <span class="inbox-time">Yesterday</span></div>
+                                    <div class="inbox-subject">Re: Kern v0.1.0 launch plan</div>
+                                    <div class="inbox-preview">I'll handle npm publish. Can you write the Product Hunt
+                                        post?</div>
+                                </div>
+                                <div class="inbox-item">
+                                    <div class="inbox-from">Vercel <span class="inbox-time">Mar 1</span></div>
+                                    <div class="inbox-subject">Deployment — kern-docs.vercel.app</div>
+                                    <div class="inbox-preview">Your project kern-docs deployed to production
+                                        successfully.</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div data-tab-panel style="padding:0;display:contents">
+                            <div style="padding:1.25rem;font-size:.82rem;color:var(--k-text-2)">2 unread messages</div>
+                        </div>
+                        <div data-tab-panel style="padding:0;display:contents">
+                            <div style="padding:1.25rem;font-size:.82rem;color:var(--k-text-2)">No starred messages
+                            </div>
+                        </div>
+                    </kern-tabs>
+                </div>
+
+                <div class="inbox-main">
+                    <div class="inbox-hdr">
+                        <div>
+                            <div class="email-subject">Q1 design review feedback ✓</div>
+                            <div class="email-meta">From: <strong>Priya Sharma</strong> · priya@designco.io · Today at
+                                10:42 AM</div>
+                        </div>
+                        <div data-row data-gap="sm">
+                            <button data-variant="ghost" data-size="icon" data-tooltip="Archive"
+                                style="width:28px;height:28px">📁</button>
+                            <button data-variant="ghost" data-size="icon" data-tooltip="Delete"
+                                style="width:28px;height:28px">🗑</button>
+                            <kern-dropdown data-align="end">
+                                <button data-dropdown-trigger data-variant="ghost" data-size="icon"
+                                    style="width:28px;height:28px">⋯</button>
+                                <div data-dropdown-content>
+                                    <a data-dropdown-item href="#">Forward</a>
+                                    <a data-dropdown-item href="#">Print</a>
+                                    <div data-dropdown-sep></div>
+                                    <a data-dropdown-item data-color="danger" href="#">Report spam</a>
+                                </div>
+                            </kern-dropdown>
+                        </div>
+                    </div>
+                    <div class="inbox-body">
+                        <div class="email-body">
+                            <p>Hey! Just went through the Figma file you shared for the Q1 rebrand. Overall it looks
+                                really solid — the typographic hierarchy is much cleaner than last quarter.</p>
+                            <p>A few thoughts on the color palette: the accent amber works well for most elements, but
+                                on data visualizations it can look warm next to the greens. Worth testing with a more
+                                neutral secondary.</p>
+                            <p>The component library structure is excellent. Really smart to keep tokens modular — means
+                                we can swap accents per-product without any rework.</p>
+                            <p>Let me know when you want to jump on a call to go through this in detail. Tuesday
+                                afternoon works best.</p>
+                            <p style="color:var(--k-text-3)">— Priya</p>
+                        </div>
+                        <div data-alert data-color="info" style="margin-top:1.25rem;max-width:500px">
+                            <div>
+                                <div data-alert-title>Attachment</div>kern-q1-review.fig · 14.2 MB · <a
+                                    href="#">Download</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="inbox-ftr">
+                        <input type="text" placeholder="Reply to Priya…" style="flex:1;height:34px">
+                        <button
+                            onclick="Kern.toast({title:'Sent',message:'Reply delivered.',color:'success'})">Send</button>
+                        <button data-variant="outline">Schedule ▾</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════
+     SCENE 3: TRAVEL AGENCY
+═══════════════════════════════════════════ -->
+        <div class="demo-scene" id="s-travel">
+            <div class="travel">
+                <div class="travel-hero">
+                    <div class="travel-hero-bg"></div>
+                    <div class="travel-hero-c">
+                        <div class="travel-tag">✈ Kern Travel · 50,000+ destinations</div>
+                        <h1 class="travel-title">Discover your next <em>adventure.</em></h1>
+                        <p class="travel-desc">Curated trips, exclusive deals and unforgettable experiences. Where will
+                            you go next?</p>
+                        <div class="search-bar">
+                            <div class="sf">
+                                <div class="sf-lbl">Where</div><input class="sf-val" type="text"
+                                    placeholder="Destination">
+                            </div>
+                            <div class="sf-sep"></div>
+                            <div class="sf">
+                                <div class="sf-lbl">Check-in</div><input class="sf-val" type="text"
+                                    placeholder="Add date">
+                            </div>
+                            <div class="sf-sep"></div>
+                            <div class="sf">
+                                <div class="sf-lbl">Check-out</div><input class="sf-val" type="text"
+                                    placeholder="Add date">
+                            </div>
+                            <div class="sf-sep"></div>
+                            <div class="sf" style="flex:0 0 auto">
+                                <div class="sf-lbl">Guests</div><input class="sf-val" type="text" placeholder="2"
+                                    style="width:28px">
+                            </div>
+                            <button style="align-self:center;border-radius:var(--k-r-md);padding:0 1rem;flex-shrink:0"
+                                onclick="Kern.toast({title:'Searching…',message:'Finding the best deals.',color:'accent'})">Search</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="travel-sec">
+                    <div class="travel-sec-hdr">
+                        <div class="travel-sec-title">🔥 Trending destinations</div>
+                        <button data-variant="ghost" data-size="sm">View all →</button>
+                    </div>
+                    <div class="dest-grid">
+                        <div class="dest-card">
+                            <div class="dest-img"
+                                style="background:linear-gradient(160deg,hsl(200,70%,20%),hsl(200,80%,38%))">
+                                <div class="dest-lbl">
+                                    <div class="dest-city">Santorini</div>
+                                    <div class="dest-country">🇬🇷 Greece</div>
+                                </div>
+                            </div>
+                            <div class="dest-info"><span class="dest-price">from <strong>$840</strong></span><span
+                                    class="dest-rating">⭐ 4.9 · 2.3k</span></div>
+                        </div>
+                        <div class="dest-card">
+                            <div class="dest-img"
+                                style="background:linear-gradient(160deg,hsl(30,60%,20%),hsl(30,80%,40%))">
+                                <div class="dest-lbl">
+                                    <div class="dest-city">Marrakech</div>
+                                    <div class="dest-country">🇲🇦 Morocco</div>
+                                </div>
+                            </div>
+                            <div class="dest-info"><span class="dest-price">from <strong>$620</strong></span><span
+                                    class="dest-rating">⭐ 4.7 · 1.8k</span></div>
+                        </div>
+                        <div class="dest-card">
+                            <div class="dest-img"
+                                style="background:linear-gradient(160deg,hsl(260,50%,18%),hsl(260,70%,35%))">
+                                <div class="dest-lbl">
+                                    <div class="dest-city">Kyoto</div>
+                                    <div class="dest-country">🇯🇵 Japan</div>
+                                </div>
+                            </div>
+                            <div class="dest-info"><span class="dest-price">from <strong>$1,240</strong></span><span
+                                    class="dest-rating">⭐ 4.95 · 4.1k</span></div>
+                        </div>
+                        <div class="dest-card">
+                            <div class="dest-img"
+                                style="background:linear-gradient(160deg,hsl(150,50%,14%),hsl(150,65%,28%))">
+                                <div class="dest-lbl">
+                                    <div class="dest-city">Maldives</div>
+                                    <div class="dest-country">🇲🇻 Islands</div>
+                                </div>
+                            </div>
+                            <div class="dest-info"><span class="dest-price">from <strong>$1,890</strong></span><span
+                                    class="dest-rating">⭐ 5.0 · 980</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pkg-grid">
+                    <div class="pkg-card">
+                        <div class="pkg-icon">🏖</div>
+                        <div class="pkg-name">Beach Escape</div>
+                        <div class="pkg-desc">7 nights private villa, all-inclusive, direct flights and transfers.</div>
+                        <div class="pkg-price">$2,190 <span>/ person</span></div>
+                        <div data-row data-gap="sm"><button data-size="sm" style="flex:1"
+                                onclick="Kern.toast({title:'Added to cart',message:'Beach Escape · 7 nights',color:'success'})">Book
+                                now</button><button data-variant="outline" data-size="sm"
+                                data-tooltip="Wishlist">♡</button></div>
+                    </div>
+                    <div class="pkg-card" style="border-color:var(--k-accent);box-shadow:0 0 0 1px var(--k-accent)">
+                        <div data-row data-justify="between" style="margin-bottom:.5rem">
+                            <div class="pkg-icon" style="margin-bottom:0">🏔</div><span data-badge data-color="accent"
+                                data-variant="pill">Popular</span>
+                        </div>
+                        <div class="pkg-name">Mountain Trek</div>
+                        <div class="pkg-desc">10-day guided Himalaya trek with expert guides. All gear included.</div>
+                        <div class="pkg-price">$1,850 <span>/ person</span></div>
+                        <div data-row data-gap="sm"><button data-size="sm" style="flex:1"
+                                onclick="Kern.toast({title:'Added to cart',message:'Mountain Trek · 10 days',color:'success'})">Book
+                                now</button><button data-variant="outline" data-size="sm"
+                                data-tooltip="Wishlist">♡</button></div>
+                    </div>
+                    <div class="pkg-card">
+                        <div class="pkg-icon">🌆</div>
+                        <div class="pkg-name">City Break</div>
+                        <div class="pkg-desc">4-night boutique hotel, curated restaurants, skip-the-line attractions.
+                        </div>
+                        <div class="pkg-price">$890 <span>/ person</span></div>
+                        <div data-row data-gap="sm"><button data-size="sm" style="flex:1"
+                                onclick="Kern.toast({title:'Added to cart',message:'City Break · 4 nights',color:'success'})">Book
+                                now</button><button data-variant="outline" data-size="sm"
+                                data-tooltip="Wishlist">♡</button></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════
+     SCENE 4: SaaS KANBAN
+═══════════════════════════════════════════ -->
+        <div class="demo-scene" id="s-saas">
+            <div class="saas">
+                <aside class="saas-sb">
+                    <div class="saas-logo">
+                        <div class="saas-lic">K</div> Kern Board
+                    </div>
+                    <a class="saas-nav-item" href="#">🏠 Home</a>
+                    <a class="saas-nav-item on" href="#">🗂 Projects</a>
+                    <a class="saas-nav-item" href="#">✅ My tasks <span class="snb">7</span></a>
+                    <a class="saas-nav-item" href="#">📅 Calendar</a>
+                    <a class="saas-nav-item" href="#">📨 Inbox <span class="snb">3</span></a>
+                    <div style="height:1px;background:var(--k-border);margin:.625rem 0"></div>
+                    <div
+                        style="font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--k-text-3);padding:.2rem .625rem .3rem">
+                        Teams</div>
+                    <a class="saas-nav-item" href="#">🎨 Design</a>
+                    <a class="saas-nav-item" href="#">⚙ Engineering</a>
+                    <a class="saas-nav-item" href="#">📣 Marketing</a>
+                    <div style="flex:1"></div>
+                    <div style="padding:.5rem 0;border-top:1px solid var(--k-border)">
+                        <div class="saas-nav-item" style="cursor:default">
+                            <div data-avatar data-size="sm"
+                                style="background:var(--k-accent-subtle);color:var(--k-accent);flex-shrink:0">JD</div>
+                            <div style="flex:1;min-width:0">
+                                <div style="font-size:.76rem;font-weight:500">Jane Doe</div>
+                                <div style="font-size:.65rem;color:var(--k-text-3)">Pro plan</div>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+
+                <div class="saas-main">
+                    <div class="saas-topbar">
+                        <div class="saas-bc">Projects <span>›</span> <span>Kern UI</span> <span>›</span> <span>Sprint
+                                8</span></div>
+                        <div data-row data-gap="sm" style="margin-left:auto">
+                            <div data-avatar-group>
+                                <div data-avatar data-size="sm"
+                                    style="background:var(--k-accent-subtle);color:var(--k-accent)">JD</div>
+                                <div data-avatar data-size="sm"
+                                    style="background:hsl(262,30%,22%);color:hsl(262,75%,65%)">LM</div>
+                                <div data-avatar data-size="sm"
+                                    style="background:hsl(142,30%,16%);color:hsl(142,72%,45%)">PK</div>
+                                <div data-avatar data-size="sm"
+                                    style="background:var(--k-surface-2);color:var(--k-text-3);font-size:.58rem">+4
+                                </div>
+                            </div>
+                            <button data-variant="outline" data-size="sm">Filter</button>
+                            <button data-size="sm"
+                                onclick="Kern.toast({title:'Issue created',message:'KRN-043 added to backlog',color:'success'})">+
+                                Add</button>
+                        </div>
+                    </div>
+
+                    <div class="saas-content">
+                        <div data-row data-justify="between" style="margin-bottom:1rem">
+                            <div style="font-size:1rem;font-weight:700;letter-spacing:-.02em">Sprint 8 — Kern v0.1.0
+                            </div>
+                            <div data-row data-gap="sm"><span data-badge data-color="info">Due Mar 15</span><span
+                                    data-badge data-color="success" data-dot>On track</span></div>
+                        </div>
+
+                        <div data-card data-variant="inset" style="margin-bottom:1rem">
+                            <div data-row data-justify="between" style="margin-bottom:.5rem">
+                                <span style="font-size:.8rem;font-weight:500">Sprint progress</span>
+                                <span style="font-size:.78rem;color:var(--k-text-2)">18 / 24 issues</span>
+                            </div>
+                            <div data-progress>
+                                <div data-progress-bar style="width:75%"></div>
+                            </div>
+                            <div data-row data-gap="lg" style="margin-top:.625rem">
+                                <div style="font-size:.72rem;color:var(--k-text-2)"><span
+                                        style="color:var(--k-success-fg);font-weight:600">18</span> done</div>
+                                <div style="font-size:.72rem;color:var(--k-text-2)"><span
+                                        style="color:var(--k-accent);font-weight:600">4</span> in progress</div>
+                                <div style="font-size:.72rem;color:var(--k-text-2)"><span
+                                        style="color:var(--k-text-3);font-weight:600">2</span> to do</div>
+                            </div>
+                        </div>
+
+                        <div class="kanban">
+                            <div class="kcol">
+                                <div class="kcol-hdr"><span class="kcol-title">Backlog</span><span
+                                        class="kcount">2</span></div>
+                                <div class="kcard">
+                                    <div style="display:flex;align-items:center;gap:.3rem;margin-bottom:.3rem">
+                                        <div class="pdot" style="background:var(--k-warning)"></div><span
+                                            style="font-size:.65rem;color:var(--k-text-3)">KRN-041</span>
+                                    </div>
+                                    <div class="kcard-title">Command palette component</div>
+                                    <div class="kcard-meta"><span class="kcard-tag"
+                                            style="background:var(--k-surface-2);color:var(--k-text-3)">Feature</span>
+                                        <div class="kavs">
+                                            <div class="kav" style="background:hsl(262,30%,22%);color:hsl(262,75%,65%)">
+                                                LM</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="kcard">
+                                    <div style="display:flex;align-items:center;gap:.3rem;margin-bottom:.3rem">
+                                        <div class="pdot" style="background:var(--k-text-3)"></div><span
+                                            style="font-size:.65rem;color:var(--k-text-3)">KRN-042</span>
+                                    </div>
+                                    <div class="kcard-title">Date picker design</div>
+                                    <div class="kcard-meta"><span class="kcard-tag"
+                                            style="background:var(--k-surface-2);color:var(--k-text-3)">Design</span>
+                                        <div class="kavs">
+                                            <div class="kav"
+                                                style="background:var(--k-accent-subtle);color:var(--k-accent)">JD</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="kcol">
+                                <div class="kcol-hdr"><span class="kcol-title" style="color:var(--k-accent)">In
+                                        Progress</span><span class="kcount">4</span></div>
+                                <div class="kcard" style="border-left:2px solid var(--k-accent)">
+                                    <div style="display:flex;align-items:center;gap:.3rem;margin-bottom:.3rem">
+                                        <div class="pdot" style="background:var(--k-danger)"></div><span
+                                            style="font-size:.65rem;color:var(--k-text-3)">KRN-038</span>
+                                    </div>
+                                    <div class="kcard-title">Mobile sidebar breakpoint fix</div>
+                                    <div data-progress data-size="sm" style="margin:.4rem 0">
+                                        <div data-progress-bar style="width:60%"></div>
+                                    </div>
+                                    <div class="kcard-meta"><span class="kcard-tag"
+                                            style="background:var(--k-danger-bg);color:var(--k-danger-fg)">Bug</span>
+                                        <div class="kavs">
+                                            <div class="kav" style="background:hsl(142,30%,16%);color:hsl(142,72%,45%)">
+                                                PK</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="kcard">
+                                    <div style="display:flex;align-items:center;gap:.3rem;margin-bottom:.3rem">
+                                        <div class="pdot" style="background:var(--k-accent)"></div><span
+                                            style="font-size:.65rem;color:var(--k-text-3)">KRN-040</span>
+                                    </div>
+                                    <div class="kcard-title">Publish kern-ui v0.1.0 to npm</div>
+                                    <div class="kcard-meta"><span class="kcard-tag"
+                                            style="background:var(--k-accent-subtle);color:var(--k-accent)">Release</span>
+                                        <div class="kavs">
+                                            <div class="kav"
+                                                style="background:var(--k-accent-subtle);color:var(--k-accent)">JD</div>
+                                            <div class="kav" style="background:hsl(142,30%,16%);color:hsl(142,72%,45%)">
+                                                PK</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="kcol">
+                                <div class="kcol-hdr"><span class="kcol-title"
+                                        style="color:var(--k-success-fg)">Done</span><span class="kcount">18</span>
+                                </div>
+                                <div class="kcard" style="opacity:.65">
+                                    <div style="display:flex;align-items:center;gap:.3rem;margin-bottom:.3rem"><span
+                                            style="font-size:.72rem;color:var(--k-success-fg)">✓</span><span
+                                            style="font-size:.65rem;color:var(--k-text-3)">KRN-035</span></div>
+                                    <div class="kcard-title" style="text-decoration:line-through;color:var(--k-text-2)">
+                                        CSS token modularization</div>
+                                    <div class="kcard-meta"><span class="kcard-tag"
+                                            style="background:var(--k-success-bg);color:var(--k-success-fg)">Done</span>
+                                    </div>
+                                </div>
+                                <div class="kcard" style="opacity:.65">
+                                    <div style="display:flex;align-items:center;gap:.3rem;margin-bottom:.3rem"><span
+                                            style="font-size:.72rem;color:var(--k-success-fg)">✓</span><span
+                                            style="font-size:.65rem;color:var(--k-text-3)">KRN-036</span></div>
+                                    <div class="kcard-title" style="text-decoration:line-through;color:var(--k-text-2)">
+                                        Accordion multi-open support</div>
+                                    <div class="kcard-meta"><span class="kcard-tag"
+                                            style="background:var(--k-success-bg);color:var(--k-success-fg)">Done</span>
+                                    </div>
+                                </div>
+                                <div class="kcard" style="opacity:.65">
+                                    <div style="display:flex;align-items:center;gap:.3rem;margin-bottom:.3rem"><span
+                                            style="font-size:.72rem;color:var(--k-success-fg)">✓</span><span
+                                            style="font-size:.65rem;color:var(--k-text-3)">KRN-037</span></div>
+                                    <div class="kcard-title" style="text-decoration:line-through;color:var(--k-text-2)">
+                                        Build dist/kern.min.css + js</div>
+                                    <div class="kcard-meta"><span class="kcard-tag"
+                                            style="background:var(--k-success-bg);color:var(--k-success-fg)">Done</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════
+     SCENE 5: E-COMMERCE
+═══════════════════════════════════════════ -->
+        <div class="demo-scene" id="s-ecom">
+            <div class="ecom">
+                <div class="ecom-hdr">
+                    <a class="ecom-logo" href="#">st<em>ore</em></a>
+                    <nav class="ecom-nav">
+                        <a href="#" class="on">New arrivals</a>
+                        <a href="#">Women</a><a href="#">Men</a><a href="#">Accessories</a>
+                        <a href="#" style="color:var(--k-danger-fg)">Sale</a>
+                    </nav>
+                    <div class="ecom-acts">
+                        <button data-variant="ghost" data-size="icon" data-tooltip="Search"
+                            style="font-size:.95rem">🔍</button>
+                        <button data-variant="ghost" data-size="icon" data-tooltip="Wishlist"
+                            style="font-size:.95rem">♡</button>
+                        <div class="cart-btn">
+                            <button data-variant="ghost" data-size="icon" data-tooltip="Cart" style="font-size:.95rem"
+                                onclick="Kern.toast({title:'Cart',message:'3 items · $285 total',color:'accent'})">🛍</button>
+                            <div class="cart-count">3</div>
+                        </div>
+                        <button data-size="sm">Sign in</button>
+                    </div>
+                </div>
+
+                <div class="ecom-body">
+                    <aside class="ecom-filters">
+                        <div class="filter-group">
+                            <div class="filter-title">Category</div>
+                            <label class="filter-opt"><input type="checkbox" checked style="width:13px;height:13px"> All
+                                items</label>
+                            <label class="filter-opt"><input type="checkbox" style="width:13px;height:13px">
+                                Tops</label>
+                            <label class="filter-opt"><input type="checkbox" style="width:13px;height:13px">
+                                Outerwear</label>
+                            <label class="filter-opt"><input type="checkbox" style="width:13px;height:13px">
+                                Accessories</label>
+                        </div>
+                        <div class="filter-group">
+                            <div class="filter-title">Size</div>
+                            <div data-row data-gap="sm" style="flex-wrap:wrap">
+                                <button data-variant="outline" data-size="sm"
+                                    style="min-width:34px;padding:0">XS</button>
+                                <button data-size="sm" style="min-width:34px;padding:0">S</button>
+                                <button data-variant="outline" data-size="sm"
+                                    style="min-width:34px;padding:0">M</button>
+                                <button data-variant="outline" data-size="sm"
+                                    style="min-width:34px;padding:0">L</button>
+                                <button data-variant="outline" data-size="sm"
+                                    style="min-width:34px;padding:0">XL</button>
+                            </div>
+                        </div>
+                        <div class="filter-group">
+                            <div class="filter-title">Color</div>
+                            <div data-row data-gap="sm">
+                                <div class="cswatch" style="background:#1a1a1a;width:20px;height:20px"></div>
+                                <div class="cswatch" style="background:#f0efed;width:20px;height:20px"></div>
+                                <div class="cswatch"
+                                    style="background:hsl(var(--k-accent-h),var(--k-accent-s),var(--k-accent-l));width:20px;height:20px">
+                                </div>
+                                <div class="cswatch" style="background:#4a90d9;width:20px;height:20px"></div>
+                                <div class="cswatch" style="background:#c0392b;width:20px;height:20px"></div>
+                            </div>
+                        </div>
+                        <div class="filter-group">
+                            <div class="filter-title">Price</div>
+                            <input type="range" min="0" max="500" value="250">
+                            <div data-row data-justify="between" style="margin-top:.25rem">
+                                <span style="font-size:.72rem;color:var(--k-text-2)">$0</span>
+                                <span style="font-size:.72rem;font-weight:600">$250</span>
+                                <span style="font-size:.72rem;color:var(--k-text-2)">$500</span>
+                            </div>
+                        </div>
+                    </aside>
+
+                    <div class="ecom-grid">
+                        <div class="pcard">
+                            <div class="pimg" style="background:hsl(var(--k-accent-h),20%,14%)">🧥<div class="pbadge">
+                                    <span data-badge data-color="danger" data-variant="pill">–30%</span>
+                                </div>
+                            </div>
+                            <div class="pinfo">
+                                <div class="pname">Minimal Overshirt</div>
+                                <div class="pcat">Outerwear</div>
+                                <div class="pprice-row">
+                                    <div><span class="pprice">$98</span><span class="pold">$140</span></div>
+                                    <div class="pstars">★★★★★</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pcard">
+                            <div class="pimg" style="background:hsl(200,20%,12%)">👕<div class="pbadge"><span data-badge
+                                        data-color="accent" data-variant="pill">New</span></div>
+                            </div>
+                            <div class="pinfo">
+                                <div class="pname">Core Tee — Slate</div>
+                                <div class="pcat">T-Shirts</div>
+                                <div class="pprice-row"><span class="pprice">$42</span>
+                                    <div class="pstars">★★★★☆</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pcard">
+                            <div class="pimg" style="background:hsl(30,20%,12%)">🎒</div>
+                            <div class="pinfo">
+                                <div class="pname">Daypack 20L</div>
+                                <div class="pcat">Accessories</div>
+                                <div class="pprice-row"><span class="pprice">$145</span>
+                                    <div class="pstars">★★★★★</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pcard">
+                            <div class="pimg" style="background:hsl(var(--k-accent-h),28%,12%)">🧤<div class="pbadge">
+                                    <span data-badge data-color="info" data-variant="pill">Limited</span>
+                                </div>
+                            </div>
+                            <div class="pinfo">
+                                <div class="pname">Knit Gloves</div>
+                                <div class="pcat">Accessories</div>
+                                <div class="pprice-row"><span class="pprice">$38</span>
+                                    <div class="pstars">★★★★☆</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pcard">
+                            <div class="pimg" style="background:hsl(260,18%,12%)">👟</div>
+                            <div class="pinfo">
+                                <div class="pname">Runner Mid</div>
+                                <div class="pcat">Footwear</div>
+                                <div class="pprice-row"><span class="pprice">$189</span>
+                                    <div class="pstars">★★★★★</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pcard">
+                            <div class="pimg" style="background:hsl(150,15%,11%)">🧣<div class="pbadge"><span data-badge
+                                        data-color="danger" data-variant="pill">–20%</span></div>
+                            </div>
+                            <div class="pinfo">
+                                <div class="pname">Merino Scarf</div>
+                                <div class="pcat">Accessories</div>
+                                <div class="pprice-row">
+                                    <div><span class="pprice">$64</span><span class="pold">$80</span></div>
+                                    <div class="pstars">★★★★☆</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div><!-- /demo-wrap -->
+
+    <kern-toaster data-position="bottom-right"></kern-toaster>
+
+    <script src="../dist/kern.min.js"></script>
+    <script>
+        /* ── Bar chart generator ── */
+        (function () {
+            const data = [42, 58, 35, 71, 63, 80, 54, 68, 76, 83, 61, 90];
+            const months = ['F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D', 'J'];
+            const chart = document.getElementById('bar-chart');
+            const labels = document.getElementById('bar-labels');
+            const max = Math.max(...data);
+            data.forEach((v, i) => {
+                const b = document.createElement('div');
+                b.className = 'bar';
+                b.style.height = (v / max * 100) + '%';
+                b.setAttribute('data-tooltip', '$' + v + 'k');
+                chart.appendChild(b);
+                const l = document.createElement('div');
+                l.className = 'bar-lbl';
+                l.textContent = months[i];
+                labels.appendChild(l);
+            });
+        })();
+
+        /* ── Scene switcher ── */
+        function show(id, btn) {
+            document.querySelectorAll('.demo-scene').forEach(s => s.classList.remove('on'));
+            document.querySelectorAll('.ttab').forEach(t => t.classList.remove('on'));
+            document.getElementById('s-' + id).classList.add('on');
+            btn.classList.add('on');
+        }
+
+        /* ── Accent switcher ── */
+        function accent(name, dot) {
+            Kern.setAccent(name);
+            document.querySelectorAll('.adot').forEach(d => d.classList.remove('on'));
+            dot.classList.add('on');
+        }
+
+        /* ── Theme toggle ── */
+        function toggleTheme() {
+            Kern.setTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,8 @@
+/* kern/src/components/skeleton.css */
+[data-skeleton]{
+  background:linear-gradient(90deg,var(--k-surface-2) 25%,var(--k-surface) 50%,var(--k-surface-2) 75%);
+  background-size:200% 100%;animation:k-skeleton 1.5s ease-in-out infinite;
+  border-radius:var(--k-r);display:block;
+}
+[data-skeleton][data-shape="circle"]{border-radius:50%}
+[data-skeleton][data-shape="text"]{height:1em;border-radius:var(--k-r-sm)}

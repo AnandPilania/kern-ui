@@ -1,0 +1,53 @@
+/* kern/src/components/form.css */
+label{display:block;font-size:.875rem;font-weight:var(--k-fw-medium);color:var(--k-text);margin-bottom:var(--k-sp-1)}
+label[data-required]::after{content:' *';color:var(--k-danger)}
+input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=color]):not([type=file]),
+textarea,select{
+  display:block;width:100%;height:var(--k-input-h);padding:0 var(--k-sp-3);
+  font-size:.875rem;color:var(--k-text);background:var(--k-bg);
+  border:1px solid var(--k-border);border-radius:var(--k-input-r);
+  outline:none;appearance:none;-webkit-appearance:none;
+  transition:border-color var(--k-fast),box-shadow var(--k-fast);
+}
+textarea{height:auto;min-height:90px;padding:var(--k-sp-3);resize:vertical}
+select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;padding-right:32px;cursor:pointer}
+input:not([type=checkbox]):not([type=radio]):focus,textarea:focus,select:focus{
+  border-color:var(--k-accent);
+  box-shadow:0 0 0 3px hsl(var(--k-accent-h),var(--k-accent-s),var(--k-accent-l),.15);
+}
+input[data-size="sm"]:not([type=checkbox]):not([type=radio]){height:var(--k-input-h-sm);font-size:.8rem;padding:0 var(--k-sp-2)}
+input[data-size="lg"]:not([type=checkbox]):not([type=radio]){height:var(--k-input-h-lg);font-size:1rem;padding:0 var(--k-sp-4)}
+input[data-state="error"],textarea[data-state="error"]{border-color:var(--k-danger)}
+input[data-state="error"]:focus{box-shadow:0 0 0 3px rgba(192,57,43,.15)}
+input[data-state="success"],textarea[data-state="success"]{border-color:var(--k-success)}
+input:disabled,textarea:disabled,select:disabled{opacity:.55;cursor:not-allowed;background:var(--k-surface)}
+input[readonly]{background:var(--k-surface)}
+/* Checkbox & radio */
+input[type=checkbox],input[type=radio]{
+  width:16px;height:16px;border:1.5px solid var(--k-border-strong);background:var(--k-bg);
+  appearance:none;-webkit-appearance:none;cursor:pointer;
+  flex-shrink:0;display:inline-flex;align-items:center;justify-content:center;position:relative;
+  transition:all var(--k-fast);
+}
+input[type=checkbox]{border-radius:var(--k-r-sm)}
+input[type=radio]{border-radius:50%}
+input[type=checkbox]:checked,input[type=radio]:checked{background:var(--k-accent);border-color:var(--k-accent)}
+input[type=checkbox]:checked::after{content:'';width:4px;height:8px;border:2px solid var(--k-accent-fg);border-top:none;border-left:none;transform:rotate(45deg) translateY(-1px);position:absolute}
+input[type=radio]:checked::after{content:'';width:6px;height:6px;background:var(--k-accent-fg);border-radius:50%;position:absolute}
+input[type=checkbox]:focus-visible,input[type=radio]:focus-visible{outline:2px solid var(--k-accent);outline-offset:2px}
+/* Range */
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:5px;background:var(--k-surface-2);border-radius:var(--k-r-full);outline:none;cursor:pointer}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;background:var(--k-accent);border-radius:50%;border:2px solid var(--k-bg);box-shadow:var(--k-sh-sm);transition:transform var(--k-fast)}
+input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.15)}
+/* Field wrapper */
+[data-field]{display:flex;flex-direction:column;gap:var(--k-sp-1);margin-bottom:var(--k-sp-5)}
+[data-field]:last-child{margin-bottom:0}
+[data-hint]{font-size:.8rem;color:var(--k-text-2)}
+[data-hint][data-state="error"]{color:var(--k-danger)}
+[data-hint][data-state="success"]{color:var(--k-success)}
+/* Input group (prefix/suffix addon) */
+[data-input-group]{display:flex;align-items:stretch;width:100%}
+[data-input-group] input{border-radius:0;flex:1}
+[data-input-group] [data-addon]{display:inline-flex;align-items:center;padding:0 var(--k-sp-3);background:var(--k-surface-2);border:1px solid var(--k-border);font-size:.875rem;color:var(--k-text-2);white-space:nowrap}
+[data-input-group] [data-addon]:first-child{border-right:none;border-radius:var(--k-input-r) 0 0 var(--k-input-r)}
+[data-input-group] [data-addon]:last-child{border-left:none;border-radius:0 var(--k-input-r) var(--k-input-r) 0}

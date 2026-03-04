@@ -1,0 +1,13 @@
+/* kern/src/utils/helpers.css */
+[data-sr-only]{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border-width:0}
+[data-truncate]{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+[data-surface]{background:var(--k-surface)}
+[data-surface="2"]{background:var(--k-surface-2)}
+[data-rounded]{border-radius:var(--k-r)}
+[data-rounded="full"]{border-radius:var(--k-r-full)}
+[data-container]{width:100%;max-width:1200px;margin:0 auto;padding:0 var(--k-sp-6)}
+[data-container="sm"]{max-width:720px}
+[data-container="lg"]{max-width:1440px}
+[data-scroll]{overflow:auto}
+[data-scroll="x"]{overflow-y:hidden;overflow-x:auto}
+[data-scroll="y"]{overflow-x:hidden;overflow-y:auto}

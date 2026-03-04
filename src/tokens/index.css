@@ -1,0 +1,10 @@
+/* kern/src/tokens/index.css — imports all token files */
+@import './colors.css';
+@import './accent.css';
+@import './typography.css';
+@import './spacing.css';
+@import './radius.css';
+@import './shadow.css';
+@import './motion.css';
+@import './z-index.css';
+@import './components.css';

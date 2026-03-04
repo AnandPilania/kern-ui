@@ -1,0 +1,43 @@
+{
+    "name": "kern-ui",
+    "version": "0.1.0",
+    "description": "Attribute-driven, zero-build UI library. Configure in HTML, theme in CSS, control in JS.",
+    "homepage": "https://github.com/AnandPilania/kern-ui",
+    "type": "module",
+    "main": "dist/kern.js",
+    "module": "src-js/kern.js",
+    "style": "dist/kern.css",
+    "exports": {
+        ".": {
+            "import": "./src-js/kern.js"
+        },
+        "./css": "./dist/kern.css",
+        "./src/kern.css": "./src/kern.css",
+        "./components/*": "./src-js/components/*.js",
+        "./behaviors/*": "./src-js/behaviors/*.js"
+    },
+    "files": [
+        "src",
+        "src-js",
+        "dist"
+    ],
+    "keywords": [
+        "ui",
+        "css",
+        "components",
+        "design-system",
+        "no-build",
+        "htmx",
+        "alpine"
+    ],
+    "license": "MIT",
+    "author": {
+        "name": "Aannd Pilania",
+        "email": "pilaniaanand@gmail.com",
+        "url": "https://github.com/AnandPilania"
+    },
+    "scripts": {
+        "build": "node scripts/build.js",
+        "dev": "node scripts/dev.js"
+    }
+}

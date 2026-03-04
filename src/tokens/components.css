@@ -1,0 +1,17 @@
+/* kern/src/tokens/components.css
+   Per-component tokens — override any of these to tune
+   a single component without touching global tokens.     */
+:root {
+  /* Button */
+  --k-btn-h-sm:28px;
+  --k-btn-h:36px;
+  --k-btn-h-lg:44px;
+  /* Input */
+  --k-input-h:36px;
+  --k-input-h-sm:28px;
+  --k-input-h-lg:44px;
+  /* Card */
+  --k-card-p:var(--k-sp-6);
+  /* Sidebar */
+  --k-sidebar-w:240px;
+}

@@ -1,0 +1,8 @@
+/* kern/src/components/breadcrumb.css */
+[aria-label="breadcrumb"],[data-breadcrumb]{display:flex;align-items:center;gap:var(--k-sp-2);font-size:.875rem;color:var(--k-text-2);flex-wrap:wrap}
+[data-breadcrumb] a{color:var(--k-text-2);text-decoration:none}
+[data-breadcrumb] a:hover{color:var(--k-text)}
+[data-breadcrumb] [aria-current="page"]{color:var(--k-text);font-weight:var(--k-fw-medium)}
+[data-breadcrumb-sep]::before{content:'/';color:var(--k-text-3)}
+[data-breadcrumb][data-sep="dot"]   [data-breadcrumb-sep]::before{content:'·'}
+[data-breadcrumb][data-sep="arrow"] [data-breadcrumb-sep]::before{content:'→'}
