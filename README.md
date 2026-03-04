@@ -4,8 +4,8 @@
 Configure in HTML. Theme in CSS. Control in JS. No build step. Ever.
 
 ```html
-<link rel="stylesheet" href="https://unpkg.com/kern-ui@0.1.1/dist/kern.min.css">
-<script src="https://unpkg.com/kern-ui@0.1.1/dist/kern.min.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/kern-ui@0.1.2/dist/kern.min.css">
+<script src="https://unpkg.com/kern-ui@0.1.2/dist/kern.min.js"></script>
 ```
 
 **41 KB CSS · 12 KB JS — 7 KB + 3 KB gzipped — Zero dependencies**
@@ -47,7 +47,7 @@ Most UI libraries demand a build step, a framework, or hundreds of KB of JS. Ker
 <!DOCTYPE html>
 <html lang="en" data-theme="dark" data-accent="violet">
 <head>
-  <link rel="stylesheet" href="https://unpkg.com/kern-ui@0.1.1/dist/kern.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/kern-ui@0.1.2/dist/kern.min.css">
 </head>
 <body>
   <button>Primary</button>
@@ -61,7 +61,7 @@ Most UI libraries demand a build step, a framework, or hundreds of KB of JS. Ker
     </div>
   </kern-dropdown>
 
-  <script src="https://unpkg.com/kern-ui@0.1.1/dist/kern.min.js"></script>
+  <script src="https://unpkg.com/kern-ui@0.1.2/dist/kern.min.js"></script>
   <script>
     Kern.toast({ title: 'Hello!', message: 'Kern is ready.', color: 'success' });
   </script>

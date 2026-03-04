@@ -1,17 +1,17 @@
 {
     "name": "kern-ui",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "description": "Attribute-driven, zero-build UI library. Configure in HTML, theme in CSS, control in JS.",
     "homepage": "https://github.com/AnandPilania/kern-ui",
     "type": "module",
-    "main": "dist/kern.js",
+    "main": "dist/kern.min.js",
     "module": "src-js/kern.js",
-    "style": "dist/kern.css",
+    "style": "dist/kern.min.css",
     "exports": {
         ".": {
             "import": "./src-js/kern.js"
         },
-        "./css": "./dist/kern.css",
+        "./css": "./dist/kern.min.css",
         "./src/kern.css": "./src/kern.css",
         "./components/*": "./src-js/components/*.js",
         "./behaviors/*": "./src-js/behaviors/*.js"
@@ -39,6 +39,6 @@
     "scripts": {
         "build": "node scripts/build.js",
         "build:css": "npx postcss src/kern.css --use postcss-import --no-map | npx cssnano > dist/kern.min.css",
-        "buils:js": "npx rollup src-js/kern.js --format iife --name Kern | npx terser -c -m > dist/kern.min.js"
+        "build:js": "npx rollup src-js/kern.js --format iife --name Kern | npx terser -c -m > dist/kern.min.js"
     }
 }
