@@ -1,11 +1,6 @@
 /* ============================================================
    KERN UI — src/kern.css
    Root stylesheet entry point.
-
-   Usage:
-     @import 'kern/src/kern.css';          (full library)
-     @import 'kern/src/tokens/index.css';  (tokens only)
-     @import 'kern/src/components/button.css'; (single component)
    ============================================================ */
 @import './tokens/index.css';
 @import './base/index.css';

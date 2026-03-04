@@ -1,18 +1,75 @@
-/* kern/src/components/badge.css */
-[data-badge]{
-  display:inline-flex;align-items:center;gap:var(--k-sp-1);
-  padding:2px var(--k-sp-2);font-size:.75rem;font-weight:var(--k-fw-medium);
-  border-radius:var(--k-badge-r);border:1px solid var(--k-border);
-  line-height:1.5;white-space:nowrap;
-  background:var(--k-surface-2);color:var(--k-text-2);
+[data-badge] {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--k-sp-1);
+    padding: 2px var(--k-sp-2);
+    font-size: .75rem;
+    font-weight: var(--k-fw-medium);
+    border-radius: var(--k-badge-r);
+    border: 1px solid var(--k-border);
+    line-height: 1.5;
+    white-space: nowrap;
+    background: var(--k-surface-2);
+    color: var(--k-text-2);
 }
-[data-badge][data-color="accent"] {background:var(--k-accent-subtle);color:var(--k-accent);border-color:var(--k-accent-muted)}
-[data-badge][data-color="success"]{background:var(--k-success-bg);color:var(--k-success-fg);border-color:var(--k-success)}
-[data-badge][data-color="warning"]{background:var(--k-warning-bg);color:var(--k-warning-fg);border-color:var(--k-warning)}
-[data-badge][data-color="danger"] {background:var(--k-danger-bg); color:var(--k-danger-fg); border-color:var(--k-danger)}
-[data-badge][data-color="info"]   {background:var(--k-info-bg);   color:var(--k-info-fg);   border-color:var(--k-info)}
-[data-badge][data-variant="solid"][data-color="accent"] {background:var(--k-accent);color:var(--k-accent-fg);border-color:transparent}
-[data-badge][data-variant="solid"][data-color="success"]{background:var(--k-success);color:#fff;border-color:transparent}
-[data-badge][data-variant="solid"][data-color="danger"] {background:var(--k-danger); color:#fff;border-color:transparent}
-[data-badge][data-variant="pill"]{border-radius:var(--k-r-full)}
-[data-badge][data-dot]::before{content:'';width:6px;height:6px;border-radius:50%;background:currentColor;flex-shrink:0}
+
+[data-badge][data-color="accent"] {
+    background: var(--k-accent-subtle);
+    color: var(--k-accent);
+    border-color: var(--k-accent-muted)
+}
+
+[data-badge][data-color="success"] {
+    background: var(--k-success-bg);
+    color: var(--k-success-fg);
+    border-color: var(--k-success)
+}
+
+[data-badge][data-color="warning"] {
+    background: var(--k-warning-bg);
+    color: var(--k-warning-fg);
+    border-color: var(--k-warning)
+}
+
+[data-badge][data-color="danger"] {
+    background: var(--k-danger-bg);
+    color: var(--k-danger-fg);
+    border-color: var(--k-danger)
+}
+
+[data-badge][data-color="info"] {
+    background: var(--k-info-bg);
+    color: var(--k-info-fg);
+    border-color: var(--k-info)
+}
+
+[data-badge][data-variant="solid"][data-color="accent"] {
+    background: var(--k-accent);
+    color: var(--k-accent-fg);
+    border-color: transparent
+}
+
+[data-badge][data-variant="solid"][data-color="success"] {
+    background: var(--k-success);
+    color: #fff;
+    border-color: transparent
+}
+
+[data-badge][data-variant="solid"][data-color="danger"] {
+    background: var(--k-danger);
+    color: #fff;
+    border-color: transparent
+}
+
+[data-badge][data-variant="pill"] {
+    border-radius: var(--k-r-full)
+}
+
+[data-badge][data-dot]::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+    flex-shrink: 0
+}

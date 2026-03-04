@@ -1,6 +1,39 @@
-/* kern/src/components/pagination.css */
-[data-pagination]{display:flex;align-items:center;gap:var(--k-sp-1)}
-[data-pagination] [data-page]{display:inline-flex;align-items:center;justify-content:center;min-width:32px;height:32px;padding:0 var(--k-sp-2);font-size:.875rem;border-radius:var(--k-r);cursor:pointer;border:1px solid var(--k-border);background:var(--k-bg);color:var(--k-text-2);text-decoration:none;transition:all var(--k-fast)}
-[data-pagination] [data-page]:hover{background:var(--k-surface-2);color:var(--k-text);border-color:var(--k-border-strong)}
-[data-pagination] [data-page][aria-current="page"]{background:var(--k-accent);color:var(--k-accent-fg);border-color:transparent}
-[data-pagination] [data-page][disabled]{opacity:.4;pointer-events:none}
+[data-pagination] {
+    display: flex;
+    align-items: center;
+    gap: var(--k-sp-1)
+}
+
+[data-pagination] [data-page] {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 32px;
+    height: 32px;
+    padding: 0 var(--k-sp-2);
+    font-size: .875rem;
+    border-radius: var(--k-r);
+    cursor: pointer;
+    border: 1px solid var(--k-border);
+    background: var(--k-bg);
+    color: var(--k-text-2);
+    text-decoration: none;
+    transition: all var(--k-fast)
+}
+
+[data-pagination] [data-page]:hover {
+    background: var(--k-surface-2);
+    color: var(--k-text);
+    border-color: var(--k-border-strong)
+}
+
+[data-pagination] [data-page][aria-current="page"] {
+    background: var(--k-accent);
+    color: var(--k-accent-fg);
+    border-color: transparent
+}
+
+[data-pagination] [data-page][disabled] {
+    opacity: .4;
+    pointer-events: none
+}

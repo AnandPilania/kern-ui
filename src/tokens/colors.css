@@ -1,37 +1,87 @@
-/* kern/src/tokens/colors.css — Neutral scale + semantic colors */
+/* Neutral scale + semantic colors */
 :root {
-  --k-0:#fff;--k-50:#f8f8f7;--k-100:#f0efed;--k-150:#e8e6e2;
-  --k-200:#d8d5d0;--k-300:#b8b4ae;--k-400:#918d87;--k-500:#6b6762;
-  --k-600:#504d49;--k-700:#38352f;--k-800:#242119;--k-850:#1a1812;
-  --k-900:#100f0a;--k-950:#080807;
-  /* Semantic — light defaults */
-  --k-bg:var(--k-0);--k-surface:var(--k-50);--k-surface-2:var(--k-100);
-  --k-border:var(--k-200);--k-border-strong:var(--k-300);
-  --k-text:var(--k-900);--k-text-2:var(--k-600);--k-text-3:var(--k-400);
-  --k-text-invert:var(--k-0);
-  /* Status */
-  --k-success:#2d8a4e;--k-success-bg:#edf7f1;--k-success-fg:#1a5c32;
-  --k-warning:#c07a10;--k-warning-bg:#fef8ec;--k-warning-fg:#7a4d08;
-  --k-danger:#c0392b;--k-danger-bg:#fdecea;--k-danger-fg:#8b1a10;
-  --k-info:#1a6fa8;--k-info-bg:#eaf3fb;--k-info-fg:#0e4570;
+    --k-0: #fff;
+    --k-50: #f8f8f7;
+    --k-100: #f0efed;
+    --k-150: #e8e6e2;
+    --k-200: #d8d5d0;
+    --k-300: #b8b4ae;
+    --k-400: #918d87;
+    --k-500: #6b6762;
+    --k-600: #504d49;
+    --k-700: #38352f;
+    --k-800: #242119;
+    --k-850: #1a1812;
+    --k-900: #100f0a;
+    --k-950: #080807;
+    /* Semantic — light defaults */
+    --k-bg: var(--k-0);
+    --k-surface: var(--k-50);
+    --k-surface-2: var(--k-100);
+    --k-border: var(--k-200);
+    --k-border-strong: var(--k-300);
+    --k-text: var(--k-900);
+    --k-text-2: var(--k-600);
+    --k-text-3: var(--k-400);
+    --k-text-invert: var(--k-0);
+    /* Status */
+    --k-success: #2d8a4e;
+    --k-success-bg: #edf7f1;
+    --k-success-fg: #1a5c32;
+    --k-warning: #c07a10;
+    --k-warning-bg: #fef8ec;
+    --k-warning-fg: #7a4d08;
+    --k-danger: #c0392b;
+    --k-danger-bg: #fdecea;
+    --k-danger-fg: #8b1a10;
+    --k-info: #1a6fa8;
+    --k-info-bg: #eaf3fb;
+    --k-info-fg: #0e4570;
 }
-@media(prefers-color-scheme:dark){
-  :root:not([data-theme="light"]){
-    --k-bg:var(--k-950);--k-surface:var(--k-900);--k-surface-2:var(--k-850);
-    --k-border:var(--k-700);--k-border-strong:var(--k-600);
-    --k-text:var(--k-50);--k-text-2:var(--k-300);--k-text-3:var(--k-500);
-    --k-success-bg:#0f2b1a;--k-warning-bg:#2a1c07;--k-danger-bg:#2a0f0c;--k-info-bg:#0c1f2e;
-  }
+
+@media(prefers-color-scheme:dark) {
+    :root:not([data-theme="light"]) {
+        --k-bg: var(--k-950);
+        --k-surface: var(--k-900);
+        --k-surface-2: var(--k-850);
+        --k-border: var(--k-700);
+        --k-border-strong: var(--k-600);
+        --k-text: var(--k-50);
+        --k-text-2: var(--k-300);
+        --k-text-3: var(--k-500);
+        --k-success-bg: #0f2b1a;
+        --k-warning-bg: #2a1c07;
+        --k-danger-bg: #2a0f0c;
+        --k-info-bg: #0c1f2e;
+    }
 }
-[data-theme="dark"]{
-  --k-bg:var(--k-950);--k-surface:var(--k-900);--k-surface-2:var(--k-850);
-  --k-border:var(--k-700);--k-border-strong:var(--k-600);
-  --k-text:var(--k-50);--k-text-2:var(--k-300);--k-text-3:var(--k-500);
-  --k-success-bg:#0f2b1a;--k-warning-bg:#2a1c07;--k-danger-bg:#2a0f0c;--k-info-bg:#0c1f2e;
+
+[data-theme="dark"] {
+    --k-bg: var(--k-950);
+    --k-surface: var(--k-900);
+    --k-surface-2: var(--k-850);
+    --k-border: var(--k-700);
+    --k-border-strong: var(--k-600);
+    --k-text: var(--k-50);
+    --k-text-2: var(--k-300);
+    --k-text-3: var(--k-500);
+    --k-success-bg: #0f2b1a;
+    --k-warning-bg: #2a1c07;
+    --k-danger-bg: #2a0f0c;
+    --k-info-bg: #0c1f2e;
 }
-[data-theme="light"]{
-  --k-bg:var(--k-0);--k-surface:var(--k-50);--k-surface-2:var(--k-100);
-  --k-border:var(--k-200);--k-border-strong:var(--k-300);
-  --k-text:var(--k-900);--k-text-2:var(--k-600);--k-text-3:var(--k-400);
-  --k-success-bg:#edf7f1;--k-warning-bg:#fef8ec;--k-danger-bg:#fdecea;--k-info-bg:#eaf3fb;
+
+[data-theme="light"] {
+    --k-bg: var(--k-0);
+    --k-surface: var(--k-50);
+    --k-surface-2: var(--k-100);
+    --k-border: var(--k-200);
+    --k-border-strong: var(--k-300);
+    --k-text: var(--k-900);
+    --k-text-2: var(--k-600);
+    --k-text-3: var(--k-400);
+    --k-success-bg: #edf7f1;
+    --k-warning-bg: #fef8ec;
+    --k-danger-bg: #fdecea;
+    --k-info-bg: #eaf3fb;
 }

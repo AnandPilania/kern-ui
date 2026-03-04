@@ -335,7 +335,7 @@
     // Public API: Kern
     // ============================================================
     const Kern = {
-        version: '0.1.0',
+        version: '0.1.1',
 
         /** Toast shorthand */
         toast(options = {}) {

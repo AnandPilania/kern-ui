@@ -1,5 +1,4 @@
 /**
- * kern/src-js/kern.js
  * Root JavaScript entry point (ESM).
  *
  * Import the whole library:
@@ -14,16 +13,16 @@
  */
 
 // ── Web Components ──
-export { KernTabs }     from './components/tabs.js';
+export { KernTabs } from './components/tabs.js';
 export { KernDropdown } from './components/dropdown.js';
-export { KernDialog }   from './components/dialog.js';
-export { KernDrawer }   from './components/drawer.js';
-export { KernToaster }  from './components/toaster.js';
+export { KernDialog } from './components/dialog.js';
+export { KernDrawer } from './components/drawer.js';
+export { KernToaster } from './components/toaster.js';
 
 // ── Behaviors ──
 export { initAccordions } from './behaviors/accordion.js';
-export { initToggles }    from './behaviors/toggle.js';
-export { initTableSort }  from './behaviors/table-sort.js';
+export { initToggles } from './behaviors/toggle.js';
+export { initTableSort } from './behaviors/table-sort.js';
 
 // ── API + boot ──
 export { Kern } from './api.js';

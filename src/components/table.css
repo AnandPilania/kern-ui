@@ -1,17 +1,90 @@
-/* kern/src/components/table.css */
-table,[data-table]{width:100%;border-collapse:collapse;font-size:.875rem}
-table th{text-align:left;font-weight:var(--k-fw-medium);font-size:.75rem;color:var(--k-text-2);letter-spacing:.05em;text-transform:uppercase;padding:var(--k-sp-3) var(--k-sp-4);border-bottom:1px solid var(--k-border);white-space:nowrap;background:var(--k-surface)}
-table th[data-sort]{cursor:pointer;user-select:none}
-table th[data-sort]:hover{color:var(--k-text)}
-table th[data-sort]::after{content:' ⇕';opacity:.35;font-size:.75em}
-table th[data-sort="asc"]::after{content:' ↑';opacity:1;color:var(--k-accent)}
-table th[data-sort="desc"]::after{content:' ↓';opacity:1;color:var(--k-accent)}
-table td{padding:var(--k-sp-3) var(--k-sp-4);border-bottom:1px solid var(--k-border);vertical-align:middle}
-table tr:last-child td{border-bottom:none}
-table[data-variant="bordered"] td,table[data-variant="bordered"] th{border:1px solid var(--k-border)}
-table[data-variant="striped"] tbody tr:nth-child(even){background:var(--k-surface)}
-table[data-variant="compact"] th,table[data-variant="compact"] td{padding:var(--k-sp-2) var(--k-sp-3)}
-table[data-variant="comfortable"] th,table[data-variant="comfortable"] td{padding:var(--k-sp-4) var(--k-sp-5)}
-tbody tr{transition:background var(--k-fast)}
-table[data-hover] tbody tr:hover{background:var(--k-surface)}
-[data-table-wrap]{border:1px solid var(--k-border);border-radius:var(--k-r-md);overflow:hidden;overflow-x:auto}
+table,
+[data-table] {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: .875rem
+}
+
+table th {
+    text-align: left;
+    font-weight: var(--k-fw-medium);
+    font-size: .75rem;
+    color: var(--k-text-2);
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    padding: var(--k-sp-3) var(--k-sp-4);
+    border-bottom: 1px solid var(--k-border);
+    white-space: nowrap;
+    background: var(--k-surface)
+}
+
+table th[data-sort] {
+    cursor: pointer;
+    user-select: none
+}
+
+table th[data-sort]:hover {
+    color: var(--k-text)
+}
+
+table th[data-sort]::after {
+    content: ' ⇕';
+    opacity: .35;
+    font-size: .75em
+}
+
+table th[data-sort="asc"]::after {
+    content: ' ↑';
+    opacity: 1;
+    color: var(--k-accent)
+}
+
+table th[data-sort="desc"]::after {
+    content: ' ↓';
+    opacity: 1;
+    color: var(--k-accent)
+}
+
+table td {
+    padding: var(--k-sp-3) var(--k-sp-4);
+    border-bottom: 1px solid var(--k-border);
+    vertical-align: middle
+}
+
+table tr:last-child td {
+    border-bottom: none
+}
+
+table[data-variant="bordered"] td,
+table[data-variant="bordered"] th {
+    border: 1px solid var(--k-border)
+}
+
+table[data-variant="striped"] tbody tr:nth-child(even) {
+    background: var(--k-surface)
+}
+
+table[data-variant="compact"] th,
+table[data-variant="compact"] td {
+    padding: var(--k-sp-2) var(--k-sp-3)
+}
+
+table[data-variant="comfortable"] th,
+table[data-variant="comfortable"] td {
+    padding: var(--k-sp-4) var(--k-sp-5)
+}
+
+tbody tr {
+    transition: background var(--k-fast)
+}
+
+table[data-hover] tbody tr:hover {
+    background: var(--k-surface)
+}
+
+[data-table-wrap] {
+    border: 1px solid var(--k-border);
+    border-radius: var(--k-r-md);
+    overflow: hidden;
+    overflow-x: auto
+}

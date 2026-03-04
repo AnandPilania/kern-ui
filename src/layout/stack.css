@@ -1,13 +1,69 @@
-/* kern/src/layout/stack.css — vertical + horizontal flex primitives */
-[data-stack]{display:flex;flex-direction:column;gap:var(--k-sp-4)}
-[data-stack][data-gap="xs"]{gap:var(--k-sp-1)}[data-stack][data-gap="sm"]{gap:var(--k-sp-2)}
-[data-stack][data-gap="lg"]{gap:var(--k-sp-8)}[data-stack][data-gap="xl"]{gap:var(--k-sp-12)}
-[data-row]{display:flex;align-items:center;gap:var(--k-sp-4);flex-wrap:wrap}
-[data-row][data-gap="xs"]{gap:var(--k-sp-1)}[data-row][data-gap="sm"]{gap:var(--k-sp-2)}
-[data-row][data-gap="lg"]{gap:var(--k-sp-8)}
-[data-row][data-align="start"]{align-items:flex-start}[data-row][data-align="end"]{align-items:flex-end}
-[data-row][data-align="stretch"]{align-items:stretch}
-[data-row][data-justify="between"]{justify-content:space-between}
-[data-row][data-justify="end"]{justify-content:flex-end}
-[data-row][data-justify="center"]{justify-content:center}
-[data-row][data-nowrap]{flex-wrap:nowrap}
+/* vertical + horizontal flex primitives */
+[data-stack] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--k-sp-4)
+}
+
+[data-stack][data-gap="xs"] {
+    gap: var(--k-sp-1)
+}
+
+[data-stack][data-gap="sm"] {
+    gap: var(--k-sp-2)
+}
+
+[data-stack][data-gap="lg"] {
+    gap: var(--k-sp-8)
+}
+
+[data-stack][data-gap="xl"] {
+    gap: var(--k-sp-12)
+}
+
+[data-row] {
+    display: flex;
+    align-items: center;
+    gap: var(--k-sp-4);
+    flex-wrap: wrap
+}
+
+[data-row][data-gap="xs"] {
+    gap: var(--k-sp-1)
+}
+
+[data-row][data-gap="sm"] {
+    gap: var(--k-sp-2)
+}
+
+[data-row][data-gap="lg"] {
+    gap: var(--k-sp-8)
+}
+
+[data-row][data-align="start"] {
+    align-items: flex-start
+}
+
+[data-row][data-align="end"] {
+    align-items: flex-end
+}
+
+[data-row][data-align="stretch"] {
+    align-items: stretch
+}
+
+[data-row][data-justify="between"] {
+    justify-content: space-between
+}
+
+[data-row][data-justify="end"] {
+    justify-content: flex-end
+}
+
+[data-row][data-justify="center"] {
+    justify-content: center
+}
+
+[data-row][data-nowrap] {
+    flex-wrap: nowrap
+}

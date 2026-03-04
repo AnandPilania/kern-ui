@@ -1,9 +1,54 @@
-/* kern/src/base/reset.css */
-*,*::before,*::after{box-sizing:border-box;margin:0}
-html{font-size:var(--k-font-size);-webkit-text-size-adjust:100%;tab-size:2}
-body{font-family:var(--k-font-sans);font-size:1rem;line-height:var(--k-line-height);color:var(--k-text);background:var(--k-bg);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
-img,video,svg{display:block;max-width:100%}
-input,button,textarea,select{font:inherit}
-a{color:var(--k-accent);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px;transition:opacity var(--k-fast)}
-a:hover{opacity:.75}
-hr{border:none;border-top:1px solid var(--k-border);margin:var(--k-sp-6) 0}
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0
+}
+
+html {
+    font-size: var(--k-font-size);
+    -webkit-text-size-adjust: 100%;
+    tab-size: 2
+}
+
+body {
+    font-family: var(--k-font-sans);
+    font-size: 1rem;
+    line-height: var(--k-line-height);
+    color: var(--k-text);
+    background: var(--k-bg);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale
+}
+
+img,
+video,
+svg {
+    display: block;
+    max-width: 100%
+}
+
+input,
+button,
+textarea,
+select {
+    font: inherit
+}
+
+a {
+    color: var(--k-accent);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+    transition: opacity var(--k-fast)
+}
+
+a:hover {
+    opacity: .75
+}
+
+hr {
+    border: none;
+    border-top: 1px solid var(--k-border);
+    margin: var(--k-sp-6) 0
+}

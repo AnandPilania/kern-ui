@@ -1,20 +1,78 @@
-/* kern/src/tokens/accent.css — HSL-decomposed accent + presets */
+/* HSL-decomposed accent + presets */
 :root {
-  --k-accent-h:38;--k-accent-s:92%;--k-accent-l:50%;
-  --k-accent:hsl(var(--k-accent-h),var(--k-accent-s),var(--k-accent-l));
-  --k-accent-subtle:hsl(var(--k-accent-h),var(--k-accent-s),94%);
-  --k-accent-muted:hsl(var(--k-accent-h),60%,70%);
-  --k-accent-fg:#000;
+    --k-accent-h: 38;
+    --k-accent-s: 92%;
+    --k-accent-l: 50%;
+    --k-accent: hsl(var(--k-accent-h), var(--k-accent-s), var(--k-accent-l));
+    --k-accent-subtle: hsl(var(--k-accent-h), var(--k-accent-s), 94%);
+    --k-accent-muted: hsl(var(--k-accent-h), 60%, 70%);
+    --k-accent-fg: #000;
 }
-[data-theme="dark"]{--k-accent-subtle:hsl(var(--k-accent-h),30%,18%);--k-accent-muted:hsl(var(--k-accent-h),60%,45%);}
-@media(prefers-color-scheme:dark){
-  :root:not([data-theme="light"]){--k-accent-subtle:hsl(var(--k-accent-h),30%,18%);--k-accent-muted:hsl(var(--k-accent-h),60%,45%);}
+
+[data-theme="dark"] {
+    --k-accent-subtle: hsl(var(--k-accent-h), 30%, 18%);
+    --k-accent-muted: hsl(var(--k-accent-h), 60%, 45%);
 }
-[data-accent="amber"] {--k-accent-h:38; --k-accent-s:92%;--k-accent-l:50%;--k-accent-fg:#000}
-[data-accent="blue"]  {--k-accent-h:214;--k-accent-s:85%;--k-accent-l:52%;--k-accent-fg:#fff}
-[data-accent="green"] {--k-accent-h:142;--k-accent-s:72%;--k-accent-l:40%;--k-accent-fg:#fff}
-[data-accent="red"]   {--k-accent-h:4;  --k-accent-s:80%;--k-accent-l:50%;--k-accent-fg:#fff}
-[data-accent="violet"]{--k-accent-h:262;--k-accent-s:75%;--k-accent-l:58%;--k-accent-fg:#fff}
-[data-accent="rose"]  {--k-accent-h:346;--k-accent-s:80%;--k-accent-l:55%;--k-accent-fg:#fff}
-[data-accent="cyan"]  {--k-accent-h:192;--k-accent-s:80%;--k-accent-l:42%;--k-accent-fg:#fff}
-[data-accent="orange"]{--k-accent-h:24; --k-accent-s:95%;--k-accent-l:53%;--k-accent-fg:#fff}
+
+@media(prefers-color-scheme:dark) {
+    :root:not([data-theme="light"]) {
+        --k-accent-subtle: hsl(var(--k-accent-h), 30%, 18%);
+        --k-accent-muted: hsl(var(--k-accent-h), 60%, 45%);
+    }
+}
+
+[data-accent="amber"] {
+    --k-accent-h: 38;
+    --k-accent-s: 92%;
+    --k-accent-l: 50%;
+    --k-accent-fg: #000
+}
+
+[data-accent="blue"] {
+    --k-accent-h: 214;
+    --k-accent-s: 85%;
+    --k-accent-l: 52%;
+    --k-accent-fg: #fff
+}
+
+[data-accent="green"] {
+    --k-accent-h: 142;
+    --k-accent-s: 72%;
+    --k-accent-l: 40%;
+    --k-accent-fg: #fff
+}
+
+[data-accent="red"] {
+    --k-accent-h: 4;
+    --k-accent-s: 80%;
+    --k-accent-l: 50%;
+    --k-accent-fg: #fff
+}
+
+[data-accent="violet"] {
+    --k-accent-h: 262;
+    --k-accent-s: 75%;
+    --k-accent-l: 58%;
+    --k-accent-fg: #fff
+}
+
+[data-accent="rose"] {
+    --k-accent-h: 346;
+    --k-accent-s: 80%;
+    --k-accent-l: 55%;
+    --k-accent-fg: #fff
+}
+
+[data-accent="cyan"] {
+    --k-accent-h: 192;
+    --k-accent-s: 80%;
+    --k-accent-l: 42%;
+    --k-accent-fg: #fff
+}
+
+[data-accent="orange"] {
+    --k-accent-h: 24;
+    --k-accent-s: 95%;
+    --k-accent-l: 53%;
+    --k-accent-fg: #fff
+}

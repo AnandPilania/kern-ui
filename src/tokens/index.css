@@ -1,4 +1,4 @@
-/* kern/src/tokens/index.css — imports all token files */
+/* imports all token files */
 @import './colors.css';
 @import './accent.css';
 @import './typography.css';

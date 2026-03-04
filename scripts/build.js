@@ -11,7 +11,7 @@
  *   dist/kern.min.js    — minified
  */
 
-import { readFileSync, writeFileSync, mkdirSync } from 'fs';
+import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'fs';
 import { resolve, dirname, relative } from 'path';
 import { fileURLToPath } from 'url';
 
@@ -25,13 +25,43 @@ const seen = new Set();
 
 function resolveCSS(filePath) {
     const abs = resolve(filePath);
-    if (seen.has(abs)) return `/* already imported: ${relative(root, abs)} */\n`;
-    seen.add(abs);
-    const src = readFileSync(abs, 'utf8');
-    return src.replace(/@import\s+['"](.+?)['"]\s*;/g, (_, rel) => {
-        return resolveCSS(resolve(dirname(abs), rel));
-    });
+
+    if (seen.has(abs)) {
+        return `/* already imported: ${relative(root, abs)} */\n`;
+    }
+
+    try {
+        const src = readFileSync(abs, 'utf8');
+        seen.add(abs);
+
+        const currentDir = dirname(abs);
+
+        return src.replace(/@import\s+['"](.+?)['"]\s*;/g, (_, rel) => {
+            const nextPath = resolve(currentDir, rel);
+            return resolveCSS(nextPath);
+        });
+    } catch (err) {
+        console.error(`Could not find: ${abs}`);
+        return `/* Error: file not found ${relative(root, abs)} */\n`;
+    }
 }
+
+function debugImports(filePath) {
+    const abs = resolve(filePath);
+    if (!existsSync(abs)) return;
+
+    const src = readFileSync(abs, 'utf8');
+    const imports = src.match(/@import\s+['"](.+?)['"]\s*;/g) || [];
+
+    console.log(`\nImports in ${relative(root, abs)}:`);
+    imports.forEach(imp => {
+        console.log(`  ${imp.trim()}`);
+    });
+
+    return imports.length;
+}
+
+debugImports(resolve(root, 'src/kern.css'));
 
 const fullCSS = resolveCSS(resolve(root, 'src/kern.css'));
 writeFileSync(resolve(distDir, 'kern.css'), fullCSS, 'utf8');

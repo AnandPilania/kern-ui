@@ -1,12 +1,78 @@
-/* kern/src/components/stepper.css */
-[data-stepper]{display:flex;align-items:flex-start;counter-reset:step;overflow-x:auto}
-[data-step]{display:flex;flex-direction:column;align-items:center;flex:1;position:relative;text-align:center;counter-increment:step}
-[data-step]:not(:last-child)::after{content:'';position:absolute;top:16px;left:50%;width:100%;height:1px;background:var(--k-border)}
-[data-step][data-done]:not(:last-child)::after{background:var(--k-success)}
-[data-step-marker]{width:32px;height:32px;border-radius:50%;background:var(--k-surface-2);border:2px solid var(--k-border);display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:var(--k-fw-bold);color:var(--k-text-2);position:relative;z-index:1;transition:all var(--k-dur)}
-[data-step-marker]::before{content:counter(step)}
-[data-step][data-active] [data-step-marker]{background:var(--k-accent);border-color:var(--k-accent);color:var(--k-accent-fg)}
-[data-step][data-done] [data-step-marker]{background:var(--k-success);border-color:var(--k-success);color:#fff}
-[data-step][data-done] [data-step-marker]::before{content:'✓'}
-[data-step-label]{font-size:.8rem;color:var(--k-text-2);margin-top:var(--k-sp-2)}
-[data-step][data-active] [data-step-label]{color:var(--k-text);font-weight:var(--k-fw-medium)}
+[data-stepper] {
+    display: flex;
+    align-items: flex-start;
+    counter-reset: step;
+    overflow-x: auto
+}
+
+[data-step] {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    position: relative;
+    text-align: center;
+    counter-increment: step
+}
+
+[data-step]:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    top: 16px;
+    left: 50%;
+    width: 100%;
+    height: 1px;
+    background: var(--k-border)
+}
+
+[data-step][data-done]:not(:last-child)::after {
+    background: var(--k-success)
+}
+
+[data-step-marker] {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--k-surface-2);
+    border: 2px solid var(--k-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: .8rem;
+    font-weight: var(--k-fw-bold);
+    color: var(--k-text-2);
+    position: relative;
+    z-index: 1;
+    transition: all var(--k-dur)
+}
+
+[data-step-marker]::before {
+    content: counter(step)
+}
+
+[data-step][data-active] [data-step-marker] {
+    background: var(--k-accent);
+    border-color: var(--k-accent);
+    color: var(--k-accent-fg)
+}
+
+[data-step][data-done] [data-step-marker] {
+    background: var(--k-success);
+    border-color: var(--k-success);
+    color: #fff
+}
+
+[data-step][data-done] [data-step-marker]::before {
+    content: '✓'
+}
+
+[data-step-label] {
+    font-size: .8rem;
+    color: var(--k-text-2);
+    margin-top: var(--k-sp-2)
+}
+
+[data-step][data-active] [data-step-label] {
+    color: var(--k-text);
+    font-weight: var(--k-fw-medium)
+}

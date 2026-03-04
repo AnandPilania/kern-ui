@@ -1,9 +1,8 @@
-/* kern/src/tokens/z-index.css */
 :root {
-  --k-z-drop:100;
-  --k-z-sticky:200;
-  --k-z-overlay:300;
-  --k-z-modal:400;
-  --k-z-toast:500;
-  --k-z-tip:600;
+    --k-z-drop: 100;
+    --k-z-sticky: 200;
+    --k-z-overlay: 300;
+    --k-z-modal: 400;
+    --k-z-toast: 500;
+    --k-z-tip: 600;
 }

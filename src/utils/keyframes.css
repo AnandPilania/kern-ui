@@ -1,11 +1,105 @@
-/* kern/src/utils/keyframes.css — all @keyframes */
-@keyframes k-spin{to{transform:rotate(360deg)}}
-@keyframes k-fade-in{from{opacity:0}to{opacity:1}}
-@keyframes k-dialog-in{from{opacity:0;transform:translateY(12px) scale(.97)}to{opacity:1;transform:none}}
-@keyframes k-toast-in{from{opacity:0;transform:translateX(16px)}to{opacity:1;transform:none}}
-@keyframes k-toast-out{from{opacity:1;transform:translateX(0);max-height:100px}to{opacity:0;transform:translateX(16px);max-height:0;padding:0;margin:0}}
-@keyframes k-drawer-in{from{transform:translateX(100%)}to{transform:none}}
-@keyframes k-drawer-in-left{from{transform:translateX(-100%)}to{transform:none}}
-@keyframes k-skeleton{0%{background-position:200% 0}100%{background-position:-200% 0}}
-@keyframes k-progress-stripe{from{background-position:0 0}to{background-position:28px 0}}
-@keyframes k-progress-indeterminate{0%{transform:translateX(-100%)}100%{transform:translateX(350%)}}
+@keyframes k-spin {
+    to {
+        transform: rotate(360deg)
+    }
+}
+
+@keyframes k-fade-in {
+    from {
+        opacity: 0
+    }
+
+    to {
+        opacity: 1
+    }
+}
+
+@keyframes k-dialog-in {
+    from {
+        opacity: 0;
+        transform: translateY(12px) scale(.97)
+    }
+
+    to {
+        opacity: 1;
+        transform: none
+    }
+}
+
+@keyframes k-toast-in {
+    from {
+        opacity: 0;
+        transform: translateX(16px)
+    }
+
+    to {
+        opacity: 1;
+        transform: none
+    }
+}
+
+@keyframes k-toast-out {
+    from {
+        opacity: 1;
+        transform: translateX(0);
+        max-height: 100px
+    }
+
+    to {
+        opacity: 0;
+        transform: translateX(16px);
+        max-height: 0;
+        padding: 0;
+        margin: 0
+    }
+}
+
+@keyframes k-drawer-in {
+    from {
+        transform: translateX(100%)
+    }
+
+    to {
+        transform: none
+    }
+}
+
+@keyframes k-drawer-in-left {
+    from {
+        transform: translateX(-100%)
+    }
+
+    to {
+        transform: none
+    }
+}
+
+@keyframes k-skeleton {
+    0% {
+        background-position: 200% 0
+    }
+
+    100% {
+        background-position: -200% 0
+    }
+}
+
+@keyframes k-progress-stripe {
+    from {
+        background-position: 0 0
+    }
+
+    to {
+        background-position: 28px 0
+    }
+}
+
+@keyframes k-progress-indeterminate {
+    0% {
+        transform: translateX(-100%)
+    }
+
+    100% {
+        transform: translateX(350%)
+    }
+}

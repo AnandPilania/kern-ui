@@ -1,43 +1,175 @@
-/* kern/src/components/button.css */
-button,[role="button"],input[type="submit"],input[type="button"],input[type="reset"]{
-  display:inline-flex;align-items:center;justify-content:center;
-  gap:var(--k-sp-2);height:var(--k-btn-h);padding:0 var(--k-sp-4);
-  font-size:.875rem;font-weight:var(--k-fw-medium);line-height:1;
-  white-space:nowrap;border-radius:var(--k-btn-r);border:1px solid transparent;
-  cursor:pointer;text-decoration:none;user-select:none;
-  transition:background var(--k-fast) var(--k-ease),border-color var(--k-fast),
-    color var(--k-fast),box-shadow var(--k-fast),filter var(--k-fast),transform var(--k-fast);
-  /* Default: primary / accent */
-  background:var(--k-accent);color:var(--k-accent-fg);
+button,
+[role="button"],
+input[type="submit"],
+input[type="button"],
+input[type="reset"] {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--k-sp-2);
+    height: var(--k-btn-h);
+    padding: 0 var(--k-sp-4);
+    font-size: .875rem;
+    font-weight: var(--k-fw-medium);
+    line-height: 1;
+    white-space: nowrap;
+    border-radius: var(--k-btn-r);
+    border: 1px solid transparent;
+    cursor: pointer;
+    text-decoration: none;
+    user-select: none;
+    transition: background var(--k-fast) var(--k-ease), border-color var(--k-fast),
+        color var(--k-fast), box-shadow var(--k-fast), filter var(--k-fast), transform var(--k-fast);
+    /* Default: primary / accent */
+    background: var(--k-accent);
+    color: var(--k-accent-fg);
 }
-button:hover{filter:brightness(1.08);box-shadow:var(--k-sh-sm)}
-button:active{filter:brightness(.95);transform:translateY(1px)}
-button:focus-visible{outline:2px solid var(--k-accent);outline-offset:2px}
+
+button:hover {
+    filter: brightness(1.08);
+    box-shadow: var(--k-sh-sm)
+}
+
+button:active {
+    filter: brightness(.95);
+    transform: translateY(1px)
+}
+
+button:focus-visible {
+    outline: 2px solid var(--k-accent);
+    outline-offset: 2px
+}
+
 /* Variants */
-button[data-variant="secondary"]{background:var(--k-surface-2);color:var(--k-text);border-color:var(--k-border)}
-button[data-variant="secondary"]:hover{background:var(--k-surface);border-color:var(--k-border-strong);filter:none}
-button[data-variant="outline"]{background:transparent;color:var(--k-text);border-color:var(--k-border-strong)}
-button[data-variant="outline"]:hover{background:var(--k-surface);filter:none}
-button[data-variant="ghost"]{background:transparent;color:var(--k-text);border-color:transparent}
-button[data-variant="ghost"]:hover{background:var(--k-surface-2);filter:none}
-button[data-variant="danger"]{background:var(--k-danger);color:#fff;border-color:transparent}
-button[data-variant="link"]{background:transparent;color:var(--k-accent);border-color:transparent;padding:0;height:auto;text-decoration:underline;text-underline-offset:3px}
+button[data-variant="secondary"] {
+    background: var(--k-surface-2);
+    color: var(--k-text);
+    border-color: var(--k-border)
+}
+
+button[data-variant="secondary"]:hover {
+    background: var(--k-surface);
+    border-color: var(--k-border-strong);
+    filter: none
+}
+
+button[data-variant="outline"] {
+    background: transparent;
+    color: var(--k-text);
+    border-color: var(--k-border-strong)
+}
+
+button[data-variant="outline"]:hover {
+    background: var(--k-surface);
+    filter: none
+}
+
+button[data-variant="ghost"] {
+    background: transparent;
+    color: var(--k-text);
+    border-color: transparent
+}
+
+button[data-variant="ghost"]:hover {
+    background: var(--k-surface-2);
+    filter: none
+}
+
+button[data-variant="danger"] {
+    background: var(--k-danger);
+    color: #fff;
+    border-color: transparent
+}
+
+button[data-variant="link"] {
+    background: transparent;
+    color: var(--k-accent);
+    border-color: transparent;
+    padding: 0;
+    height: auto;
+    text-decoration: underline;
+    text-underline-offset: 3px
+}
+
 /* Sizes */
-button[data-size="sm"]{height:var(--k-btn-h-sm);padding:0 var(--k-sp-3);font-size:.8rem}
-button[data-size="lg"]{height:var(--k-btn-h-lg);padding:0 var(--k-sp-6);font-size:.95rem}
-button[data-size="icon"]{width:var(--k-btn-h);padding:0}
-button[data-size="icon"][data-size="sm"]{width:var(--k-btn-h-sm)}
+button[data-size="sm"] {
+    height: var(--k-btn-h-sm);
+    padding: 0 var(--k-sp-3);
+    font-size: .8rem
+}
+
+button[data-size="lg"] {
+    height: var(--k-btn-h-lg);
+    padding: 0 var(--k-sp-6);
+    font-size: .95rem
+}
+
+button[data-size="icon"] {
+    width: var(--k-btn-h);
+    padding: 0
+}
+
+button[data-size="icon"][data-size="sm"] {
+    width: var(--k-btn-h-sm)
+}
+
 /* Colors */
-button[data-color="success"]{background:var(--k-success);color:#fff}
-button[data-color="warning"]{background:var(--k-warning);color:#fff}
-button[data-color="info"]{background:var(--k-info);color:#fff}
+button[data-color="success"] {
+    background: var(--k-success);
+    color: #fff
+}
+
+button[data-color="warning"] {
+    background: var(--k-warning);
+    color: #fff
+}
+
+button[data-color="info"] {
+    background: var(--k-info);
+    color: #fff
+}
+
 /* States */
-button[data-loading]{pointer-events:none;opacity:.75}
-button[data-loading]::after{content:'';width:13px;height:13px;border:2px solid currentColor;border-right-color:transparent;border-radius:50%;animation:k-spin .6s linear infinite;margin-left:var(--k-sp-2)}
-button:disabled,button[disabled]{opacity:.45;pointer-events:none;cursor:not-allowed}
+button[data-loading] {
+    pointer-events: none;
+    opacity: .75
+}
+
+button[data-loading]::after {
+    content: '';
+    width: 13px;
+    height: 13px;
+    border: 2px solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    animation: k-spin .6s linear infinite;
+    margin-left: var(--k-sp-2)
+}
+
+button:disabled,
+button[disabled] {
+    opacity: .45;
+    pointer-events: none;
+    cursor: not-allowed
+}
+
 /* Button group */
-[role="group"]{display:inline-flex}
-[role="group"] button{border-radius:0}
-[role="group"]>:first-child{border-radius:var(--k-btn-r) 0 0 var(--k-btn-r)}
-[role="group"]>:last-child{border-radius:0 var(--k-btn-r) var(--k-btn-r) 0}
-[role="group"]>:not(:first-child){border-left-width:0}
+[role="group"] {
+    display: inline-flex
+}
+
+[role="group"] button {
+    border-radius: 0
+}
+
+[role="group"]>:first-child {
+    border-radius: var(--k-btn-r) 0 0 var(--k-btn-r)
+}
+
+[role="group"]>:last-child {
+    border-radius: 0 var(--k-btn-r) var(--k-btn-r) 0
+}
+
+[role="group"]>:not(:first-child) {
+    border-left-width: 0
+}

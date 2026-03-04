@@ -1,20 +1,77 @@
-/* kern/src/components/tabs.css */
-kern-tabs{display:block}
-kern-tabs [data-tabs-list]{display:flex;border-bottom:1px solid var(--k-border);overflow-x:auto;scrollbar-width:none}
-kern-tabs [data-tabs-list]::-webkit-scrollbar{display:none}
-kern-tabs [data-tab]{
-  display:inline-flex;align-items:center;gap:var(--k-sp-2);
-  padding:var(--k-sp-3) var(--k-sp-4);font-size:.875rem;font-weight:var(--k-fw-medium);
-  color:var(--k-text-2);border-bottom:2px solid transparent;cursor:pointer;
-  white-space:nowrap;transition:color var(--k-fast),border-color var(--k-fast);
-  margin-bottom:-1px;user-select:none;
-  background:none;border-top:none;border-left:none;border-right:none;border-radius:0;height:auto;
+kern-tabs {
+    display: block
 }
-kern-tabs [data-tab]:hover{color:var(--k-text)}
-kern-tabs [data-tab][aria-selected="true"]{color:var(--k-accent);border-bottom-color:var(--k-accent)}
-kern-tabs [data-tab-panel]{padding:var(--k-sp-6) 0;display:none}
-kern-tabs [data-tab-panel][data-active]{display:block}
+
+kern-tabs [data-tabs-list] {
+    display: flex;
+    border-bottom: 1px solid var(--k-border);
+    overflow-x: auto;
+    scrollbar-width: none
+}
+
+kern-tabs [data-tabs-list]::-webkit-scrollbar {
+    display: none
+}
+
+kern-tabs [data-tab] {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--k-sp-2);
+    padding: var(--k-sp-3) var(--k-sp-4);
+    font-size: .875rem;
+    font-weight: var(--k-fw-medium);
+    color: var(--k-text-2);
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: color var(--k-fast), border-color var(--k-fast);
+    margin-bottom: -1px;
+    user-select: none;
+    background: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-radius: 0;
+    height: auto;
+}
+
+kern-tabs [data-tab]:hover {
+    color: var(--k-text)
+}
+
+kern-tabs [data-tab][aria-selected="true"] {
+    color: var(--k-accent);
+    border-bottom-color: var(--k-accent)
+}
+
+kern-tabs [data-tab-panel] {
+    padding: var(--k-sp-6) 0;
+    display: none
+}
+
+kern-tabs [data-tab-panel][data-active] {
+    display: block
+}
+
 /* Pills variant */
-kern-tabs[data-variant="pills"] [data-tabs-list]{border-bottom:none;gap:var(--k-sp-1);padding:var(--k-sp-1);background:var(--k-surface-2);border-radius:var(--k-r-md);display:inline-flex}
-kern-tabs[data-variant="pills"] [data-tab]{border:none;border-radius:var(--k-r);margin-bottom:0;color:var(--k-text-2)}
-kern-tabs[data-variant="pills"] [data-tab][aria-selected="true"]{background:var(--k-bg);color:var(--k-text);box-shadow:var(--k-sh-sm)}
+kern-tabs[data-variant="pills"] [data-tabs-list] {
+    border-bottom: none;
+    gap: var(--k-sp-1);
+    padding: var(--k-sp-1);
+    background: var(--k-surface-2);
+    border-radius: var(--k-r-md);
+    display: inline-flex
+}
+
+kern-tabs[data-variant="pills"] [data-tab] {
+    border: none;
+    border-radius: var(--k-r);
+    margin-bottom: 0;
+    color: var(--k-text-2)
+}
+
+kern-tabs[data-variant="pills"] [data-tab][aria-selected="true"] {
+    background: var(--k-bg);
+    color: var(--k-text);
+    box-shadow: var(--k-sh-sm)
+}
