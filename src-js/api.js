@@ -8,7 +8,7 @@ import { initToggles } from './behaviors/toggle.js';
 import { initTableSort } from './behaviors/table-sort.js';
 
 export const Kern = {
-    version: '0.1.2',
+    version: '0.1.3',
 
     /**
      * Show a toast notification.
