@@ -8,7 +8,7 @@ Configure in HTML. Theme in CSS. Control in JS. No build step. Ever.
 <script src="https://unpkg.com/kern-ui@0.1.3/dist/kern.min.js"></script>
 ```
 
-**41 KB CSS · 12 KB JS — 7 KB + 3 KB gzipped — Zero dependencies**
+**50 KB CSS · 15 KB JS — 13 KB + 2 KB gzipped — Zero dependencies**
 
 ---
 
